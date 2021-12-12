@@ -1,8 +1,8 @@
-
+import MainPage from "./Components/MainPage/MainPage";
 function App() {
   return (
     <div className="App">
-      hello world
+      <MainPage/>
     </div>
   );
 }
