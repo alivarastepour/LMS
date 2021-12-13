@@ -6,6 +6,10 @@
          url('../font/Tanha.ttf') format('truetype');
     font-weight: normal;
   }
+  @font-face {
+     font-family: 'Dinar';
+     src: url('../font/Mj_Dinar\ One\ Light.ttf')
+   }
   .App{
        width: 100vw;
        height: 100vh;
