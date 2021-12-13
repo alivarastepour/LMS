@@ -13,7 +13,7 @@ const SignIn = () => {
                     <input className="inp" type='password' placeholder="رمز عبور"/>
                 </div>
                 <div className="flex-item submit">
-                    <button>login</button>
+                    <button className="button">ورود</button>
                 </div>
             </Content>
         </Wrapper>
