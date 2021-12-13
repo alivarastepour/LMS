@@ -1,12 +1,29 @@
+*{
+    font-family: 'Tanha', sans-serif;
+}
 .flex-item{
-    width: 250px;
+    width: 350px;
 }
 .label{
     margin-top: 80px;
+    direction: rtl;
+    font-size: 1.4rem;
 }
 .input{
     margin-top: 20px;
 }
 .submit{
     padding-top: 100px;
+}
+.inp{
+    width: 350px;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 1.0rem;
+    text-align: center;
+}
+.inp:hover{
+    background-color: #fefefec7;
 }
