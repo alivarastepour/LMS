@@ -1,0 +1,15 @@
+@font-face {
+    font-family: Tanha;
+    src: url('../font/Tanha.eot');
+    src: url('../font/Tanha.eot?#iefix') format('embedded-opentype'),
+         url('../font/Tanha.woff') format('woff'),
+         url('../font/Tanha.ttf') format('truetype');
+    font-weight: normal;
+  }
+  .App{
+       width: 100vw;
+       height: 100vh;
+       background: url('../alexandre-van-thuan-mr9FouttLGY-unsplash.jpg');
+       padding-top: 100px;
+     
+  }
