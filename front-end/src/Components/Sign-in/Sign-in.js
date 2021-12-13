@@ -6,11 +6,11 @@ const SignIn = () => {
             <Content>
                 <div className="flex-item label">نام کاربری</div>
                 <div className="flex-item input">
-                    <input type='text' placeholder="نام کاربری"/>
+                    <input className="inp" type='text' placeholder="کد ملی"/>
                 </div>
                 <div className="flex-item label" >رمز عبور</div>
                 <div className="flex-item input">
-                    <input type='password' placeholder="رمز عبور"/>
+                    <input className="inp" type='password' placeholder="رمز عبور"/>
                 </div>
                 <div className="flex-item submit">
                     <button>login</button>
