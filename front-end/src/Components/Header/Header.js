@@ -1,10 +1,10 @@
 import { Wrapper } from "./Header.styles";
 
-const Header = () => {
+const Header = ({login, setLogin}) => {
     return <>
         <Wrapper>
-            <div><button className="btn">ورود</button></div>
-            <div><button className="btn">ثبت نام</button></div>
+            <div><button onClick={() => setLogin(true)} className={`btn ${login ? 'active' : 'not-active'}`}>ورود</button></div>
+            <div><button onClick={() => setLogin(false)} className={`btn ${login ? 'not-active' : 'active'}`}>ثبت نام</button></div>
         </Wrapper>
     </>
 }

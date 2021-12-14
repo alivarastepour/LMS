@@ -1,21 +1,12 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
-    max-width: 600px;
-    height: 600px;
-    margin: auto;
-    background-color: #F5F5F5;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-    border-radius: 10px;
-`;
-
 export const Content = styled.div`
-    max-width: 400px;
-    height: 500px;
-    margin: auto;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
+  max-width: 400px;
+  height: 500px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 
   *{
     font-family: 'Dinar', sans-serif;
@@ -23,16 +14,16 @@ export const Content = styled.div`
   .flex-item{
     width: 350px;
   }
-  .label{
-    margin-top: 80px;
+  .labelX{
+    margin-top: 30px;
     direction: rtl;
     font-size: 1.4rem;
   }
-  .input{
-    margin-top: 20px;
+  .inputX{
+    margin-top: 10px;
   }
-  .submit{
-    padding-top: 90px;
+  .submitX{
+    padding-top: 65px;
   }
   .inp{
     width: 350px;
@@ -43,7 +34,7 @@ export const Content = styled.div`
     font-size: 1.0rem;
     text-align: center;
   }
-  .button{
+  .buttonX{
     width: 200px;
     height: 50px;
     margin: auto;
@@ -54,13 +45,22 @@ export const Content = styled.div`
     border: none;
     border-radius: 10px;
   }
-  .button:hover,  .inp:hover{
+  .buttonX:hover,  .inp:hover{
     transition: 0.6s;
     background-color: #cecece;
   }
-  .button:not(:hover),  .inp:not(:hover){
+  .buttonX:not(:hover),  .inp:not(:hover){
     transition: 0.4s;
     background-color: white;
   }
-
-`;
+  .select{
+    width: 350px;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 1.0rem;
+    text-align: center;
+    background-color: #fff;
+  }
+  `;
