@@ -24,7 +24,7 @@ const SignUp = () => {
                         <input value={email} onChange={e => setEmail(e.target.value)} className="inp" type='email' placeholder="ایمیل"/>
                     </div>
                     <div className="flex-item submitX">
-                        <button type='submit' className="buttonX">ورود</button>
+                        <button type='submit' className="buttonX">ثبت نام</button>
                     </div>
                 </form>
             </Content>
