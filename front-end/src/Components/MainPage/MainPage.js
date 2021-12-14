@@ -11,7 +11,7 @@ const MainPage = () => {
         <Wrapper>
             <Header login={state} setLogin={setState}/>
             {
-                state ? <SignIn login={state}/> : <SignUp/>
+                state ? <SignIn/> : <SignUp/>
             }
         </Wrapper>
     </>
