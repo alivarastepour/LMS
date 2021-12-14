@@ -11,7 +11,7 @@ const SignIn = () => {
                 <form onSubmit={(e) => submitHandler(e, username, password)}>
                     <div className="flex-item label">نام کاربری</div>
                     <div className="flex-item input">
-                        <input className="inp" type='text' value={username}
+                        <input autoFocus className="inp" type='text' value={username}
                                onChange={e => setUser(e.target.value, setUsername)}
                                placeholder="کد ملی"/>
                     </div>
