@@ -15,7 +15,7 @@ export const Content = styled.div`
     width: 350px;
   }
   .labelX{
-    margin-top: 40px;
+    margin-top: 30px;
     direction: rtl;
     font-size: 1.4rem;
   }
@@ -52,5 +52,15 @@ export const Content = styled.div`
   .buttonX:not(:hover),  .inp:not(:hover){
     transition: 0.4s;
     background-color: white;
+  }
+  .select{
+    width: 350px;
+    height: 40px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 1.0rem;
+    text-align: center;
+    background-color: #fff;
   }
   `;
