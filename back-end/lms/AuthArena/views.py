@@ -20,9 +20,9 @@ class SignUp(APIView):
                              'is_logged_in': response.status_code == 200,
                              'token': response.json()['token'],
                              'message': 'OK',
-                             })
+                             },status=200)
         return Response({'is_signed_up': False,
                          'is_logged_in': False,
                          'token': '',
                          'message': user.errors,
-                         })
+                         },status=403)
