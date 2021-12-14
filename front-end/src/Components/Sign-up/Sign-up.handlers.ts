@@ -3,35 +3,44 @@ import axios from "axios";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
-export const signUpHandler = (e:FormEvent<HTMLFormElement>, username:string, password:string, email:string, role:string) => {
-    console.log(username);
-    console.log(password);
-    console.log(email);
-    console.log(role);
-    axios.post('http://localhost:8000/auth/signup/', {
-        'username':username,
-        'password':password,
-        'email':email,
-        'role':role
-    }).then((res) => {
-        console.log(res);
-    })
-
-    const validPassword = password.length >= 8 ;
-    const validEmail = EMAIL_PATTERN.test(email) ;
-    if(validEmail && validPassword)
-        console.log('hello world');
-         
+export const signUpHandler = (e:FormEvent<HTMLFormElement>, state:{username:string,password:string, email:string, role:string, validUsername:boolean, validPassword:boolean, validEmail:boolean }) => {
+    if (state.validUsername && state.validPassword && state.validUsername)
+        axios.post('http://localhost:8000/auth/signup/', {
+            'username':state.username,
+            'password':state.password,
+            'email':state.email,
+            'role':state.role
+        }).then((res) => {
+            console.log(res);
+        })
     e.preventDefault();
 }
 
-export const setUser =(username:string, setter:Function):void => {
-    if (!isNaN(Number(username[username.length - 1])) || username.length === 0)
-        setter(username)
+export const valid_username = (username:string, dispatch:Function) => {
+  if (username.length !== 10 || isNaN(Number(username)))
+      dispatch({type:'VALID-USERNAME', payload: false});
+  else
+      dispatch({type:'VALID-USERNAME', payload: true});
 }
-export const setPass = (password:string, setter:Function) => {
-    setter(password)
+
+export const valid_password = (password:string, dispatch:Function) => {
+    if (password.length < 8)
+        dispatch({type:'VALID-PASSWORD', payload: false});
+    else
+        dispatch({type:'VALID-PASSWORD', payload: true});
 }
-export const set_Email = (email:string, setter:Function) => {
-    setter(email)
+
+export const valid_email = (email:string, dispatch:Function) => {
+    const valid = EMAIL_PATTERN.test(email);
+    if (!valid)
+        dispatch({type:'VALID-EMAIL', payload: false});
+    else
+        dispatch({type:'VALID-EMAIL', payload: true});
+}
+
+export const valid_role = (role:string, dispatch:Function) => {
+    if (role === 'default')
+        dispatch({type:'VALID-ROLE', payload: false});
+    else
+        dispatch({type:'VALID-ROLE', payload: true});
 }
