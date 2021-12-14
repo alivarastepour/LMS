@@ -2,10 +2,11 @@ import {FormEvent} from "react";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
-export const signUpHandler = (e:FormEvent<HTMLFormElement>, username:string, password:string, email:string) => {
+export const signUpHandler = (e:FormEvent<HTMLFormElement>, username:string, password:string, email:string, role:string) => {
     console.log(username);
     console.log(password);
     console.log(email);
+    console.log(role);
     const validPassword = password.length >= 8 ;
     const validEmail = EMAIL_PATTERN.test(email) ;
     if(validEmail && validPassword)
