@@ -1,7 +1,7 @@
 import {Wrapper} from "../Sign-in/sign-in.styles";
 import {Content} from "./Sign-up.styles";
 import {useState} from "react";
-import {signUpHandler} from "./Sign-up.handlers";
+import {signUpHandler, setUser, setPass, set_Email  } from "./Sign-up.handlers";
 
 const SignUp = () => {
     const [username, setUsername] = useState('');
@@ -13,15 +13,15 @@ const SignUp = () => {
                 <form onSubmit={(e) => signUpHandler(e, username, password, email)}>
                     <div className="flex-item labelX">نام کاربری</div>
                     <div className="flex-item inputX">
-                        <input value={username} onChange={e => setUsername(e.target.value)} className="inp" type='text' placeholder="کد ملی"/>
+                        <input value={username} onChange={e => setUser(e.target.value, setUsername)} className="inp" type='text' placeholder="کد ملی"/>
                     </div>
                     <div className="flex-item labelX" >رمز عبور</div>
                     <div className="flex-item inputX">
-                        <input value={password} onChange={e => setPassword(e.target.value)} className="inp" type='text' placeholder="رمز عبور"/>
+                        <input value={password} onChange={e => setPass(e.target.value, setPassword)} className="inp" type='text' placeholder="رمز عبور"/>
                     </div>
                     <div className="flex-item labelX" >ایمیل</div>
                     <div className="flex-item inputX">
-                        <input value={email} onChange={e => setEmail(e.target.value)} className="inp" type='email' placeholder="ایمیل"/>
+                        <input value={email} onChange={e => set_Email(e.target.value, setEmail)} className="inp" type='text' placeholder="ایمیل"/>
                     </div>
                     <div className="flex-item submitX">
                         <button type='submit' className="buttonX">ثبت نام</button>
