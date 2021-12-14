@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-    width: 1000px;
+    max-width: 1000px;
     height: 700px;
     margin: auto auto;
     backdrop-filter: blur(30px) saturate(160%);
