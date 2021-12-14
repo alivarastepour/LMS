@@ -11,11 +11,13 @@ class SignUp(APIView):
     permission_classes = (AllowAny,)
 
     def post(self, request):
+        print('hello mdfk')
         user = UserSerializer(data=request.data)
         if user.is_valid():
             user = user.save()
             response = requests.post('http://127.0.0.1:8000/auth/login/',
                                      data={'username': user.username, 'password': request.data.get('password', '')})
+            print(response.json()['token'])
             return Response({'is_signed_up': True,
                              'is_logged_in': response.status_code == 200,
                              'token': response.json()['token'],

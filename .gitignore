@@ -2,3 +2,12 @@ front-end/src/react-app-env.d.ts
 package-lock.json
 front-end/package-lock.json
 front-end/src/Components/Sign-up/Sign-up.handlers.ts
+/.idea/.gitignore
+/back-end/lms/AuthArena/migrations/0001_initial.py
+/back-end/lms/db.sqlite3
+/.idea/LMS.iml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/vcs.xml

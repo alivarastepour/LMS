@@ -1,4 +1,5 @@
 import {FormEvent} from "react";
+import axios from "axios";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
@@ -7,6 +8,15 @@ export const signUpHandler = (e:FormEvent<HTMLFormElement>, username:string, pas
     console.log(password);
     console.log(email);
     console.log(role);
+    axios.post('http://localhost:8000/auth/signup/', {
+        'username':username,
+        'password':password,
+        'email':email,
+        'role':role
+    }).then((res) => {
+        console.log(res);
+    })
+
     const validPassword = password.length >= 8 ;
     const validEmail = EMAIL_PATTERN.test(email) ;
     if(validEmail && validPassword)
