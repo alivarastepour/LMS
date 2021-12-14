@@ -8,24 +8,29 @@ export const Content = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
 
-  *{
+  * {
     font-family: 'Dinar', sans-serif;
   }
-  .flex-item{
+
+  .flex-item {
     width: 350px;
   }
-  .labelX{
+
+  .labelX {
     margin-top: 30px;
     direction: rtl;
     font-size: 1.4rem;
   }
-  .inputX{
+
+  .inputX {
     margin-top: 10px;
   }
-  .submitX{
+
+  .submitX {
     padding-top: 65px;
   }
-  .inp{
+
+  .inp {
     width: 350px;
     height: 40px;
     border: none;
@@ -34,7 +39,8 @@ export const Content = styled.div`
     font-size: 1.0rem;
     text-align: center;
   }
-  .buttonX{
+
+  .buttonX {
     width: 200px;
     height: 50px;
     margin: auto;
@@ -45,15 +51,18 @@ export const Content = styled.div`
     border: none;
     border-radius: 10px;
   }
-  .buttonX:hover,  .inp:hover{
+
+  .buttonX:hover, .inp:hover {
     transition: 0.6s;
     background-color: #cecece;
   }
-  .buttonX:not(:hover),  .inp:not(:hover){
+
+  .buttonX:not(:hover), .inp:not(:hover) {
     transition: 0.4s;
     background-color: white;
   }
-  .select{
+
+  .select {
     width: 350px;
     height: 40px;
     border: none;
@@ -63,4 +72,8 @@ export const Content = styled.div`
     text-align: center;
     background-color: #fff;
   }
-  `;
+
+  .error {
+    border: 2px rgba(255, 0, 0, 0.37) solid;
+  }
+`;
