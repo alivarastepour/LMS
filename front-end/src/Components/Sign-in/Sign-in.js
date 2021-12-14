@@ -1,6 +1,6 @@
 import { Wrapper, Content } from "./sign-in.styles";
 import './sign-in.css'
-const SignIn = () => {
+const SignIn = ({login}) => {
     return <>
         <Wrapper>
             <Content>
