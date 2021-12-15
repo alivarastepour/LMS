@@ -8,11 +8,12 @@ const SignIn = () => {
         username:'',
         password:'',
         validUsername:true,
-        validPassword:true
+        validPassword:true,
+        validLogin:true
     }
 
     const [state, dispatch] = useReducer(signInReducer, initialState);
-    const {username, password, validUsername, validPassword} = state;
+    const {username, password, validUsername, validPassword, validLogin} = state;
 
     return <>
         <Wrapper>
@@ -37,6 +38,7 @@ const SignIn = () => {
                         <div className={validPassword ? 'error-msg-hide' : 'error-msg-show'}>لطفا رمزعبور خود را وارد کنید</div>
                     </div>
                     <div className="flex-item submit">
+                        <div className={validLogin ? 'error-msg-hide errorLogin' : 'error-msg-show errorLogin'}>نام کاربری یا رمز عبور صحیح نمی باشد.</div>
                         <button
                             type='submit'
                             className="button">ورود</button>
