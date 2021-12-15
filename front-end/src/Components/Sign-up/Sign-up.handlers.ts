@@ -1,18 +1,29 @@
-import {FormEvent} from "react";
+import  {FormEvent} from "react";
 import axios from "axios";
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
-export const signUpHandler = (e:FormEvent<HTMLFormElement>, state:{username:string,password:string, email:string, role:string, validUsername:boolean, validPassword:boolean, validEmail:boolean }) => {
-    if (state.validUsername && state.validPassword && state.validUsername)
+export const signUpHandler = 
+    (e:FormEvent<HTMLFormElement>, state:{username:string,password:string, email:string, role:string, 
+    validUsername:boolean, validPassword:boolean, validEmail:boolean }, dispatch:Function) => {
+    if (state.validUsername && state.validPassword && state.validUsername){
         axios.post('http://localhost:8000/auth/signup/', {
             'username':state.username,
             'password':state.password,
             'email':state.email,
             'role':state.role
         }).then((res) => {
-            console.log(res);
+            if(res.status === 200){
+                dispatch({type:'VALID-SIGN-UP', payload:true});
+                window.alert('ثبت نام با موفقیت انجام شد.')
+                clearFields(dispatch);
+            }
+        }).catch(error => {
+            dispatch({type:'VALID-SIGN-UP', payload:false});
+            console.clear();
         })
+        e.preventDefault(); 
+    }
     else{
         e.preventDefault();
     }
@@ -38,4 +49,11 @@ export const valid_email = (email:string, dispatch:Function) => {
         dispatch({type:'VALID-EMAIL', payload: false});
     else
         dispatch({type:'VALID-EMAIL', payload: true});
+}
+
+const clearFields = (dispatch:Function) => {
+    dispatch({type:'SET-USERNAME', payload:''});
+    dispatch({type:'SET-PASSWORD', payload:''});
+    dispatch({type:'SET-EMAIL', payload:''});
+    dispatch({type:'SET-ROLE', payload:''});
 }
