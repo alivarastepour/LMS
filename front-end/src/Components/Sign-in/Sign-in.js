@@ -6,22 +6,25 @@ const SignIn = () => {
 
     const initialState = {
         username:'',
-        password:''
+        password:'',
+        validUsername:true,
+        validPassword:true
     }
 
     const [state, dispatch] = useReducer(signInReducer, initialState);
-    const {username, password} = state;
+    const {username, password, validUsername, validPassword} = state;
 
     return <>
         <Wrapper>
             <Content>
-                <form onSubmit={(e) => submitHandler(e, username, password)}>
+                <form onSubmit={(e) => submitHandler(e, state, dispatch)}>
                     <div className="flex-item label">نام کاربری</div>
                     <div className="flex-item input">
                         <input
                             autoFocus className="inp" type='text' value={username}
                             onChange={e => dispatch({type:'SET-USERNAME', payload:e.target.value})}
                             placeholder="کد ملی"/>
+                        <div className={validUsername ? 'error-msg-hide' : 'error-msg-show'}>لطفا نام کاربری خود را وارد کنید</div>
                     </div>
                     <div className="flex-item label" >رمز عبور</div>
                     <div className="flex-item input">
@@ -31,6 +34,7 @@ const SignIn = () => {
                             value={password}
                             onChange={e => dispatch({type:'SET-PASSWORD', payload:e.target.value})}
                             placeholder="رمز عبور"/>
+                        <div className={validPassword ? 'error-msg-hide' : 'error-msg-show'}>لطفا رمزعبور خود را وارد کنید</div>
                     </div>
                     <div className="flex-item submit">
                         <button
