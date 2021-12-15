@@ -13,7 +13,9 @@ export const signUpHandler = (e:FormEvent<HTMLFormElement>, state:{username:stri
         }).then((res) => {
             console.log(res);
         })
-    e.preventDefault();
+    else{
+        e.preventDefault();
+    }
 }
 
 export const valid_username = (username:string, dispatch:Function) => {
