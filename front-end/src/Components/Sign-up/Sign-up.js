@@ -14,16 +14,17 @@ const SignUp = () => {
         validUsername:true,
         validPassword:true,
         validEmail:true,
+        validSignUp:true
     }
 
     const [state, dispatch] = useReducer(signUpReducer,initialState);
-    const {username, password, email, role, validUsername, validPassword, validEmail} = state ;
+    const {username, password, email, role, validUsername, validPassword, validEmail, validSignUp} = state ;
 
     return <>
         <Wrapper>
             <Content>
                 <form
-                    onSubmit={(e) => signUpHandler(e, state)}>
+                    onSubmit={(e) => signUpHandler(e, state, dispatch)}>
                     <div className="flex-item labelX">نام کاربری</div>
                     <div className="flex-item inputX">
                         <input
@@ -70,6 +71,7 @@ const SignUp = () => {
                         </select>
                     </div>
                     <div className="flex-item submitX">
+                        <div className={validSignUp ? 'error-msg-hide errorSignup' : 'error-msg-show errorSignup'}>نام کاربری در سامانه وجود دارد.</div>
                         <button type='submit' className="buttonX">ثبت نام</button>
                     </div>
                 </form>
