@@ -24,10 +24,9 @@ export const submitHandler = (e:FormEvent<HTMLFormElement>, state: {username:str
             username:state.username,
             password:state.password
         }).then((res) => {
-            console.log(res.data.token);
-        }).catch(e => console.log(e));
-    }else{
-        e.preventDefault();
+            sessionStorage.setItem('user',res.data.token);
+            dispatch({type:'VALID-LOG-IN', payload:true})
+        }).catch(e => dispatch({type:'VALID-LOG-IN', payload:false}));
     }
-
+    e.preventDefault();
 }
