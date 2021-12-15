@@ -19,7 +19,11 @@ export const signInReducer = (state, action) => {
         case 'VALID-PASSWORD':
             newState = {...state, validPassword: action.payload};
             break;
-
+        case 'VALID-LOG-IN':
+            newState = {...state, validLogin: action.payload};
+            break;
+        default:
+            break;    
 
     }
     return newState;
