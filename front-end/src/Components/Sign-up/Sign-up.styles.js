@@ -27,7 +27,7 @@ export const Content = styled.div`
   }
 
   .submitX {
-    padding-top: 35px;
+    padding-top: 25px;
   }
 
   .inp {
@@ -82,5 +82,9 @@ export const Content = styled.div`
   }
   .error-msg-hide{
     visibility: hidden;
+  }
+  .errorSignup{
+    text-align: center;
+    direction: rtl;
   }
 `;
