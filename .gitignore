@@ -12,3 +12,17 @@ front-end/src/Components/Sign-up/Sign-up.handlers.ts
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/vcs.xml
 /.idea/dataSources.xml
+back-end/lms/AuthArena/__pycache__/__init__.cpython-39.pyc
+back-end/lms/AuthArena/__pycache__/admin.cpython-39.pyc
+back-end/lms/AuthArena/__pycache__/apps.cpython-39.pyc
+back-end/lms/AuthArena/__pycache__/models.cpython-39.pyc
+back-end/lms/AuthArena/__pycache__/serializers.cpython-39.pyc
+back-end/lms/AuthArena/__pycache__/urls.cpython-39.pyc
+back-end/lms/AuthArena/__pycache__/views.cpython-39.pyc
+back-end/lms/AuthArena/migrations/__pycache__/__init__.cpython-39.pyc
+back-end/lms/AuthArena/migrations/__pycache__/0001_initial.cpython-39.pyc
+back-end/lms/lms/__pycache__/__init__.cpython-39.pyc
+back-end/lms/lms/__pycache__/settings.cpython-39.pyc
+back-end/lms/lms/__pycache__/urls.cpython-39.pyc
+back-end/lms/lms/__pycache__/wsgi.cpython-39.pyc
+back-end/lms/AuthArena/__pycache__/__init__.cpython-39.pyc
