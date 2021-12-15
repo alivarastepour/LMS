@@ -17,17 +17,17 @@ export const Content = styled.div`
   }
 
   .labelX {
-    margin-top: 30px;
+    margin-top: 25px;
     direction: rtl;
     font-size: 1.4rem;
   }
 
   .inputX {
-    margin-top: 10px;
+    margin-top: 5px;
   }
 
   .submitX {
-    padding-top: 65px;
+    padding-top: 35px;
   }
 
   .inp {
@@ -75,5 +75,12 @@ export const Content = styled.div`
 
   .error {
     border: 2px rgba(255, 0, 0, 0.37) solid;
+  }
+  .error-msg-show{
+    visibility: visible;
+    color: red;
+  }
+  .error-msg-hide{
+    visibility: hidden;
   }
 `;
