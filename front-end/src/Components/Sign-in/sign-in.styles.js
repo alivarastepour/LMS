@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     height: 600px;
     margin: auto;
     background-color: #F5F5F5;
-    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
     border-radius: 10px;
 `;
 
@@ -62,5 +62,13 @@ export const Content = styled.div`
     transition: 0.4s;
     background-color: white;
   }
-
+  .error-msg-hide{
+    visibility: hidden;
+    
+  }
+  .error-msg-show{
+    display: block;
+    visibility: visible;
+    color: red;
+  }
 `;
