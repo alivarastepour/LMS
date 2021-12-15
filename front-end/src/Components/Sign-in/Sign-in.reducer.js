@@ -13,6 +13,14 @@ export const signInReducer = (state, action) => {
         case 'SET-PASSWORD':
             newState = {...state, password: action.payload};
             break;
+        case 'VALID-USERNAME':
+            newState = {...state, validUsername: action.payload};
+            break;
+        case 'VALID-PASSWORD':
+            newState = {...state, validPassword: action.payload};
+            break;
+
+
     }
     return newState;
 }
