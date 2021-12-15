@@ -22,6 +22,11 @@ export const signUpReducer = (state, action) => {
         case 'VALID-EMAIL':
             newState = {...state, validEmail: action.payload};
             break;
+        case 'VALID-SIGN-UP':
+            newState = {...state, validSignUp: action.payload};
+            break;
+        default:
+            break    
     }
     return newState;
 }
