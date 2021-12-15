@@ -34,6 +34,7 @@ const SignUp = () => {
                             className={`${validUsername ?  'inp' : 'inp error'}`}
                             type='text'
                             placeholder="کد ملی"/>
+                        <div className={validUsername ? 'error-msg-hide' : 'error-msg-show'}>لطفا کد ملی ده رقمی خود را وارد کنید</div>
                     </div>
                     <div className="flex-item labelX" >رمز عبور</div>
                     <div className="flex-item inputX">
@@ -44,6 +45,7 @@ const SignUp = () => {
                             className={`${validPassword ? 'inp' : 'inp error'}`}
                             type='text'
                             placeholder="رمز عبور"/>
+                        <div className={validPassword ? 'error-msg-hide' : 'error-msg-show'}>رمز عبور باید شامل حداقل هشت کاراکتر باشد</div>
                     </div>
                     <div className="flex-item labelX" >ایمیل</div>
                     <div className="flex-item inputX">
@@ -54,6 +56,7 @@ const SignUp = () => {
                             className={`${validEmail ? 'inp' : 'inp error'}`}
                             type='text'
                             placeholder="ایمیل"/>
+                        <div className={validEmail ? 'error-msg-hide' : 'error-msg-show'}>لطفا آدرس ایمیل خود را به درستی وارد کنید</div>
                     </div>
                     <div className="flex-item labelX" >نقش</div>
                     <div className="flex-item inputX">
