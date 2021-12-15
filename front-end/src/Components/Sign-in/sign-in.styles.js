@@ -71,4 +71,9 @@ export const Content = styled.div`
     visibility: visible;
     color: red;
   }
+  .errorLogin{
+    text-align: center;
+    direction: rtl;
+  }
+
 `;
