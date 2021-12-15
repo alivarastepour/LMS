@@ -11,9 +11,12 @@
      src: url('../font/Mj_Dinar\ One\ Light.ttf')
    }
   .App{
-       width: 100vw;
-       height: 100vh;
-       background: url('../alexandre-van-thuan-mr9FouttLGY-unsplash.jpg');
-       padding-top: 100px;
+      height: 100%;
+      object-fit: cover;
+      background-size: contain;
+      background: url('../alexandre-van-thuan-mr9FouttLGY-unsplash.jpg') no-repeat fixed;
+      width: 100%;
+      padding-top: 5%;
+      padding-bottom: 5%;
      
   }
