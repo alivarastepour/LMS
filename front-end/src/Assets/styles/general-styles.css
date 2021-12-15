@@ -1,14 +1,6 @@
-@font-face {
-    font-family: Tanha;
-    src: url('../font/Tanha.eot');
-    src: url('../font/Tanha.eot?#iefix') format('embedded-opentype'),
-         url('../font/Tanha.woff') format('woff'),
-         url('../font/Tanha.ttf') format('truetype');
-    font-weight: normal;
-  }
   @font-face {
-     font-family: 'Dinar';
-     src: url('../font/Mj_Dinar\ One\ Light.ttf')
+     font-family: 'vazir';
+     src: url('../font/vazir-font-v16.1.0/Vazir-Light.ttf')
    }
   .App{
       height: 100vh;

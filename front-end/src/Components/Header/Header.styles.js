@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
     border: none;
     width: 120px;
     height: 70px;
-    font-family: 'Dinar', 'Tanha', sans-serif;
+    font-family: 'vazir', sans-serif;
     font-size: 1.5rem;
     margin-left: 10px;
     background-color: #F5F5F5;

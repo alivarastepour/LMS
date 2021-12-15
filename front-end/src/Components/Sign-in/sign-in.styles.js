@@ -18,7 +18,7 @@ export const Content = styled.div`
     flex-direction: column;
 
   *{
-    font-family: 'Dinar', sans-serif;
+    font-family: 'vazir', sans-serif;
   }
   .flex-item{
     width: 350px;
