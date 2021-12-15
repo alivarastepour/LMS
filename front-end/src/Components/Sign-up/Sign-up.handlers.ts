@@ -39,10 +39,3 @@ export const valid_email = (email:string, dispatch:Function) => {
     else
         dispatch({type:'VALID-EMAIL', payload: true});
 }
-
-export const valid_role = (role:string, dispatch:Function) => {
-    if (role === 'default')
-        dispatch({type:'VALID-ROLE', payload: false});
-    else
-        dispatch({type:'VALID-ROLE', payload: true});
-}

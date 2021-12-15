@@ -1,7 +1,7 @@
 import {Wrapper} from "../Sign-in/sign-in.styles";
 import {Content} from "./Sign-up.styles";
 import {useReducer} from "react";
-import {signUpHandler, valid_username, valid_password, valid_email, valid_role} from "./Sign-up.handlers";
+import {signUpHandler, valid_username, valid_password, valid_email} from "./Sign-up.handlers";
 import {signUpReducer} from "./Sign-up.reducer";
 
 const SignUp = () => {
