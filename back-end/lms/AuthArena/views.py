@@ -35,3 +35,11 @@ class SignUp(APIView):
                          'token': '',
                          'message': user.errors,
                          }, status=403)
+
+
+class WhoAmI(APIView):
+    serializer_class = UserSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        return Response({'role': request.user.role}, status=200)
