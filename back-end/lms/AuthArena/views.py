@@ -14,11 +14,11 @@ class SignUp(APIView):
         data = {'username': request.data['username'],
                 'password': request.data['password'],
                 'email': request.data['email']}
-        if 'مدیر' in request.data['role']:
+        if 'manager' in request.data['role']:
             data['role'] = 'M'
-        if 'استاد' in request.data['role']:
+        if 'teacher' in request.data['role']:
             data['role'] = 'T'
-        if 'دانشجو' in request.data['role']:
+        if 'student' in request.data['role']:
             data['role'] = 'S'
         user = UserSerializer(data=data)
         if user.is_valid():
