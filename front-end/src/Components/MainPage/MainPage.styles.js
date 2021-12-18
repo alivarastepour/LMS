@@ -26,4 +26,5 @@ export const Heading = styled.div`
     color: white;
     text-shadow: 0 1px 0 black;
     text-align: center;
+    direction: rtl;
 `;
