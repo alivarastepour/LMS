@@ -2,7 +2,7 @@ import { Wrapper, Content } from "./sign-in.styles";
 import {useReducer} from "react";
 import {submitHandler} from "./Sign-in.handlers";
 import {signInReducer} from "./Sign-in.reducer";
-const SignIn = () => {
+const SignIn = ({action, processEvaluation}) => {
 
     const initialState = {
         username:'',
@@ -18,7 +18,7 @@ const SignIn = () => {
     return <>
         <Wrapper>
             <Content>
-                <form onSubmit={(e) => submitHandler(e, state, dispatch)}>
+                <form onSubmit={(e) => submitHandler(e, state, dispatch, processEvaluation, action)}>
                     <div className="flex-item label">نام کاربری</div>
                     <div className="flex-item input">
                         <input
