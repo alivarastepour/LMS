@@ -8,7 +8,7 @@ import Typewriter from 'typewriter-effect';
 
 
 
-const MainPage = () => {
+const MainPage = ({setProcessState}) => {
     
     const [state, setState] = useState(true);
 
@@ -16,7 +16,9 @@ const MainPage = () => {
         <Wrapper>
             <Content>
                 <Header login={state} setLogin={setState}/>
-                {state ? <SignIn/> : <SignUp/>}
+                {state ? 
+                <SignIn action='SET-LOGIN-STATE' processEvaluation={setProcessState}/> : 
+                <SignUp action='SET-SIGNUP-STATE' processEvaluation={setProcessState}/>}
             </Content>
 
             <Heading>
