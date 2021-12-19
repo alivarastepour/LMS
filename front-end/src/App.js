@@ -1,7 +1,9 @@
-import MainPage from "./Components/MainPage/MainPage";
-import '../src/Assets/styles/general-styles.css'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext, useState } from "react";
+import MainPage from "./Components/MainPage/MainPage";
+import '../src/Assets/styles/general-styles.css'
+import Dashboard from "./Components/Dashboard/Dashboard";
+
 import Background from "./Components/Background/Background";
 
 export const authContext = createContext();
@@ -14,7 +16,9 @@ const App = () => {
     <authContext.Provider value={{auth, setAuth}}>
       <Routes>
         <Route path='/' element={<Background component = {<MainPage/>}/>}/>
-        <Route path='/accounts/manager/:id' element={<div>helloooo</div>}/>
+        <Route path='/accounts/manager/:id' element={<Background component = {<Dashboard/>}/>}>
+          {/* <Route path=':dashboard' element={<div>hi</div>}/> */}
+        </Route>
       </Routes>
     </authContext.Provider>
     </Router>
