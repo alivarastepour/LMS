@@ -54,7 +54,10 @@ export const Content = styled.div`
 
   .buttonX:hover, .inp:hover {
     transition: 0.6s;
-    background-color: #cecece;
+    background-color: #8b9ce8;
+  }
+  .inp:hover::placeholder{
+    color: white;
   }
 
   .buttonX:not(:hover), .inp:not(:hover) {
@@ -74,7 +77,12 @@ export const Content = styled.div`
   }
 
   .error {
-    border: 2px rgba(255, 0, 0, 0.37) solid;
+    border: 2px #780585 solid;
+    animation: fade 5s;
+  }
+  @keyframes fade{
+    0%{opacity:0}
+    100%{opacity:1}
   }
   .error-msg-show{
     visibility: visible;

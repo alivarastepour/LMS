@@ -59,7 +59,7 @@ export const Content = styled.div`
     background-color: #8b9ce8;
     color: white !important;
   }
-  .inp:hover::placeholder, .inp:hover:-ms-input-placeholder, .inp:hover::-ms-input-placeholder{
+  .inp:hover::placeholder{
     color: white;
   }
   .button:not(:hover),  .inp:not(:hover){
