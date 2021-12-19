@@ -6,8 +6,8 @@ export const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap-reverse;
-    padding-left: 30px;
-    padding-bottom: 173px;
+    padding-left: 100px;
+    /* padding-bottom: 173px; */
 `;
 
 export const Content = styled.div`

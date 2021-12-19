@@ -6,7 +6,7 @@ width: 100%;
 margin-top: 100px;
 .bg {
   animation:slide 3s ease-in-out infinite alternate;
-  background-image: linear-gradient(-60deg, #406dcf 50%, #3457a3 50%);
+  background-image: linear-gradient(-60deg, rgba(45,116,213,1) 50%, rgba(121,137,212,1) 50%);
   bottom:0;
   left:-50%;
   opacity:.5;
