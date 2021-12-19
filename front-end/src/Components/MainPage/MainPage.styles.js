@@ -23,8 +23,9 @@ export const Heading = styled.div`
     height: 700px;
     padding-top: 100px;
     font-size: 2.0rem;
+    font-family: 'vazir', sans-serif;
     color: white;
-    text-shadow: 0 1px 0 black;
+    /* text-shadow: 0 1px 0 black; */
     text-align: center;
     direction: rtl;
 `;
