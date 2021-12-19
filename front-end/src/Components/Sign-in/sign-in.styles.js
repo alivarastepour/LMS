@@ -56,7 +56,11 @@ export const Content = styled.div`
   }
   .button:hover,  .inp:hover{
     transition: 0.6s;
-    background-color: #cecece;
+    background-color: #8b9ce8;
+    color: white !important;
+  }
+  .inp:hover::placeholder, .inp:hover:-ms-input-placeholder, .inp:hover::-ms-input-placeholder{
+    color: white;
   }
   .button:not(:hover),  .inp:not(:hover){
     transition: 0.4s;
