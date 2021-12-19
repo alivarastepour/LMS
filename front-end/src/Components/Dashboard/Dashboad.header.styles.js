@@ -1,0 +1,32 @@
+import styled from 'styled-components'
+
+export const Wrapper = styled.div`
+    width: 100%;
+    display: flex;
+    height: 60px;
+    text-align: right;
+    direction: rtl;
+    justify-content: center;
+
+    .flex-item{
+        width: 160px;
+        height: 100%;
+        /* padding-right: 3px; */
+    }
+
+    .header-button{
+        border: none;
+        outline: none;
+        border-radius: 10px 10px 0 0;
+        background-color: white;
+        width: 100%;
+        height: 100%;
+        font-family: 'vazir', sans-serif;
+        font-size: 1.2rem;
+    }
+
+    .header-link{
+        color: black;
+        text-decoration: none;
+    }
+`;
