@@ -1,10 +1,17 @@
 import { Wrapper } from "./Field.styles";
 
 const Field = ({edit}) => {
+    const t = false ;
     return <>
         <Wrapper>
             {
-                edit ? <div>hello world</div> : <input type="text"/>
+                edit ? <div className="content">علی وارسته پور</div> : <input spellCheck={false} placeholder="prev username" className="input" type="text"/>
+            }
+            {
+                t ? 
+                <i className="fa fa-pencil-square-o icon" aria-hidden="true"></i>
+                :
+                <i className="fa fa-check icon" aria-hidden="true"></i>
             }
         </Wrapper>
     </>
