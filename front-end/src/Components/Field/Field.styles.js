@@ -3,8 +3,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
     max-width: 300px;
     height: 50px;
-    border: 1px black solid;
-
+    
     .input{
         outline: none;
         border: none;

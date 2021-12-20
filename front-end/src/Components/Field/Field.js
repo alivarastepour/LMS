@@ -1,9 +1,9 @@
 import { Wrapper } from "./Field.styles";
 
 const Field = ({edit}) => {
-    const t = false ;
+    const t = true ;
     return <>
-        <Wrapper>
+        <Wrapper className="wrapper">
             {
                 edit ? <div className="content">علی وارسته پور</div> : <input spellCheck={false} placeholder="prev username" className="input" type="text"/>
             }
