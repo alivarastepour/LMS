@@ -11,14 +11,13 @@ export const Wrapper = styled.div`
     .flex-item{
         width: 160px;
         height: 100%;
-        /* padding-right: 3px; */
     }
 
     .header-button{
         border: none;
         outline: none;
         border-radius: 10px 10px 0 0;
-        background-color: white;
+        background-color: #F5F5F5;  
         width: 100%;
         height: 100%;
         font-family: 'vazir', sans-serif;
