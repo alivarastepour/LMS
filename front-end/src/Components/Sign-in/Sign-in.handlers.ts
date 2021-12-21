@@ -1,7 +1,9 @@
 import axios from "axios";
 import {FormEvent} from "react";
 
-export const submitHandler = (e:FormEvent<HTMLFormElement>, state: {username:string, password:string, validUsername:string, validPassword:string}, dispatch:Function, auth:boolean, setAuth:Function, nav:Function):void => {
+export const submitHandler = 
+    (e:FormEvent<HTMLFormElement>, state: {username:string, password:string, validUsername:string,
+     validPassword:string}, dispatch:Function, auth:boolean, setAuth:Function, nav:Function):void => {
     let vu, vp ;
     if (state.username.length !== 10){
         dispatch({type:'VALID-USERNAME', payload:false})
@@ -18,7 +20,7 @@ export const submitHandler = (e:FormEvent<HTMLFormElement>, state: {username:str
     else{
         dispatch({type:'VALID-PASSWORD', payload:true})
         vp = true;
-    }
+    }    
     if (vu && vp){
         axios.post('http://localhost:8000/auth/login/', {
             username:state.username,
@@ -27,7 +29,7 @@ export const submitHandler = (e:FormEvent<HTMLFormElement>, state: {username:str
             sessionStorage.setItem('user',res.data.token);
             dispatch({type:'VALID-LOG-IN', payload:true});
             setAuth(true);
-            nav()
+            nav();
         }).catch(e => {
             dispatch({type:'VALID-LOG-IN', payload:false});
             setAuth(false);

@@ -7,7 +7,9 @@ import { useNavigate } from "react-router-dom";
 const SignIn = () => {
 
     const {auth, setAuth} = useContext(authContext);
+
     const navigator = useNavigate();
+    
     const initialState = {
         username:'',
         password:'',
@@ -18,11 +20,9 @@ const SignIn = () => {
 
     const [state, dispatch] = useReducer(signInReducer, initialState);
     const {username, password, validUsername, validPassword, validLogin} = state;
-    const nav = () => {
-        if (auth) {
-            navigator(`./accounts/manager/${sessionStorage.getItem('user')}`);            
-        }
-    }
+
+    const nav = () => navigator(`./accounts/manager/${sessionStorage.getItem('user')}`);            
+    
 
     return <>
         <Wrapper>
