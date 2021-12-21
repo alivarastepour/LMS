@@ -1,19 +1,22 @@
 import { Wrapper } from "./Dashboad.header.styles";
 import { Link } from "react-router-dom";
 
-const DashboardHeader = () => {
+const DashboardHeader = ({show, setShow}) => {
+
+    
+
     return <>
         <Wrapper>
             <div className="flex-item">
                 <Link className="header-link" to='./'>
-                    <button className="header-button">
+                    <button onClick={() => setShow(true)} className={`header-button ${show ? 'show' : 'hide'}`}>
                         پروفایل
                     </button>
                 </Link>
             </div>
             <div className="flex-item">
                 <Link className="header-link" to='./'>
-                    <button className="header-button">
+                    <button onClick={() => setShow(false)} className={`header-button ${show ? 'hide' : 'show'}`}>
                         مدیریت مدرسه
                     </button>
                 </Link>
