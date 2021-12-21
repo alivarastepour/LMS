@@ -17,11 +17,16 @@ export const Wrapper = styled.div`
         border: none;
         outline: none;
         border-radius: 10px 10px 0 0;
-        background-color: #F5F5F5;  
         width: 100%;
         height: 100%;
         font-family: 'vazir', sans-serif;
         font-size: 1.2rem;
+    }
+    .show{
+        background-color: #F5F5F5;  
+    }
+    .hide{
+        background-color: transparent;
     }
 
     .header-link{
