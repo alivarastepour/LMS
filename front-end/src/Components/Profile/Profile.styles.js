@@ -7,8 +7,9 @@ export const Wrapper = styled.div`
     background-color: #F5F5F5;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: 20% 20% 20%;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-rows: 20% 20% 20% 20%;
+    direction: rtl;
     justify-content: space-evenly;
 
     .label{
@@ -28,25 +29,19 @@ export const Wrapper = styled.div`
         height: 299px;
     }
     .item1{
-        grid-row: 1/3;
-    }
-
-    .item6{
-        grid-column: 1/4;
-
-        .wrapper{
-            width: 440px;
-        }
-        .label, .content, .input{
-            width: 400px;
-        }
-
-        .input, .content{
-            font-size: 1rem;
-        }
+        grid-row: 1/4;
     }
 
     .label{
         direction: rtl;
+    }
+
+    @media only screen and (max-width: 1060px){
+        & {
+            grid-template-rows: auto auto auto auto;
+        }
+        .item1{
+            grid-row: 1/3;
+        }
     }
 `;
