@@ -4,7 +4,7 @@ import {useReducer} from "react";
 import {signUpHandler, valid_username, valid_password, valid_email} from "./Sign-up.handlers";
 import {signUpReducer} from "./Sign-up.reducer";
 
-const SignUp = ({action, processEvaluation}) => {
+const SignUp = ({action}) => {
 
     const initialState = {
         username:'',
@@ -24,7 +24,7 @@ const SignUp = ({action, processEvaluation}) => {
         <Wrapper>
             <Content>
                 <form
-                    onSubmit={(e) => signUpHandler(e, state, dispatch, processEvaluation, action)}>
+                    onSubmit={(e) => signUpHandler(e, state, dispatch, action)}>
                     <div className="flex-item labelX">نام کاربری</div>
                     <div className="flex-item inputX">
                         <input
