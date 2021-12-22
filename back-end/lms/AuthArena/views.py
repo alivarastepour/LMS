@@ -40,6 +40,22 @@ class SignUp(APIView):
                          'message': user.errors,
                          }, status=403)
 
+class CustomLogin(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        user = self.serializer_class(data=request.data)
+        if user.is_valid():
+            validated_user = user.validated_data['user']
+            tk, created = Token.objects.get_or_create(user=validated_user)
+            return Response(data={
+                'id': validated_user.pk,
+                'token': tk.key,
+            }, status=200)
+        return Response(data={
+            'id': 'null',
+            'token': 'null',
+        }, status=400)
+
+
 
 class WhoAmI(APIView):
     serializer_class = UserSerializer
