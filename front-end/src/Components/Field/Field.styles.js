@@ -30,15 +30,20 @@ export const Wrapper = styled.div`
 
     .content{
         display: inline-block;
-        width: 250px;
+        width: 450px;
         height: 40px;
         direction: rtl;
         text-align: right;
-        font-size: 1.5rem;
+        font-size: 1.2rem;
         font-family: 'vazir', sans-serif;
+        padding-right: 10px;
+        color: #50a0de;
+
+        @media only screen and (max-width:1375px){
+            &{
+                width: 350px;
+            }
+        }
     }
 
-    .icon{
-        padding-left: 10px;
-    }
 `;
