@@ -56,10 +56,15 @@ class CustomLogin(ObtainAuthToken):
         }, status=400)
 
 
-
 class WhoAmI(APIView):
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 
     def get(self, request):
-        return Response({'role': request.user.role}, status=200)
+        return Response({
+            # TODO: add ano
+            'id': request.user.id,
+            'fullname': request.user.fullname,
+            'username': request.user.username,
+            'role': request.user.role,
+        }, status=200)
