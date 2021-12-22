@@ -18,7 +18,7 @@ const MainPage = () => {
                 <Header login={state} setLogin={setState}/>
                 {state ? 
                 <SignIn action='SET-LOGIN-STATE' /> : 
-                <SignUp action='SET-SIGNUP-STATE' />}   
+                <SignUp action='SET-SIGNUP-STATE' processEvaluation={setState} />}   
             </Content>
 
             <Heading>
