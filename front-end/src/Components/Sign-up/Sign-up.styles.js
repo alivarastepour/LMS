@@ -56,6 +56,7 @@ export const Content = styled.div`
     transition: 0.6s;
     background-color: #8b9ce8;
   }
+
   .inp:hover::placeholder{
     color: white;
   }
@@ -80,19 +81,30 @@ export const Content = styled.div`
     border: 2px #780585 solid;
     animation: fade 5s;
   }
+
   @keyframes fade{
     0%{opacity:0}
     100%{opacity:1}
   }
+
   .error-msg-show{
     visibility: visible;
     color: red;
   }
+
   .error-msg-hide{
     visibility: hidden;
   }
+
   .errorSignup{
     text-align: center;
     direction: rtl;
   }
+
+  @media only screen and (max-width:695px){
+      &{
+        max-width: 99%;
+        align-content: center;  
+      }
+    }
 `;
