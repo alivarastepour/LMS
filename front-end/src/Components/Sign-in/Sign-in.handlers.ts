@@ -26,7 +26,7 @@ export const submitHandler =
             username:state.username,
             password:state.password
         }).then((res) => {
-            sessionStorage.setItem('user',res.data.token);
+            sessionStorage.setItem('user',res.data.id);
             dispatch({type:'VALID-LOG-IN', payload:true});
             setAuth(true);
             nav();
