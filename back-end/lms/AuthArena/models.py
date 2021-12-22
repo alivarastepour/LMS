@@ -8,7 +8,9 @@ class CustomUser(AbstractUser):
                                      ('T', 'Teacher'),
                                      ('S', 'Student')],
                             max_length=1)
+    address = models.CharField(max_length=512, null=True, blank=True)
 
+    # TODO: add picture
     @property
     def fullname(self):
         return self.first_name + ' ' + self.last_name
