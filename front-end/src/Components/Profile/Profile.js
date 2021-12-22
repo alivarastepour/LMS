@@ -2,7 +2,7 @@ import { Wrapper } from "./Profile.styles";
 import Field from "../Field/Field";
 import photo from "../../Assets/Cover Background Images - Google Search (1).png"
 const Profile = () => {
-    const data = {'name':'علی', 'lastname':'وارسته پور', 'id':"۱۲۷۳۶۷۲۰۲۱", 'bitrhDate':'28-11-80', 'address':'خیابان چهارباغ‌بالا کوچه ۱۲ پلاک ۱۳'}
+    const data = {'name':'علی', 'lastname':'وارسته پور', 'id':"۱۲۷۳۶۷۲۰۲۱", 'bitrhDate':'28-11-80', 'address':'خیابان چهارباغ خواجو خیابان عافیت کوچه ۱۲ پلاک ۲۰'}
     return <>
         <Wrapper>
             <div className="grid-item item1">

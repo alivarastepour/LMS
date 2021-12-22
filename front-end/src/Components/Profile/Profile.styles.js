@@ -14,7 +14,8 @@ export const Wrapper = styled.div`
 
     .label{
         font-family: 'vazir', sans-serif;
-        font-size: 1.4rem;
+        font-size: 1.8rem;
+        direction: rtl;
     }
     .content{
         font-size: 1.2rem;
@@ -23,10 +24,17 @@ export const Wrapper = styled.div`
     .grid-item{
         margin: auto;
     }
+
     .profile-image{
         border-radius: 50%;
         width: 299px;
         height: 299px;
+        @media only screen and (max-width: 1060px){
+        &{
+            width: 200px;
+            height: 200px;
+        }
+        }
     }
     .item1{
         grid-row: 1/4;
@@ -43,5 +51,6 @@ export const Wrapper = styled.div`
         .item1{
             grid-row: 1/3;
         }
+
     }
 `;
