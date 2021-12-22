@@ -8,3 +8,7 @@ class CustomUser(AbstractUser):
                                      ('T', 'Teacher'),
                                      ('S', 'Student')],
                             max_length=1)
+
+    @property
+    def fullname(self):
+        return self.first_name + ' ' + self.last_name
