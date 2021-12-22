@@ -16,7 +16,7 @@ const App = () => {
     <authContext.Provider value={{auth, setAuth}}>
       <Routes>
         <Route path='/' element={<Background component = {<MainPage/>}/>}/>
-        <Route path='/accounts/manager/:id' element={<Background component = {<Dashboard/>}/>}>
+        <Route path='/accounts/manager/profile/:id' element={<Background component = {<Dashboard/>}/>}>
           {/* <Route path=':dashboard' element={<div>hi</div>}/> */}
         </Route>
       </Routes>
