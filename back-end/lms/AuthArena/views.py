@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,11 +27,13 @@ class SignUp(APIView):
             user = user.save()
             response = requests.post('http://127.0.0.1:8000/auth/login/',
                                      data={'username': user.username, 'password': request.data.get('password', '')})
-            return Response({'is_signed_up': True,
-                             'is_logged_in': response.status_code == 200,
-                             'token': response.json()['token'],
-                             'message': 'OK',
-                             }, status=200)
+            return Response({
+                'id': user.id,
+                'is_signed_up': True,
+                'is_logged_in': response.status_code == 200,
+                'token': response.json()['token'],
+                'message': 'OK',
+            }, status=200)
         return Response({'is_signed_up': False,
                          'is_logged_in': False,
                          'token': '',
