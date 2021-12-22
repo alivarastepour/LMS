@@ -62,9 +62,12 @@ class WhoAmI(APIView):
 
     def get(self, request):
         return Response({
-            # TODO: add ano
+            # TODO: add picture address
             'id': request.user.id,
             'fullname': request.user.fullname,
+            'firstname': request.user.first_name,
+            'lastname': request.user.last_name,
             'username': request.user.username,
+            'address': request.user.address,
             'role': request.user.role,
         }, status=200)
