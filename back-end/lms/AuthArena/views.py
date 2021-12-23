@@ -1,10 +1,11 @@
-from django.shortcuts import render
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer
+from .models import CustomUser
 import requests
 
 
@@ -57,7 +58,7 @@ class CustomLogin(ObtainAuthToken):
         }, status=400)
 
 
-class WhoAmI(APIView):
+class Profile(APIView):
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -74,7 +75,6 @@ class WhoAmI(APIView):
         return Response({
             # TODO: add picture address
             'id': request.user.id,
-            'fullname': request.user.fullname,
             'firstname': request.user.first_name,
             'lastname': request.user.last_name,
             'username': request.user.username,
@@ -82,3 +82,15 @@ class WhoAmI(APIView):
             'address': request.user.address,
             'role': self.get_complete_role(request.user.role),
         }, status=200)
+
+    def put(self, request):
+        user = get_object_or_404(CustomUser, username=request.user.username)
+        user_serializer = UserSerializer(instance=user, data=request.data, partial=True)
+        if user_serializer.is_valid():
+            user_serializer.save()
+            return Response({
+                'message': 'user data updated!'
+            }, status=200)
+        return Response({
+            'message': 'something is wrong!'
+        }, status=400)
