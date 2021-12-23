@@ -43,7 +43,27 @@ export const Wrapper = styled.div`
     .label{
         direction: rtl;
     }
-
+    .button{
+      background-color: white;
+      border: none;
+      outline: none;
+      font-family: 'vazir', sans-serif;
+      font-size: 1.3rem;
+      border-radius: 10px;
+      padding: 10px;
+      margin: auto;
+      display: block;
+    }
+    .button:hover{
+      transition: 1s;
+      color: white;
+      background-color: #8b9ce8;
+    }
+    .button:not(:hover){
+      transition: 1s;
+      color: black;
+      background-color: white;
+    }
     @media only screen and (max-width: 1060px){
         & {
             grid-template-rows: auto auto auto auto;
