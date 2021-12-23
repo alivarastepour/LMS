@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
                                      ('T', 'Teacher'),
                                      ('S', 'Student')],
                             max_length=1)
-    address = models.CharField(max_length=512, null=True, blank=True)
+    address = models.CharField(max_length=512, null=True, blank=True,default='')
 
     # TODO: add picture
     @property
