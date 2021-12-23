@@ -40,6 +40,7 @@ class SignUp(APIView):
                          'message': user.errors,
                          }, status=403)
 
+
 class CustomLogin(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         user = self.serializer_class(data=request.data)
@@ -60,6 +61,15 @@ class WhoAmI(APIView):
     serializer_class = UserSerializer
     permission_classes = (IsAuthenticated,)
 
+    def get_complete_role(self, role):
+        if role == 'M':
+            return 'manager'
+        if role == 'S':
+            return 'student'
+        if role == 'T':
+            return 'teacher'
+        return 'admin'
+
     def get(self, request):
         return Response({
             # TODO: add picture address
@@ -68,6 +78,7 @@ class WhoAmI(APIView):
             'firstname': request.user.first_name,
             'lastname': request.user.last_name,
             'username': request.user.username,
+            'email': request.user.email,
             'address': request.user.address,
-            'role': request.user.role,
+            'role': self.get_complete_role(request.user.role),
         }, status=200)
