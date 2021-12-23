@@ -1,10 +1,12 @@
 import { Wrapper } from "./Field.styles";
 
-const Field = ({edit, content}) => {
+const Field = ({edit, content, editable}) => {
     return <>
         <Wrapper className="wrapper">
             {
-                edit ? <div className="content">{content}</div> : <input spellCheck={false} placeholder="prev username" className="input" type="text"/>
+                edit && editable ? <input spellCheck={false} placeholder={content} className="input" type="text"/>
+                    :
+                        <div className="content">{content}</div>
             }
         </Wrapper>
     </>
