@@ -1,6 +1,6 @@
 import { Wrapper } from "./Profile.styles";
 import Field from "../Field/Field";
-import photo from "../../Assets/photo_2021-12-23_14-13-13.jpg"
+import photo from "../../Assets/profile-placeholder.jpg"
 import useGet from "../../custom-hooks/useGet";
 import {useState} from "react";
 
