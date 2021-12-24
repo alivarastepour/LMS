@@ -1,8 +1,8 @@
 import hashlib
 import requests
 
-SHARED_SECRET = 'XXXXXXXXXXXXXXXXX'
-SERVER_ADDRESS = 'X.Y.com/bigbluebutton/api/'
+SHARED_SECRET = 'XXXXXX'
+SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
 
 
 def dict_to_str(**kwargs):
@@ -22,4 +22,15 @@ def generate_url(method, **kwargs):
 
 
 if __name__ == '__main__':
-    print(generate_url('create', name='Test+Meeting', meetingID='abc123', attendeePW='111222', moderatorPW='333444'))
+    print(generate_url('getMeetings'))
+    xml = """<modules>
+   <module name="presentation">
+      <document url="https://www.example.com/x.pdf" filename="x.pdf"/>
+      <document url="https://www.example.com/default.pptx" filename="default.pptx"/>
+   </module>
+</modules>"""
+    y = generate_url('create', name='Test+Meeting', meetingID='abc12345', attendeePW='111222', moderatorPW='333444')
+    print(y)
+    x = requests.post(y,data=xml)
+    print(x.text)
+    print(generate_url('join',fullName='mahmood',meetingID='abc12345',password='333444'))
