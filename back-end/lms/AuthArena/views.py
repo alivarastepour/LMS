@@ -64,12 +64,12 @@ class Profile(APIView):
 
     def get_complete_role(self, role):
         if role == 'M':
-            return 'manager'
+            return 'مدیر'
         if role == 'S':
-            return 'student'
+            return 'دانش آموز / دانشجو'
         if role == 'T':
-            return 'teacher'
-        return 'admin'
+            return 'دبیر / استاد'
+        return 'ادمین'
 
     def get(self, request):
         return Response({
