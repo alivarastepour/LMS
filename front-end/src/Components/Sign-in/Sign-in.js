@@ -21,7 +21,7 @@ const SignIn = () => {
     const [state, dispatch] = useReducer(signInReducer, initialState);
     const {username, password, validUsername, validPassword, validLogin} = state;
 
-    const nav = () => navigator(`./accounts/manager/${sessionStorage.getItem('user')}`);            
+    const nav = () => navigator(`./accounts/manager/profile/${sessionStorage.getItem('user')}`);            
     
 
     return <>
