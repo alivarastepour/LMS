@@ -18,7 +18,7 @@ const useGet = (URL,TOKEN ) => {
     useEffect(() => {
         fetchData();
     },[TOKEN])
-    return {data};
+    return data;
 }
 
 export default useGet;
