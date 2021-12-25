@@ -72,15 +72,16 @@ class Profile(APIView):
         return 'ادمین'
 
     def get(self, request):
+        user = get_object_or_404(CustomUser, username=request.user.username)
         return Response({
             # TODO: add picture address
-            'id': request.user.id,
-            'firstـname': request.user.first_name,
-            'lastـname': request.user.last_name,
-            'username': request.user.username,
-            'email': request.user.email,
-            'address': request.user.address,
-            'role': self.get_complete_role(request.user.role),
+            'id': user.id,
+            'firstـname': user.first_name,
+            'lastـname': user.last_name,
+            'username': user.username,
+            'email': user.email,
+            'address': user.address,
+            'role': self.get_complete_role(user.role),
         }, status=200)
 
     def put(self, request):
@@ -90,8 +91,16 @@ class Profile(APIView):
         if user_serializer.is_valid():
             user_serializer.save()
             return Response({
-                'message': 'user data updated!'
+                'message': 'user data updated!',
+                'id': request.user.id,
+                'firstـname': user.first_name,
+                'lastـname': user.last_name,
+                'username': user.username,
+                'email': user.email,
+                'address': user.address,
+                'role': self.get_complete_role(user.role),
             }, status=200)
         return Response({
-            'message': 'something is wrong!'
+            'message': 'something is wrong!',
+            'errors': user_serializer.errors
         }, status=400)
