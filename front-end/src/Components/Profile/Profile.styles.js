@@ -1,17 +1,34 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    width: 90%;
+    width: 90%; 
     height: 90%;
     margin: auto;
     background-color: #F5F5F5;
     border-radius: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-    grid-template-rows: 20% 20% 20% 20%;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto auto;
     direction: rtl;
     justify-content: space-evenly;
 
+    @media only screen and (max-width:1355px){
+        & { 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+    }
+
+    @media only screen and (max-width:1205px){
+        & { 
+            grid-template-columns: 200px;
+            grid-template-rows: auto auto auto;
+        }
+    }
+
+    input[type="file"] {
+        display: none;
+    }
+    
     .label{
         font-family: 'vazir', sans-serif;
         font-size: 1.8rem;
@@ -29,17 +46,32 @@ export const Wrapper = styled.div`
         border-radius: 50%;
         width: 299px;
         height: 299px;
-        @media only screen and (max-width: 1060px){
-        &{
-            width: 200px;
-            height: 200px;
-        }
+        @media only screen and (max-width: 1205px){
+            &{
+                width: 200px;
+                height: 200px;
+            }
         }
     }
     .item1{
         grid-row: 1/4;
-    }
 
+        @media only screen and (max-width:1205px){
+            grid-row: 1/1;
+        }
+    }
+    
+
+    .item8{
+        grid-column: 1/4;
+
+        @media only screen and (max-width:1205px){
+            &{
+                grid-column: 1/1;
+            }
+        }
+        
+    }
     .label{
         direction: rtl;
     }

@@ -8,6 +8,13 @@ export const Wrapper = styled.div`
     direction: rtl;
     justify-content: center;
 
+    @media only screen and (max-width:420px){
+            &{
+                width: 70%;
+                margin: auto;
+            }
+        }
+
     .flex-item{
         width: 160px;
         height: 100%;
@@ -21,6 +28,12 @@ export const Wrapper = styled.div`
         height: 100%;
         font-family: 'vazir', sans-serif;
         font-size: 1.2rem;
+
+        @media only screen and (max-width:420px){
+            &{
+                font-size: 1rem;
+            }
+        }
     }
     .show{
         background-color: #F5F5F5;  
@@ -32,5 +45,7 @@ export const Wrapper = styled.div`
     .header-link{
         color: black;
         text-decoration: none;
+
+
     }
 `;

@@ -14,19 +14,31 @@ export const Content = styled.div`
 
   .flex-item {
     width: 350px;
+
+    @media only screen and (max-width:420px){
+      & {
+        width: 200px;
+      }
+    }
   }
 
-  .labelX {
+  .label {
     margin-top: 25px;
     direction: rtl;
     font-size: 1.4rem;
+
+    @media only screen and (max-width:420px){
+      & {
+        margin-top: 5px;
+      }
+    }
   }
 
-  .inputX {
+  .input {
     margin-top: 5px;
   }
 
-  .submitX {
+  .submit {
     padding-top: 25px;
   }
 
@@ -38,9 +50,15 @@ export const Content = styled.div`
     border-radius: 10px;
     font-size: 1.0rem;
     text-align: center;
+
+    @media only screen and (max-width:420px){
+      & {
+        width: 200px;
+      }
+    }
   }
 
-  .buttonX {
+  .button {
     width: 200px;
     height: 50px;
     margin: auto;
@@ -52,7 +70,7 @@ export const Content = styled.div`
     border-radius: 10px;
   }
 
-  .buttonX:hover, .inp:hover {
+  .button:hover, .inp:hover {
     transition: 0.6s;
     background-color: #8b9ce8;
   }
@@ -61,7 +79,7 @@ export const Content = styled.div`
     color: white;
   }
 
-  .buttonX:not(:hover), .inp:not(:hover) {
+  .button:not(:hover), .inp:not(:hover) {
     transition: 0.4s;
     background-color: white;
   }
@@ -75,6 +93,12 @@ export const Content = styled.div`
     font-size: 1.0rem;
     text-align: center;
     background-color: #fff;
+
+    @media only screen and (max-width:420px){
+      & {
+        width: 200px;
+      }
+    }
   }
 
   .error {
@@ -90,6 +114,12 @@ export const Content = styled.div`
   .error-msg-show{
     visibility: visible;
     color: red;
+
+    @media only screen and (max-width:420px){
+      & {
+        font-size: 0.7rem;
+      }
+    }
   }
 
   .error-msg-hide{
