@@ -76,8 +76,8 @@ class Profile(APIView):
         return Response({
             # TODO: add picture address
             'id': user.id,
-            'firstـname': user.first_name,
-            'lastـname': user.last_name,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
             'username': user.username,
             'email': user.email,
             'address': user.address,
@@ -93,8 +93,8 @@ class Profile(APIView):
             return Response({
                 'message': 'user data updated!',
                 'id': request.user.id,
-                'firstـname': user.first_name,
-                'lastـname': user.last_name,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
                 'username': user.username,
                 'email': user.email,
                 'address': user.address,
