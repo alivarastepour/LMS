@@ -1,10 +1,14 @@
-import { Wrapper } from "./Profile.styles";
-import {profileReducer} from "./Profile.reducer";
-import Field from "../Field/Field";
-import photo from "../../Assets/profile-placeholder.jpg"
-import useGet from "../../custom-hooks/useGet";
 import {useEffect, useReducer, useState} from "react";
 
+import { Wrapper } from "./Profile.styles";
+import Field from "../Field/Field";
+
+import {profileReducer} from "./Profile.reducer";
+import { profileEditHandler } from "./profile-edit.handler";
+import useGet from "../../custom-hooks/useGet";
+
+import photo from "../../Assets/profile-placeholder.jpg";
+import { ROLE } from "./ROLE";
 
 const Profile = () => {
 
@@ -16,14 +20,15 @@ const Profile = () => {
     const [pro, setPro] = useState('');
     const data = useGet(url, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
-
+    // console.log('i received : ');
+    
     useEffect(() => {
-        dispatch({type:'SET-FIRSTNAME', payload:data.firstname});
-        dispatch({type:'SET-LASTNAME', payload:data.lastname});
-        dispatch({type:'SET-EMAIL', payload:data.email});
-        dispatch({type:'SET-ADDRESS', payload:data.address});
-        dispatch({type:'SET-USERNAME', payload:data.username});
-        dispatch({type:'SET-ROLE', payload:data.role});
+        dispatch({type:'SET-FIRSTNAME', payload:data.first_name || ''});
+        dispatch({type:'SET-LASTNAME', payload:data.last_name || ''});
+        dispatch({type:'SET-EMAIL', payload:data.email || ''});
+        dispatch({type:'SET-ADDRESS', payload:data.address || ''});
+        dispatch({type:'SET-USERNAME', payload:data.username || ''});
+        dispatch({type:'SET-ROLE', payload:data.role} || '');
     },[data])
 
 
@@ -45,11 +50,11 @@ const Profile = () => {
             </div>
             <div className="grid-item item2">
                 <div className="label">نام</div>
-                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-FIRSTNAME'}} content={profileData.firstname}/>
+                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-FIRSTNAME'}} content={profileData.first_name}/>
             </div>
             <div className="grid-item item3">
                 <div className="label">نام خانوادگی</div>
-                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-LASTNAME'}} content={profileData.lastname}/>
+                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-LASTNAME'}} content={profileData.last_name}/>
             </div>
             <div className="grid-item item4">
                 <div className="label">کدملی</div>
@@ -68,7 +73,7 @@ const Profile = () => {
                 <Field edit={edit} editable={false} content={profileData.role}/>
             </div>
             <div className="grid-item item8">
-                <button onClick={() => setEdit(!edit)} className='button'>{edit ? 'اعمال تغییرات' : 'تغییر اطلاعات کابری'}</button>
+                <button onClick={() => profileEditHandler(edit, setEdit, profileData)} className='button'>{edit ? 'اعمال تغییرات' : 'تغییر اطلاعات کابری'}</button>
             </div>
         </Wrapper>
     </>

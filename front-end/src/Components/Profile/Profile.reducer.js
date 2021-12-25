@@ -2,10 +2,10 @@ export const profileReducer = (state, action) => {
     let newState ;
     switch (action.type) {
         case 'SET-FIRSTNAME':
-            newState = {...state, firstname: action.payload};
+            newState = {...state, first_name: action.payload};
             break;
         case 'SET-LASTNAME':
-            newState = {...state, lastname: action.payload};
+            newState = {...state, last_name: action.payload};
             break;
         case 'SET-EMAIL':
             newState = {...state, email: action.payload};
@@ -19,6 +19,8 @@ export const profileReducer = (state, action) => {
         case 'SET-ROLE':
             newState = {...state, role: action.payload};
             break;
+        default:
+            return state;
     }
     return newState;
 }
