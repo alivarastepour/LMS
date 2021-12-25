@@ -85,7 +85,8 @@ class Profile(APIView):
 
     def put(self, request):
         user = get_object_or_404(CustomUser, username=request.user.username)
-        user_serializer = UserSerializer(instance=user, data=request.data, partial=True)
+        user_serializer = UserSerializer(instance=user, data={k: v for k, v in request.data.items() if k != 'role'},
+                                         partial=True)
         if user_serializer.is_valid():
             user_serializer.save()
             return Response({
