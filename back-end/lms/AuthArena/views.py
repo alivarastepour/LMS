@@ -75,8 +75,8 @@ class Profile(APIView):
         return Response({
             # TODO: add picture address
             'id': request.user.id,
-            'firstname': request.user.first_name,
-            'lastname': request.user.last_name,
+            'firstـname': request.user.first_name,
+            'lastـname': request.user.last_name,
             'username': request.user.username,
             'email': request.user.email,
             'address': request.user.address,
