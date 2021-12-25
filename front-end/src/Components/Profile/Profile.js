@@ -9,11 +9,12 @@ import {useEffect, useReducer, useState} from "react";
 const Profile = () => {
 
 
-    const URL = 'http://localhost:8000/auth/whoami/' ;
+    const url = 'http://localhost:8000/auth/whoami/' ;
     const TOKEN = sessionStorage.getItem('token') ;
 
     const [edit, setEdit] = useState(false);
-    const data = useGet(URL, TOKEN);
+    const [pro, setPro] = useState('');
+    const data = useGet(url, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
 
     useEffect(() => {
@@ -25,14 +26,21 @@ const Profile = () => {
         dispatch({type:'SET-ROLE', payload:data.role});
     },[data])
 
-    console.log(profileData);
+
+    const handlerIMG = (selectedFile) => {
+        const file = URL.createObjectURL(selectedFile.target.files[0]);
+        setPro(file);
+    }
 
     return <>
         <Wrapper>
             <div className="grid-item item1">
-                <img className="profile-image" alt="oi" src={photo}/>
+                <img className="profile-image" alt="oi" src={pro || photo}/>
                 <div>
-                <button className='button'>تغییر عکس کاربری</button>
+                <button className='button'>
+                    <label htmlFor="label">تغییر عکس کاربری</label>
+                    <input onChange={e => handlerIMG(e)} id="label" accept="image/*" type='file'/>
+                </button>
                 </div>
             </div>
             <div className="grid-item item2">
