@@ -29,12 +29,24 @@ export const Content = styled.div`
 
   .flex-item{
     width: 350px;
+
+    @media only screen and (max-width:420px){
+      & {
+        width: 200px;
+      }
+    }
   }
 
   .label{
     margin-top: 80px;
     direction: rtl;
     font-size: 1.4rem;
+    
+    @media only screen and (max-width:420px){
+      & {
+        margin-top: 50px;
+      }
+    }
   }
 
   .input{
@@ -53,6 +65,12 @@ export const Content = styled.div`
     border-radius: 10px;
     font-size: 1.0rem;
     text-align: center;
+
+    @media only screen and (max-width:420px){
+      & {
+        width: 200px;
+      }
+    }
   }
 
   .button{
