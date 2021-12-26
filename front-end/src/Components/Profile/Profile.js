@@ -20,7 +20,6 @@ const Profile = () => {
     const [pro, setPro] = useState('');
     const data = useGet(url, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
-    // console.log('i received : ');
     
     useEffect(() => {
         dispatch({type:'SET-FIRSTNAME', payload:data.first_name || ''});
