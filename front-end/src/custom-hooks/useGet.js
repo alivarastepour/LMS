@@ -13,11 +13,11 @@ const useGet = (URL,TOKEN ) => {
             setData(ans.data)
         })
           .catch(e => console.log(e));
-    },[TOKEN]);
+    },[TOKEN, URL]);
 
     useEffect(() => {
         fetchData();
-    },[TOKEN])
+    },[TOKEN, URL, fetchData])
     return data;
 }
 
