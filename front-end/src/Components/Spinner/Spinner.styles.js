@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
   padding-top: 200px;
 
 .example-container div {
-  background: #8b9ce8;
+  background-color: ${(props) => props.color.c};
   border-radius: 30px;
   width: 150px;
   height: 150px;
