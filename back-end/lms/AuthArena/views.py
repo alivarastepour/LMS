@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import UserSerializer
 from .models import CustomUser
+# import utils
+import io
 import requests
 
 
@@ -104,3 +106,16 @@ class Profile(APIView):
             'message': 'something is wrong!',
             'errors': user_serializer.errors
         }, status=400)
+
+    def file_handler(self, file, user_id, extension):
+        with io.open(f'./profilepic_{user_id}.{extension}', 'wb') as o:
+            for b in file.readlines():
+                o.write(b)
+                o.flush()
+
+    def post(self, request):
+        f = request.FILES.getlist('image')[0]
+        self.file_handler(f, request.user.username, f.name.split('.')[-1])
+        return Response({
+            'message': 'profile photo saved!'
+        }, status=200)
