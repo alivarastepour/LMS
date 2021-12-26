@@ -2,11 +2,11 @@ import { motion } from "framer-motion";
 
 import { Wrapper } from "./Spinner.styles";
 
-const Setup = () => {
+const Spinner = (props) => {
 
   return (
     <>
-    <Wrapper>
+    <Wrapper color={props.color}>
       <div className="example-container">
         <motion.div
           animate={{
@@ -30,4 +30,4 @@ const Setup = () => {
     </>
   );
 };
-export default Setup ;
+export default Spinner ;

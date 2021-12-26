@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { createContext, useState,lazy, Suspense } from "react";
 
-import Setup from "./Components/Spinner/Spinner";
+import Spinner from "./Components/Spinner/Spinner";
 
 import '../src/Assets/styles/general-styles.css'
 
@@ -16,7 +16,7 @@ const App = () => {
   const [auth, setAuth] = useState(false);
 
   return (
-    <Suspense fallback={<Setup/>}>
+    <Suspense fallback={<Spinner color={{c:'#8b9ce8'}}/>}>
       <Router>
       <authContext.Provider value={{auth, setAuth}}>
         <Routes>
