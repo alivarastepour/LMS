@@ -17,6 +17,8 @@ export const profileEditHandler = (edit:boolean, setEdit: Function, state:{usern
 
 export const profileImageEditHandler = (event:React.ChangeEvent<HTMLInputElement>, dispatch:Function) => {
     const URL = 'http://localhost:8000/auth/whoami/';
+    const TOKEN = sessionStorage.getItem('token');
+
     // @ts-ignore
     const file = event.target.files[0];
     dispatch({type:'SET-PROFILE-PHOTO', payload:file});
@@ -25,7 +27,8 @@ export const profileImageEditHandler = (event:React.ChangeEvent<HTMLInputElement
     console.log(formData);
     axios.post(URL, formData, {
         headers: {
-          'content-type': 'multipart/form-data'
+          'content-type': 'multipart/form-data',
+          'Authorization':`Token ${TOKEN}`
         }
       })
           .then(res => {
