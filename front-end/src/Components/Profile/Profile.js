@@ -8,7 +8,6 @@ import { profileEditHandler } from "./profile-edit.handler";
 import useGet from "../../custom-hooks/useGet";
 
 import photo from "../../Assets/profile-placeholder.jpg";
-import { ROLE } from "./ROLE";
 
 const Profile = () => {
 
