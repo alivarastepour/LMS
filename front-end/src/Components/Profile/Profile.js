@@ -6,6 +6,7 @@ import Spinner from '../Spinner/Spinner'
 
 import {profileReducer} from "./Profile.reducer";
 import { profileEditHandler } from "./profile-edit.handler";
+import { profileImageEditHandler } from "./profile-edit.handler";
 import useGet from "../../custom-hooks/useGet";
 
 import photo from "../../Assets/profile-placeholder.jpg";
@@ -17,7 +18,6 @@ const Profile = () => {
     const TOKEN = sessionStorage.getItem('token') ;
 
     const [edit, setEdit] = useState(false);
-    const [pro, setPro] = useState('');
     const data = useGet(url, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
 
@@ -28,26 +28,23 @@ const Profile = () => {
         dispatch({type:'SET-ADDRESS', payload:data.address || ''});
         dispatch({type:'SET-USERNAME', payload:data.username || ''});
         dispatch({type:'SET-ROLE', payload:data.role} || '');
+        dispatch({type:'SET-PROFILE-PHOTO', payload:data.photo} || '');
         if (data.username) {
             setLoading(false);
         }
     },[data])
 
-    const handlerIMG = (selectedFile) => {
-        const file = URL.createObjectURL(selectedFile.target.files[0]);
-        setPro(file);
-    }
 
     return <>
          
             {loading ? <Spinner color={{c:'rgba(255, 255, 255, 0.75)'}}/> :
                 <Wrapper>
             <div className="grid-item item1">
-                <img className="profile-image" alt="oi" src={pro || photo}/>
+                <img className="profile-image" alt="oi" src={profileData.photo || photo}/>
                 <div>
                 <button className='button'>
                     <label htmlFor="label">تغییر عکس کاربری</label>
-                    <input onChange={e => handlerIMG(e)} id="label" accept="image/*" type='file'/>
+                    <input onChange={e => profileImageEditHandler(e, dispatch)} id="label" accept="image/*" type='file'/>
                 </button>
                 </div>
             </div>
