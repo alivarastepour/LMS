@@ -1,6 +1,9 @@
 import axios from "axios";
 import {FormEvent} from "react";
 
+export const valid_username = (username:string) => !isNaN(Number(username[username.length - 1])) || username.length === 0;
+
+
 export const submitHandler = 
     (e:FormEvent<HTMLFormElement>, state: {username:string, password:string, validUsername:string,
      validPassword:string}, dispatch:Function, auth:boolean, setAuth:Function, nav:Function):void => {

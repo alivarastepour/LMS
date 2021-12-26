@@ -1,7 +1,9 @@
+import {useReducer} from "react";
+
 import {Wrapper} from "../Sign-in/sign-in.styles";
 import {Content} from "./Sign-up.styles";
-import {useReducer} from "react";
 import {signUpHandler, valid_username, valid_password, valid_email} from "./Sign-up.handlers";
+
 import {signUpReducer} from "./Sign-up.reducer";
 
 const SignUp = ({action}) => {
@@ -35,7 +37,8 @@ const SignUp = ({action}) => {
                             className={`${validUsername ?  'inp' : 'inp error'}`}
                             type='text'
                             placeholder="کد ملی"/>
-                        <div className={validUsername ? 'error-msg-hide' : 'error-msg-show'}>لطفا کد ملی ده رقمی خود را وارد کنید</div>
+                        <div
+                            className={validUsername ? 'error-msg-hide' : 'error-msg-show'}>لطفا کد ملی ده رقمی خود را وارد کنید</div>
                     </div>
                     <div className="flex-item label" >رمز عبور</div>
                     <div className="flex-item input">
@@ -46,7 +49,8 @@ const SignUp = ({action}) => {
                             className={`${validPassword ? 'inp' : 'inp error'}`}
                             type='text'
                             placeholder="رمز عبور"/>
-                        <div className={validPassword ? 'error-msg-hide' : 'error-msg-show'}>رمز عبور باید شامل حداقل هشت کاراکتر باشد</div>
+                        <div
+                            className={validPassword ? 'error-msg-hide' : 'error-msg-show'}>رمز عبور باید شامل حداقل هشت کاراکتر باشد</div>
                     </div>
                     <div className="flex-item label" >ایمیل</div>
                     <div className="flex-item input">
@@ -57,7 +61,8 @@ const SignUp = ({action}) => {
                             className={`${validEmail ? 'inp' : 'inp error'}`}
                             type='text'
                             placeholder="ایمیل"/>
-                        <div className={validEmail ? 'error-msg-hide' : 'error-msg-show'}>لطفا آدرس ایمیل خود را به درستی وارد کنید</div>
+                        <div
+                            className={validEmail ? 'error-msg-hide' : 'error-msg-show'}>لطفا آدرس ایمیل خود را به درستی وارد کنید</div>
                     </div>
                     <div className="flex-item label" >نقش</div>
                     <div className="flex-item input">
@@ -71,7 +76,8 @@ const SignUp = ({action}) => {
                         </select>
                     </div>
                     <div className="flex-item submit">
-                        <div className={validSignUp ? 'error-msg-hide errorSignup' : 'error-msg-show errorSignup'}>نام کاربری در سامانه وجود دارد.</div>
+                        <div
+                            className={validSignUp ? 'error-msg-hide errorSignup' : 'error-msg-show errorSignup'}>نام کاربری در سامانه وجود دارد.</div>
                         <button type='submit' className="button">ثبت نام</button>
                     </div>
                 </form>
@@ -79,4 +85,5 @@ const SignUp = ({action}) => {
         </Wrapper>
     </>
 }
+
 export default SignUp;

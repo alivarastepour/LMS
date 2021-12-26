@@ -9,10 +9,10 @@ const MainPage = lazy(() => import('./Components/MainPage/MainPage'));
 const Dashboard = lazy(() => import('./Components/Dashboard/Dashboard'));
 const Background = lazy(() => import('./Components/Background/Background'));
 
-
 export const authContext = createContext();
 
 const App = () => {
+
   const [auth, setAuth] = useState(false);
 
   return (
@@ -27,7 +27,6 @@ const App = () => {
       </authContext.Provider>
       </Router>
     </Suspense>
-
   );
 }
 

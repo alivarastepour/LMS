@@ -2,7 +2,10 @@ import axios from 'axios'
 import React from 'react';
 
 
-export const profileEditHandler = (edit:boolean, setEdit: Function, state:{username:string, first_name:string, last_name:string, email:string, role:string, address:string}) => {
+export const profileEditHandler =
+    (edit:boolean, setEdit: Function,
+     state:{username:string, first_name:string, last_name:string, email:string, role:string, address:string}) => {
+
     const URL = 'http://localhost:8000/auth/whoami/';
     const TOKEN = sessionStorage.getItem('token');
     
@@ -11,7 +14,6 @@ export const profileEditHandler = (edit:boolean, setEdit: Function, state:{usern
             headers:{'Authorization':`Token ${TOKEN}`}
         }).catch(e => console.log(e));
     }
-
     setEdit(!edit);
 }
 
@@ -24,7 +26,6 @@ export const profileImageEditHandler = (event:React.ChangeEvent<HTMLInputElement
     dispatch({type:'SET-PROFILE-PHOTO', payload:file});
     let formData = new FormData();
     formData.append('image', file, file.name);
-    console.log(formData);
     axios.post(URL, formData, {
         headers: {
           'content-type': 'multipart/form-data',

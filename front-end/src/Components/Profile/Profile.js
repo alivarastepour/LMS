@@ -14,11 +14,11 @@ import photo from "../../Assets/profile-placeholder.jpg";
 const Profile = () => {
     const [loading, setLoading] = useState(true);
 
-    const url = 'http://localhost:8000/auth/whoami/' ;
+    const URL = 'http://localhost:8000/auth/whoami/' ;
     const TOKEN = sessionStorage.getItem('token') ;
 
     const [edit, setEdit] = useState(false);
-    const data = useGet(url, TOKEN);
+    const data = useGet(URL, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
 
     useEffect(() => {
@@ -34,48 +34,51 @@ const Profile = () => {
         }
     },[data])
 
-
     return <>
-         
-            {loading ? <Spinner color={{c:'rgba(255, 255, 255, 0.75)'}}/> :
-                <Wrapper>
-            <div className="grid-item item1">
-                <img className="profile-image" alt="oi" src={profileData.photo || photo}/>
-                <div>
-                <button className='button'>
-                    <label htmlFor="label">تغییر عکس کاربری</label>
-                    <input onChange={e => profileImageEditHandler(e, dispatch)} id="label" accept="image/*" type='file'/>
-                </button>
-                </div>
-            </div>
-            <div className="grid-item item2">
-                <div className="label">نام</div>
-                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-FIRSTNAME'}} content={profileData.first_name}/>
-            </div>
-            <div className="grid-item item3">
-                <div className="label">نام خانوادگی</div>
-                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-LASTNAME'}} content={profileData.last_name}/>
-            </div>
-            <div className="grid-item item4">
-                <div className="label">کدملی</div>
-                <Field edit={edit} editable={false} content={profileData.username}/>
-            </div>
-            <div className="grid-item item5">
-                <div className="label">ایمیل</div>
-                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-EMAIL'}} content={profileData.email}/>
-            </div>
-            <div className="grid-item item6">
-                <div className="label">آدرس</div>
-                <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-ADDRESS'}} content={profileData.address}/>
-            </div>
-            <div className="grid-item item7">
-                <div className="label">نقش</div>
-                <Field edit={edit} editable={false} content={profileData.role}/>
-            </div>
-            <div className="grid-item item8">
-                <button onClick={() => profileEditHandler(edit, setEdit, profileData)} className='button'>{edit ? 'اعمال تغییرات' : 'تغییر اطلاعات کابری'}</button>
-            </div>
-        </Wrapper>}
+            {
+                loading ?
+                    <Spinner color={{c:'rgba(255, 255, 255, 0.75)'}}/>
+                    :
+                    <Wrapper>
+                        <div className="grid-item item1">
+                            <img className="profile-image" alt="oi" src={profileData.photo || photo}/>
+                            <div>
+                            <button className='button'>
+                                <label htmlFor="label">تغییر عکس کاربری</label>
+                                <input onChange={e => profileImageEditHandler(e, dispatch)} id="label" accept="image/*" type='file'/>
+                            </button>
+                            </div>
+                        </div>
+                        <div className="grid-item item2">
+                            <div className="label">نام</div>
+                            <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-FIRSTNAME'}} content={profileData.first_name}/>
+                        </div>
+                        <div className="grid-item item3">
+                            <div className="label">نام خانوادگی</div>
+                            <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-LASTNAME'}} content={profileData.last_name}/>
+                        </div>
+                        <div className="grid-item item4">
+                            <div className="label">کدملی</div>
+                            <Field edit={edit} editable={false} content={profileData.username}/>
+                        </div>
+                        <div className="grid-item item5">
+                            <div className="label">ایمیل</div>
+                            <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-EMAIL'}} content={profileData.email}/>
+                        </div>
+                        <div className="grid-item item6">
+                            <div className="label">آدرس</div>
+                            <Field edit={edit} editable={true} onChange={{change:dispatch,type:'SET-ADDRESS'}} content={profileData.address}/>
+                        </div>
+                        <div className="grid-item item7">
+                            <div className="label">نقش</div>
+                            <Field edit={edit} editable={false} content={profileData.role}/>
+                        </div>
+                        <div className="grid-item item8">
+                            <button onClick={() => profileEditHandler(edit, setEdit, profileData)} className='button'>{edit ? 'اعمال تغییرات' : 'تغییر اطلاعات کابری'}</button>
+                        </div>
+                    </Wrapper>
+            }
     </>
-}   
+}
+
 export default Profile;

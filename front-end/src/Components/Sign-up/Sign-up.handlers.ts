@@ -1,5 +1,6 @@
 import  {FormEvent} from "react";
 import axios from "axios";
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
@@ -12,18 +13,16 @@ export const signUpHandler =
             'password':state.password,
             'email':state.email,
             'role':state.role
-        }).then((res) => {
+        }).then(() => {
             dispatch({type:'VALID-SIGN-UP', payload:true});
             clearFields(dispatch);
             window.alert('ثبت نام با موفقیت انجام شد.');
         }).catch(error => {
             dispatch({type:'VALID-SIGN-UP', payload:false});
+            console.log(error.message);
         })
-        e.preventDefault(); 
     }
-    else{
-        e.preventDefault();
-    }
+    e.preventDefault();
 }
 
 export const valid_username = (username:string, dispatch:Function) => {
