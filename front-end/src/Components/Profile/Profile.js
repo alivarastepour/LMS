@@ -2,6 +2,7 @@ import {useEffect, useReducer, useState} from "react";
 
 import { Wrapper } from "./Profile.styles";
 import Field from "../Field/Field";
+import Spinner from '../Spinner/Spinner'
 
 import {profileReducer} from "./Profile.reducer";
 import { profileEditHandler } from "./profile-edit.handler";
@@ -10,7 +11,7 @@ import useGet from "../../custom-hooks/useGet";
 import photo from "../../Assets/profile-placeholder.jpg";
 
 const Profile = () => {
-
+    const [loading, setLoading] = useState(true);
 
     const url = 'http://localhost:8000/auth/whoami/' ;
     const TOKEN = sessionStorage.getItem('token') ;
@@ -19,7 +20,7 @@ const Profile = () => {
     const [pro, setPro] = useState('');
     const data = useGet(url, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
-    
+
     useEffect(() => {
         dispatch({type:'SET-FIRSTNAME', payload:data.first_name || ''});
         dispatch({type:'SET-LASTNAME', payload:data.last_name || ''});
@@ -27,8 +28,10 @@ const Profile = () => {
         dispatch({type:'SET-ADDRESS', payload:data.address || ''});
         dispatch({type:'SET-USERNAME', payload:data.username || ''});
         dispatch({type:'SET-ROLE', payload:data.role} || '');
+        if (data.username) {
+            setLoading(false);
+        }
     },[data])
-
 
     const handlerIMG = (selectedFile) => {
         const file = URL.createObjectURL(selectedFile.target.files[0]);
@@ -36,7 +39,9 @@ const Profile = () => {
     }
 
     return <>
-        <Wrapper>
+         
+            {loading ? <Spinner color={{c:'rgba(255, 255, 255, 0.75)'}}/> :
+                <Wrapper>
             <div className="grid-item item1">
                 <img className="profile-image" alt="oi" src={pro || photo}/>
                 <div>
@@ -73,7 +78,7 @@ const Profile = () => {
             <div className="grid-item item8">
                 <button onClick={() => profileEditHandler(edit, setEdit, profileData)} className='button'>{edit ? 'اعمال تغییرات' : 'تغییر اطلاعات کابری'}</button>
             </div>
-        </Wrapper>
+        </Wrapper>}
     </>
 }   
 export default Profile;
