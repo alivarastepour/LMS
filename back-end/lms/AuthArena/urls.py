@@ -1,7 +1,8 @@
 from django.urls import path
 from rest_framework.authtoken.views import obtain_auth_token
-from .views import SignUp
+from .views import SignUp, Profile, CustomLogin
 urlpatterns = [
-    path('login/', view=obtain_auth_token),
+    path('login/', CustomLogin.as_view()),
     path('signup/', SignUp.as_view()),
+    path('whoami/', Profile.as_view()),
 ]

@@ -15,6 +15,12 @@ export const Wrapper = styled.div`
     font-size: 1.5rem;
     margin-left: 10px;
     background-color: #F5F5F5;
+
+    @media only screen and (max-width:325px){
+      & {
+        width: 90px;
+      }
+    }
   }
 
   .not-active {

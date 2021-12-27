@@ -1,10 +1,16 @@
+import {useContext, useReducer} from "react";
+
 import {Wrapper} from "../Sign-in/sign-in.styles";
 import {Content} from "./Sign-up.styles";
-import {useReducer} from "react";
 import {signUpHandler, valid_username, valid_password, valid_email} from "./Sign-up.handlers";
-import {signUpReducer} from "./Sign-up.reducer";
 
-const SignUp = () => {
+import {signUpReducer} from "./Sign-up.reducer";
+import {useNavigate} from "react-router-dom";
+import {authContext} from "../../App";
+
+const SignUp = ({action}) => {
+
+    const {auth, setAuth} = useContext(authContext);
 
     const initialState = {
         username:'',
@@ -16,17 +22,21 @@ const SignUp = () => {
         validEmail:true,
         validSignUp:true
     }
+    const navigator = useNavigate();
+
 
     const [state, dispatch] = useReducer(signUpReducer,initialState);
     const {username, password, email, role, validUsername, validPassword, validEmail, validSignUp} = state ;
+
+    const nav = () => navigator(`./accounts/manager/profile/${sessionStorage.getItem('user')}`);
 
     return <>
         <Wrapper>
             <Content>
                 <form
-                    onSubmit={(e) => signUpHandler(e, state, dispatch)}>
-                    <div className="flex-item labelX">نام کاربری</div>
-                    <div className="flex-item inputX">
+                    onSubmit={(e) => signUpHandler(e, state, dispatch, action, nav, setAuth)}>
+                    <div className="flex-item label">نام کاربری</div>
+                    <div className="flex-item input">
                         <input
                             autoFocus
                             value={username}
@@ -35,10 +45,11 @@ const SignUp = () => {
                             className={`${validUsername ?  'inp' : 'inp error'}`}
                             type='text'
                             placeholder="کد ملی"/>
-                        <div className={validUsername ? 'error-msg-hide' : 'error-msg-show'}>لطفا کد ملی ده رقمی خود را وارد کنید</div>
+                        <div
+                            className={validUsername ? 'error-msg-hide' : 'error-msg-show'}>لطفا کد ملی ده رقمی خود را وارد کنید</div>
                     </div>
-                    <div className="flex-item labelX" >رمز عبور</div>
-                    <div className="flex-item inputX">
+                    <div className="flex-item label" >رمز عبور</div>
+                    <div className="flex-item input">
                         <input
                             value={password}
                             onChange={e => dispatch({type:'SET-PASSWORD', payload:e.target.value})}
@@ -46,10 +57,11 @@ const SignUp = () => {
                             className={`${validPassword ? 'inp' : 'inp error'}`}
                             type='text'
                             placeholder="رمز عبور"/>
-                        <div className={validPassword ? 'error-msg-hide' : 'error-msg-show'}>رمز عبور باید شامل حداقل هشت کاراکتر باشد</div>
+                        <div
+                            className={validPassword ? 'error-msg-hide' : 'error-msg-show'}>رمز عبور باید شامل حداقل هشت کاراکتر باشد</div>
                     </div>
-                    <div className="flex-item labelX" >ایمیل</div>
-                    <div className="flex-item inputX">
+                    <div className="flex-item label" >ایمیل</div>
+                    <div className="flex-item input">
                         <input
                             value={email}
                             onChange={e => dispatch({type:'SET-EMAIL', payload:e.target.value})}
@@ -57,10 +69,11 @@ const SignUp = () => {
                             className={`${validEmail ? 'inp' : 'inp error'}`}
                             type='text'
                             placeholder="ایمیل"/>
-                        <div className={validEmail ? 'error-msg-hide' : 'error-msg-show'}>لطفا آدرس ایمیل خود را به درستی وارد کنید</div>
+                        <div
+                            className={validEmail ? 'error-msg-hide' : 'error-msg-show'}>لطفا آدرس ایمیل خود را به درستی وارد کنید</div>
                     </div>
-                    <div className="flex-item labelX" >نقش</div>
-                    <div className="flex-item inputX">
+                    <div className="flex-item label" >نقش</div>
+                    <div className="flex-item input">
                         <select defaultValue='manager'
                             onChange={e => dispatch({type:'SET-ROLE', payload:e.target.value})}
                             className='select'
@@ -70,13 +83,15 @@ const SignUp = () => {
                             <option value='student'>دانش‌آموز/دانشجو</option>
                         </select>
                     </div>
-                    <div className="flex-item submitX">
-                        <div className={validSignUp ? 'error-msg-hide errorSignup' : 'error-msg-show errorSignup'}>نام کاربری در سامانه وجود دارد.</div>
-                        <button type='submit' className="buttonX">ثبت نام</button>
+                    <div className="flex-item submit">
+                        <div
+                            className={validSignUp ? 'error-msg-hide errorSignup' : 'error-msg-show errorSignup'}>نام کاربری در سامانه وجود دارد.</div>
+                        <button type='submit' className="button">ثبت نام</button>
                     </div>
                 </form>
             </Content>
         </Wrapper>
     </>
 }
+
 export default SignUp;

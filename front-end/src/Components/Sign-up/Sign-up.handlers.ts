@@ -1,32 +1,31 @@
 import  {FormEvent} from "react";
 import axios from "axios";
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 
 export const signUpHandler = 
     (e:FormEvent<HTMLFormElement>, state:{username:string,password:string, email:string, role:string, 
-    validUsername:boolean, validPassword:boolean, validEmail:boolean }, dispatch:Function) => {
+    validUsername:boolean, validPassword:boolean, validEmail:boolean }, dispatch:Function, action:string, nav:Function, setAuth:Function) => {
     if (state.validUsername && state.validPassword && state.validUsername){
         axios.post('http://localhost:8000/auth/signup/', {
             'username':state.username,
             'password':state.password,
             'email':state.email,
             'role':state.role
-        }).then((res) => {
-            if(res.status === 200){
-                dispatch({type:'VALID-SIGN-UP', payload:true});
-                window.alert('ثبت نام با موفقیت انجام شد.')
-                clearFields(dispatch);
-            }
+        }).then((response) => {
+            dispatch({type:'VALID-SIGN-UP', payload:true});
+            sessionStorage.setItem('token', response.data.token);
+            sessionStorage.setItem('user', response.data.id);
+            setAuth(true);
+            nav();
         }).catch(error => {
+            setAuth(false);
             dispatch({type:'VALID-SIGN-UP', payload:false});
-            console.clear();
+            console.log(error.message);
         })
-        e.preventDefault(); 
     }
-    else{
-        e.preventDefault();
-    }
+    e.preventDefault();
 }
 
 export const valid_username = (username:string, dispatch:Function) => {

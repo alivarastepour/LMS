@@ -1,4 +1,4 @@
-const valid_username = username => !isNaN(Number(username[username.length - 1])) || username.length === 0;
+import {valid_username} from "./Sign-in.handlers";
 
 export const signInReducer = (state, action) => {
     let newState ;
@@ -23,8 +23,7 @@ export const signInReducer = (state, action) => {
             newState = {...state, validLogin: action.payload};
             break;
         default:
-            break;    
-
+            break;
     }
     return newState;
 }
