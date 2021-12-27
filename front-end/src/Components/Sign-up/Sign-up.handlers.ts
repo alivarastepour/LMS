@@ -6,18 +6,21 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export const signUpHandler = 
     (e:FormEvent<HTMLFormElement>, state:{username:string,password:string, email:string, role:string, 
-    validUsername:boolean, validPassword:boolean, validEmail:boolean }, dispatch:Function, action:string) => {
+    validUsername:boolean, validPassword:boolean, validEmail:boolean }, dispatch:Function, action:string, nav:Function, setAuth:Function) => {
     if (state.validUsername && state.validPassword && state.validUsername){
         axios.post('http://localhost:8000/auth/signup/', {
             'username':state.username,
             'password':state.password,
             'email':state.email,
             'role':state.role
-        }).then(() => {
+        }).then((response) => {
             dispatch({type:'VALID-SIGN-UP', payload:true});
-            clearFields(dispatch);
-            window.alert('ثبت نام با موفقیت انجام شد.');
+            sessionStorage.setItem('token', response.data.token);
+            sessionStorage.setItem('user', response.data.id);
+            setAuth(true);
+            nav();
         }).catch(error => {
+            setAuth(false);
             dispatch({type:'VALID-SIGN-UP', payload:false});
             console.log(error.message);
         })

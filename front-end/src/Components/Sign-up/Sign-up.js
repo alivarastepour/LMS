@@ -1,12 +1,16 @@
-import {useReducer} from "react";
+import {useContext, useReducer} from "react";
 
 import {Wrapper} from "../Sign-in/sign-in.styles";
 import {Content} from "./Sign-up.styles";
 import {signUpHandler, valid_username, valid_password, valid_email} from "./Sign-up.handlers";
 
 import {signUpReducer} from "./Sign-up.reducer";
+import {useNavigate} from "react-router-dom";
+import {authContext} from "../../App";
 
 const SignUp = ({action}) => {
+
+    const {auth, setAuth} = useContext(authContext);
 
     const initialState = {
         username:'',
@@ -18,15 +22,19 @@ const SignUp = ({action}) => {
         validEmail:true,
         validSignUp:true
     }
+    const navigator = useNavigate();
+
 
     const [state, dispatch] = useReducer(signUpReducer,initialState);
     const {username, password, email, role, validUsername, validPassword, validEmail, validSignUp} = state ;
+
+    const nav = () => navigator(`./accounts/manager/profile/${sessionStorage.getItem('user')}`);
 
     return <>
         <Wrapper>
             <Content>
                 <form
-                    onSubmit={(e) => signUpHandler(e, state, dispatch, action)}>
+                    onSubmit={(e) => signUpHandler(e, state, dispatch, action, nav, setAuth)}>
                     <div className="flex-item label">نام کاربری</div>
                     <div className="flex-item input">
                         <input
