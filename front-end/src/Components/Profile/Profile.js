@@ -20,7 +20,6 @@ const Profile = () => {
     const [edit, setEdit] = useState(false);
     const data = useGet(URL, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
-    console.log(profileData);
 
     useEffect(() => {
         dispatch({type:'SET-FIRSTNAME', payload:data.first_name || ''});

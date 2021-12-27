@@ -31,7 +31,7 @@ const SignIn = () => {
         <Wrapper>
             <Content>
                 <form
-                    onSubmit={(e) => submitHandler(e, state, dispatch, auth, setAuth, nav)}>
+                    onSubmit={(e) => submitHandler(e, state, dispatch, setAuth, nav)}>
                     <div className="flex-item label">نام کاربری</div>
                     <div className="flex-item input">
                         <input
