@@ -1,10 +1,9 @@
 import axios from 'axios'
 import React from 'react';
 
-
 export const profileEditHandler =
     (edit:boolean, setEdit: Function,
-     state:{username:string, first_name:string, last_name:string, email:string, role:string, address:string}) => {
+     state:{username:string, first_name:string, last_name:string, email:string, role:string, address:string, image:string}) => {
 
     const URL = 'http://localhost:8000/auth/whoami/';
     const TOKEN = sessionStorage.getItem('token');
@@ -18,22 +17,24 @@ export const profileEditHandler =
 }
 
 export const profileImageEditHandler = (event:React.ChangeEvent<HTMLInputElement>, dispatch:Function) => {
-    const URL = 'http://localhost:8000/auth/whoami/';
+    const url = 'http://localhost:8000/auth/whoami/';
     const TOKEN = sessionStorage.getItem('token');
-
+    // @ts-ignore
+    const temp = URL.createObjectURL(event.target.files[0]);
     // @ts-ignore
     const file = event.target.files[0];
-    dispatch({type:'SET-PROFILE-PHOTO', payload:file});
     let formData = new FormData();
     formData.append('image', file, file.name);
-    axios.post(URL, formData, {
+    axios.post(url, formData, {
         headers: {
           'content-type': 'multipart/form-data',
           'Authorization':`Token ${TOKEN}`
         }
       })
-          .then(res => {
-            console.log(res.data);
+          .then((res) => {    
+            dispatch({type:'SET-PROFILE-PHOTO', payload:temp});
           })
-          .catch(err => console.log(err))
+          .catch((e) => {
+            console.log(e);
+          });
 }
