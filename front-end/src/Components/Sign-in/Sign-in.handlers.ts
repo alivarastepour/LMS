@@ -6,7 +6,7 @@ export const valid_username = (username:string) => !isNaN(Number(username[userna
 
 export const submitHandler = 
     (e:FormEvent<HTMLFormElement>, state: {username:string, password:string, validUsername:string,
-     validPassword:string}, dispatch:Function, auth:boolean, setAuth:Function, nav:Function):void => {
+     validPassword:string}, dispatch:Function, setAuth:Function, nav:Function):void => {
     let vu, vp ;
     if (state.username.length !== 10){
         dispatch({type:'VALID-USERNAME', payload:false})
