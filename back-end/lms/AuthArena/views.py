@@ -10,6 +10,8 @@ from .models import CustomUser
 import io
 import requests
 
+IMAGES_LOCATION = '/var/www/html/'  # TODO: set relative path
+
 
 class SignUp(APIView):
     serializer_class = UserSerializer
@@ -84,6 +86,7 @@ class Profile(APIView):
             'email': user.email,
             'address': user.address,
             'role': self.get_complete_role(user.role),
+            'image': user.photo_link,
         }, status=200)
 
     def put(self, request):
@@ -94,6 +97,7 @@ class Profile(APIView):
             user_serializer.save()
             return Response({
                 'message': 'user data updated!',
+                # TODO: delete useless params
                 'id': request.user.id,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
@@ -108,14 +112,20 @@ class Profile(APIView):
         }, status=400)
 
     def file_handler(self, file, user_id, extension):
-        with io.open(f'./profilepic_{user_id}.{extension}', 'wb') as o:
+        # TODO: generate a random name to keep privacy
+        with io.open(f'{IMAGES_LOCATION}/profilepic_{user_id}.{extension}', 'wb') as o:
             for b in file.readlines():
                 o.write(b)
                 o.flush()
+        return f'profilepic_{user_id}.{extension}'
 
     def post(self, request):
         f = request.FILES.getlist('image')[0]
-        self.file_handler(f, request.user.username, f.name.split('.')[-1])
+        photo_name = self.file_handler(f, request.user.username, f.name.split('.')[-1])
+        user = get_object_or_404(CustomUser, username=request.user.username)
+        user.set_photo_link(photo_name)
+        user.save()
         return Response({
-            'message': 'profile photo saved!'
+            'message': 'profile photo saved!',
+            'image': user.photo_link,
         }, status=200)
