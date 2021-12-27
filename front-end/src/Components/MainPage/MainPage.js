@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Typewriter from 'typewriter-effect';
 
 import { Wrapper, Content, Heading } from "./MainPage.styles";
@@ -9,11 +9,19 @@ import SignUp from "../Sign-up/Sign-up";
 
 import '../../Assets/styles/general-styles.css';
 
+import {authContext} from "../../App";
+
 
 
 const MainPage = () => {
-    
+
+    const {auth, setAuth} = useContext(authContext);
+
     const [state, setState] = useState(true);
+
+    useEffect(() => {
+        setAuth(false);
+    },[]);
 
     return <>
         <Wrapper>

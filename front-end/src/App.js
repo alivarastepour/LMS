@@ -9,7 +9,7 @@ const MainPage = lazy(() => import('./Components/MainPage/MainPage'));
 const Dashboard = lazy(() => import('./Components/Dashboard/Dashboard'));
 const Background = lazy(() => import('./Components/Background/Background'));
 
-export const authContext = createContext();
+export const authContext = createContext(false);
 
 const App = () => {
 
