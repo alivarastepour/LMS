@@ -3,7 +3,7 @@ from AuthArena.models import CustomUser
 
 
 class IsManager(BasePermission):
-    message = 'You Aren\'t A Manager!'
+    message = 'شما مدیر نیستید!'
 
     def has_permission(self, request, view):
         return request.user.role == 'M'
@@ -24,7 +24,7 @@ class IsStudent(BasePermission):
 
 
 class IsProfileCompleted(BasePermission):
-    message = 'Profile Not Completed'
+    message = 'لطفا اطلاعات شصخی خود را تکمیل کنید.'
 
     def has_permission(self, request, view):
         return CustomUser.objects.get(username=request.user.username).is_completed()
