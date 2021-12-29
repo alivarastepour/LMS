@@ -3,7 +3,7 @@ from AuthArena.models import CustomUser
 
 
 class School(models.Model):
-    school_id = models.CharField(max_length=10)
+    school_id = models.CharField(max_length=25,unique=True)
     name = models.CharField(max_length=100, null=False, blank=False)
     address = models.CharField(max_length=500, null=True)
     # TODO: change manager relation to : one to many
