@@ -1,7 +1,7 @@
 import useGet from "../../custom-hooks/useGet";
-import { Wrapper, Button } from "./SchoolManagment.styles";
+import { Wrapper, Button } from "./SchoolManagement.styles";
 
-const SchoolManagment = () => {
+const SchoolManagement = () => {
     const URL = 'http://localhost:8000/study/school';
     const TOKEN = sessionStorage.getItem('token') ;
 
@@ -22,4 +22,4 @@ const SchoolManagment = () => {
         </Wrapper>
     </>
 }   
-export default SchoolManagment ;
+export default SchoolManagement ;
