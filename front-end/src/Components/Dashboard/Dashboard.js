@@ -18,11 +18,11 @@ const Dashboard = () => {
 
     const {auth, setAuth} = useContext(authContext);
 
-    useEffect(() => {
-        if (!auth) {
-            nav();
-        }
-    });
+    // useEffect(() => {
+    //     if (!auth) {
+    //         nav();
+    //     }
+    // });
 
     return <>
         <Wrapper>
