@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'AuthArena',
+    'StudyArena',
     'rest_framework.authtoken',
     'rest_framework',
 ]

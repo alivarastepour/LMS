@@ -3,21 +3,21 @@ from AuthArena.models import CustomUser
 
 
 class IsManager(BasePermission):
-    message = 'You Aren\'nt A Manager!'
+    message = 'You Aren\'t A Manager!'
 
     def has_permission(self, request, view):
         return request.user.role == 'M'
 
 
 class IsTeacher(BasePermission):
-    message = 'You Aren\'nt A Teacher!'
+    message = 'You Aren\'t A Teacher!'
 
     def has_permission(self, request, view):
         return request.user.role == 'T'
 
 
 class IsStudent(BasePermission):
-    message = 'You Aren\'nt A Student!'
+    message = 'You Aren\'t A Student!'
 
     def has_permission(self, request, view):
         return request.user.role == 'S'
