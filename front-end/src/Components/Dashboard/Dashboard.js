@@ -1,35 +1,28 @@
-import {useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState, lazy, Suspense } from "react";
+import { useParams} from "react-router-dom";
 
 import { Wrapper } from "./Dashboard.styles";
-import Profile from "../Profile/Profile";
-import DashboardHeader from "./Dashboard.header";
+import Spinner from "../Spinner/Spinner";
 
-import {authContext} from "../../App";
-
+const Profile = lazy(() => import('../Profile/Profile'));
+const DashboardHeader = lazy(() => import('./Dashboard.header'));
+const SchoolManagement = lazy(() => import('../SchoolManagement/SchoolManagement'));
 
 const Dashboard = () => {
 
-    const navigator = useNavigate();
+    const defaultPage = useParams().profile;
 
-    const nav = () => navigator(`/`);
-
-    const [state, setState] = useState(true);
-
-    const {auth, setAuth} = useContext(authContext);
-
-    useEffect(() => {
-        if (!auth) {
-            nav();
-        }
-    });
+    const [show, setShow] = useState(defaultPage !== 'management');
 
     return <>
         <Wrapper>
-            <DashboardHeader show={state} setShow={setState}/>
-            {
-                state ? <Profile/> : <div>hi there</div>
-            }
+            <Suspense fallback={<Spinner color={{c:'white'}}/>}>
+                <DashboardHeader show={show} setShow={setShow}/>
+                {
+                    show ? <Profile/> : <SchoolManagement/>
+                }
+            </Suspense>
+
         </Wrapper>
     </>
 }

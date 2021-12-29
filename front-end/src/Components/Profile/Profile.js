@@ -18,7 +18,7 @@ const Profile = () => {
     const TOKEN = sessionStorage.getItem('token') ;
 
     const [edit, setEdit] = useState(false);
-    const data = useGet(URL, TOKEN);
+    const {data} = useGet(URL, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
 
     useEffect(() => {

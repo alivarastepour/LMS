@@ -7,7 +7,7 @@ const DashboardHeader = ({show, setShow}) => {
     return <>
         <Wrapper>
             <div className="flex-item">
-                <Link className="header-link" to='./'>
+                <Link className="header-link" to='./profile'>
                     <button
                         onClick={() => setShow(true)}
                         className={`header-button ${show ? 'show' : 'hide'}`}>
@@ -16,7 +16,7 @@ const DashboardHeader = ({show, setShow}) => {
                 </Link>
             </div>
             <div className="flex-item">
-                <Link className="header-link" to='./'>
+                <Link className="header-link" to='./managment'>
                     <button
                         onClick={() => setShow(false)}
                         className={`header-button ${show ? 'hide' : 'show'}`}>

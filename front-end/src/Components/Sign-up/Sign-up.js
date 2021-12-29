@@ -28,7 +28,7 @@ const SignUp = ({action}) => {
     const [state, dispatch] = useReducer(signUpReducer,initialState);
     const {username, password, email, role, validUsername, validPassword, validEmail, validSignUp} = state ;
 
-    const nav = () => navigator(`./accounts/manager/profile/${sessionStorage.getItem('user')}`);
+    const nav = () => navigator(`./accounts/manager/${sessionStorage.getItem('user')}/management`);
 
     return <>
         <Wrapper>
