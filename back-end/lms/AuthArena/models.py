@@ -21,3 +21,8 @@ class CustomUser(AbstractUser):
     def set_photo_link(self, name):
         self.photo_link = IMAGE_URL + name
         self.save()
+
+    def is_completed(self):
+        return self.first_name != '' and self.first_name is not None \
+            and self.last_name != '' and self.last_name is not None \
+            and self.address != '' and self.address is not None
