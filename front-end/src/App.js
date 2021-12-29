@@ -3,6 +3,7 @@ import { createContext, useState,lazy, Suspense } from "react";
 
 import Spinner from "./Components/Spinner/Spinner";
 
+import '../src/Assets/styles/general-styles.css';
 
 const MainPage = lazy(() => import('./Components/MainPage/MainPage'));
 const Dashboard = lazy(() => import('./Components/Dashboard/Dashboard'));

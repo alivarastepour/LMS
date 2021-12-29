@@ -7,8 +7,6 @@ import SignIn from "../Sign-in/Sign-in";
 
 import SignUp from "../Sign-up/Sign-up";
 
-import '../../Assets/styles/general-styles.css';
-
 import {authContext} from "../../App";
 
 
