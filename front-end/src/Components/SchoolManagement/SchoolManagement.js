@@ -1,9 +1,16 @@
+import {lazy, useState} from "react";
+
+import { Wrapper } from "./SchoolManagement.styles";
+
 import useGet from "../../custom-hooks/useGet";
-import { Wrapper, Button } from "./SchoolManagement.styles";
+
+const CreateSchool = lazy(() => import('../CreateSchool/CreateSchool'));
 
 const SchoolManagement = () => {
     const URL = 'http://localhost:8000/study/school';
     const TOKEN = sessionStorage.getItem('token') ;
+
+    const [showCreateSchool, setShowCreateSchool] = useState(false);
 
     const {data, error} = useGet(URL, TOKEN) ;
 
@@ -12,13 +19,14 @@ const SchoolManagement = () => {
 
     return <>
         <Wrapper>
-            {error ? <Button>
+            {showCreateSchool ? <CreateSchool/> :
+            error ? <button className='button' onClick={() => setShowCreateSchool(true)}>
                 <div>
                 <span className="plus">+</span>
                 <span>ایجاد مدرسه</span>
                 </div>
 
-                </Button> : <div>salam</div>}
+                </button> : <div>salam</div>}
         </Wrapper>
     </>
 }   
