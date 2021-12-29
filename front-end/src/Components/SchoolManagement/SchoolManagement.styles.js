@@ -7,9 +7,8 @@ export const Wrapper = styled.div`
   background-color: #F5F5F5;
   border-radius: 10px;
   display: flex;
-`;
-
-export const Button = styled.button`
+  
+  .button{
     width: 350px;
     height: 100px;
     border: none;
@@ -21,27 +20,28 @@ export const Button = styled.button`
     margin: auto auto;
 
     div{
-        display: flex;
-        justify-content: center;
-        align-items: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     span{
-        padding: 10px;
+      padding: 10px;
     }
 
     .plus{
-        font-size: 3rem;
+      font-size: 3rem;
     }
 
     &:hover{
-        transition: 0.4s;
-        background-color: #8b9ce8;
-        color: white;
+      transition: 0.4s;
+      background-color: #8b9ce8;
+      color: white;
     }
     &:not(:hover){
-        transition: 0.4s;
-        background-color: white;
-        color: #8b9ce8;
+      transition: 0.4s;
+      background-color: white;
+      color: #8b9ce8;
     }
+  }
 `;
