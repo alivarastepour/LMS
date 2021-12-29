@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
   background-color: #F5F5F5;
   border-radius: 10px;
   display: flex;
+  flex-direction: column;
   
   .button{
     width: 350px;
