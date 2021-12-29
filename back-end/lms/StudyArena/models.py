@@ -16,7 +16,7 @@ class School(models.Model):
     def to_json(self):
         return {
             'school_id': self.school_id,
-            'name': self.school_id,
+            'name': self.name,
             'address': self.address,
             'accepted': self.accepted,
             'denied': self.denied
