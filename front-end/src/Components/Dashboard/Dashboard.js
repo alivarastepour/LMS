@@ -1,23 +1,28 @@
-import { useState } from "react";
+import { useState, lazy, Suspense } from "react";
 import { useParams} from "react-router-dom";
 
 import { Wrapper } from "./Dashboard.styles";
-import Profile from "../Profile/Profile";
-import DashboardHeader from "./Dashboard.header";
-import SchoolManagment from "../SchoolManagment/SchoolManagment";
+import Spinner from "../Spinner/Spinner";
+
+const Profile = lazy(() => import('../Profile/Profile'));
+const DashboardHeader = lazy(() => import('./Dashboard.header'));
+const SchoolManagement = lazy(() => import('../SchoolManagement/SchoolManagement'));
 
 const Dashboard = () => {
 
     const defaultPage = useParams().profile;
 
-    const [show, setShow] = useState(defaultPage !== 'managment');
+    const [show, setShow] = useState(defaultPage !== 'management');
 
     return <>
         <Wrapper>
-            <DashboardHeader show={show} setShow={setShow}/>
-            {
-                show ? <Profile/> : <SchoolManagment/>
-            }
+            <Suspense fallback={<Spinner color={{c:'white'}}/>}>
+                <DashboardHeader show={show} setShow={setShow}/>
+                {
+                    show ? <Profile/> : <SchoolManagement/>
+                }
+            </Suspense>
+
         </Wrapper>
     </>
 }
