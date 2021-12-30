@@ -21,5 +21,12 @@ class SchoolView(APIView):
         return Response(data={'message': 'some fields are missing.', 'errors': school.errors}, status=400)
 
     def get(self, request):
-        school = get_object_or_404(School, manager__id=request.user.id)
-        return Response(data=school.to_json())
+        try:
+            school = School.objects.get(manager__username=request.user.username)
+        except Exception as _:
+            return Response(data={
+                "has_school": False
+            }, status=200)
+        res_dic = school.to_json()
+        res_dic['has_school'] = True
+        return Response(data=res_dic)

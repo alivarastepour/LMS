@@ -24,7 +24,7 @@ class IsStudent(BasePermission):
 
 
 class IsProfileCompleted(BasePermission):
-    message = 'لطفا اطلاعات شصخی خود را تکمیل کنید.'
+    message = 'لطفا اطلاعات شخصی خود را تکمیل کنید.'
 
     def has_permission(self, request, view):
         return CustomUser.objects.get(username=request.user.username).is_completed()
