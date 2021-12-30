@@ -1,7 +1,5 @@
-from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.generics import get_object_or_404
 
 from .models import School
 from .permissions import IsManager, IsProfileCompleted
@@ -25,8 +23,7 @@ class SchoolView(APIView):
             school = School.objects.get(manager__username=request.user.username)
         except Exception as _:
             return Response(data={
-                "has_school": False
+                "has_requested": False
             }, status=200)
         res_dic = school.to_json()
-        res_dic['has_school'] = True
         return Response(data=res_dic)
