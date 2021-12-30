@@ -1,23 +1,58 @@
+import { useReducer } from "react";
+
 import {Wrapper} from "./CreateSchool.styles";
 
+import { schoolReducer } from "./school.reducer";
+
 const CreateSchool = () => {
+
+    const initialState = {
+        schoolId : '',
+        schoolName : '',
+        schoolAddress : ''
+    }
+
+    const [school, dispatch] = useReducer(schoolReducer, initialState) ; 
+
     return <>
         <Wrapper>
+            <form onSubmit={(e) => {
+                console.log(school);
+                e.preventDefault();
+                }}>
             <div className='label'>شناسه مدرسه</div>
             <div className='flex-item'>
-                <input autoFocus={true} className='input left' type='text'/>
+                <input
+                onChange={(e) => dispatch({type:'SET-SCHOOL-ID', payload:e.target.value})}
+                spellCheck={false} 
+                autoFocus={true} 
+                className='input left' 
+                type='text'/>
+            <div className="exp">شناسه مدرسه باید متشکل از حروف انگلیسی اعداد و علائم نگارشی باشد.</div>    
             </div>
             <div className='label'>نام مدرسه</div>
             <div className='flex-item'>
-                <input className='input' type='text'/>
+                <input
+                onChange={(e) => dispatch({type:'SET-SCHOOL-NAME', payload:e.target.value})}
+                spellCheck={false} 
+                className='input' 
+                type='text'/>
             </div>
             <div className='label'>آدرس</div>
             <div className='flex-item'>
-                <input className='input address' type='text'/>
+                <input
+                onChange={(e) => dispatch({type:'SET-SCHOOL-ADDRESS', payload:e.target.value})}
+                spellCheck={false} 
+                className='input address' 
+                type='text'/>
             </div>
             <div className='flex-item'>
-                <button className='button'>ثبت درخواست</button>
+                <button
+                className='button'
+                type="submit"
+                >ثبت درخواست</button>
             </div>
+            </form>
         </Wrapper>
     </>
 }
