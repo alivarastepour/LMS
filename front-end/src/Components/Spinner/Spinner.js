@@ -24,7 +24,7 @@ const Spinner = (props) => {
         />
       </div>
 
-      <div className="text">در حال بارگذاری</div>
+      <div className="text">{props.text || 'در حال بارگذاری'}</div>
       
       </Wrapper>
     </>

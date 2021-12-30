@@ -8,7 +8,9 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   align-content: space-around;
   padding-top: 200px;
-
+  div{
+    margin: auto;
+  }
 .example-container div {
   background-color: ${(props) => props.color.c};
   border-radius: 30px;
@@ -26,6 +28,7 @@ export const Wrapper = styled.div`
 .text{
   padding-top: 100px;
   text-align: center;
+  direction: rtl;
   font-family: 'vazir', sans-serif;
 }
 `;
