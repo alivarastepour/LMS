@@ -80,11 +80,23 @@ export const Wrapper = styled.div`
     display: block;
     float: right;
     font-size: 1.2rem;
+    font-family: 'vazir', sans-serif;
     outline: none;
     background-color: white;
     border: none;
     border-radius: 10px;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+    &:hover{
+      transition: 0.4s;
+      background-color: #8b9ce8;
+      color: white;
+    }
+    &:not(:hover){
+      transition: 0.4s;
+      background-color: white;
+      color: #8b9ce8;
+    }
   }
 
   .exp{
