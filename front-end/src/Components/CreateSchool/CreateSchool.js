@@ -3,6 +3,7 @@ import { useReducer } from "react";
 import {Wrapper} from "./CreateSchool.styles";
 
 import { schoolReducer } from "./school.reducer";
+import {createSchoolHandler} from './createSchool.handlers.ts';
 
 const CreateSchool = () => {
 
@@ -17,8 +18,7 @@ const CreateSchool = () => {
     return <>
         <Wrapper>
             <form onSubmit={(e) => {
-                console.log(school);
-                e.preventDefault();
+                createSchoolHandler(e, school);
                 }}>
             <div className='label'>شناسه مدرسه</div>
             <div className='flex-item'>
