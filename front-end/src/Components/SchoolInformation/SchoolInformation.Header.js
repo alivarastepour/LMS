@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { Wrapper } from "./SchoolInformation.Header.styles";
 
-const SchoolInformationHeader = () => {
+const SchoolInformationHeader = ({state, setState}) => {
 
-    const [tab, setTab] = useState('info');
+    // const [tab, setTab] = useState('student');
 
     return <>
         <Wrapper>
-            <button onClick={() => setTab('info')} className={`button ${tab === 'info' ? 'active' : 'inactive'}`}>اطلاعات مدرسه</button>
-            <button onClick={() => setTab('teacher')} className={`button margin ${tab === 'teacher' ? 'active' : 'inactive'}`}>معلمان</button>
-            <button onClick={() => setTab('student')} className={`button margin ${tab === 'student' ? 'active' : 'inactive'}`}>دانش‌آموزان</button>
+            <button onClick={() => setState('info')} className={`button ${state === 'info' ? 'active' : 'inactive'}`}>اطلاعات مدرسه</button>
+            <button onClick={() => setState('teacher')} className={`button margin ${state === 'teacher' ? 'active' : 'inactive'}`}>معلمان</button>
+            <button onClick={() => setState('student')} className={`button margin ${state === 'student' ? 'active' : 'inactive'}`}>دانش‌آموزان</button>
         </Wrapper>
     </>
 }
