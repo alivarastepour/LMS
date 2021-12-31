@@ -8,7 +8,8 @@ export const Wrapper = styled.div`
 export const Content = styled.div`
     width: 90%;
     height: calc(100% - 50px);
-    background-color: 	#E8E8E8;
+    background-color: #E8E8E8;
     border-radius: 10px 0 10px 10px;
     margin: auto;
+    overflow-y: auto;
 `;
