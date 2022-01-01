@@ -32,11 +32,13 @@ class School(models.Model):
 
 
 class Class(models.Model):
-    pass
+    name = models.CharField(max_length=50)
+    school = models.ForeignKey(School, on_delete=models.CASCADE)
 
 
 class Teacher(models.Model):
-    pass
+    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
+    classes = models.ManyToManyField(Class)
 
 
 class Manager(models.Model):
@@ -44,4 +46,17 @@ class Manager(models.Model):
 
 
 class Student(models.Model):
-    pass
+    user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
+    classes = models.ManyToManyField(Class)
+
+
+class StudentRequest(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    clazz = models.ForeignKey(Class, on_delete=models.CASCADE)
+    status = models.CharField(max_length=8, default='pending')
+
+
+class TeacherRequest(models.Model):
+    teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    clazz = models.ForeignKey(Class, on_delete=models.CASCADE)
+    status = models.CharField(max_length=8, default='pending')
