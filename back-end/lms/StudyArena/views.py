@@ -74,9 +74,9 @@ class TeacherRequests(APIView):
                 output.append(
                     {
                         'teacher': {
-                            'name': req.student.user.fullname,
-                            'email': req.student.user.email,
-                            'photo': req.student.user.photo_link
+                            'name': req.teacher.user.fullname,
+                            'email': req.teacher.user.email,
+                            'photo': req.teacher.user.photo_link
                         },
                         'class': {
                             'name': req.clazz.name,
