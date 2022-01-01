@@ -2,13 +2,10 @@ import styled from 'styled-components';
 
 export const Table = styled.table`
   width: 100%;
-  height: 100vh;
   direction: rtl;
   font-family: 'vazir', sans-serif;
   text-align: center;
-  display: table;
   border-collapse: collapse;
-  border-spacing: 0;
 
 
   tr{
@@ -53,6 +50,10 @@ export const Table = styled.table`
     font-family: 'vazir',sans-serif;
   }
   input{
+    font-family: 'vazir', sans-serif;
+  }
+  .no-result{
+    width: 100%;
     font-family: 'vazir', sans-serif;
   }
 `;
