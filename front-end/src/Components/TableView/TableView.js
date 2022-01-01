@@ -1,5 +1,7 @@
 import { Table } from "./TableView.styles";
-import { Autocomplete, TextField } from "@mui/material";
+import {Autocomplete, InputAdornment, TextField} from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
+
 import { useState } from "react";
 const obj = [ //example
     {no:1, name:'علی وارسته پور',id:1273672021, status:'پذیرفته شده'},
@@ -36,13 +38,24 @@ const obj = [ //example
 const TableView = () => {
 
     const [searchTerm, setSearchTerm] = useState('نام');
-    console.log(searchTerm);
     return <>
         <Table>
             <tbody>
             <tr>
                 <td colSpan={2} className="input-container">
-                    <input className="input" placeholder="جستجو بر اساس نام یا کد ملی..." type='text'/>
+                    <TextField
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <SearchIcon />
+                                </InputAdornment>
+                            ),
+                        }}
+                        size="small"
+                        sx={{width:300,boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',background:'white'}}
+                        label='جستجو'
+                        placeholder='جستجو بر اساس نام, کدملی...'
+                        type='text'/>
                 </td>
                 <td colSpan={2}>
                     <Autocomplete 
@@ -50,10 +63,9 @@ const TableView = () => {
                     size="small"
                     options={['نام','کدملی']}
                     renderInput={(p) => <TextField {...p} label='فیلتر'/>}
-                    sx={{width:300,'boxShadow': 'rgba(0, 0, 0, 0.16) 0px 1px 4px'}}
+                    sx={{width:300,'boxShadow': 'rgba(0, 0, 0, 0.16) 0px 1px 4px',background:'white'}}
                     onChange={(e,v) => {
                         setSearchTerm(v);
-                        console.log('ehre');
                     }}
                     value={searchTerm}
                     />
