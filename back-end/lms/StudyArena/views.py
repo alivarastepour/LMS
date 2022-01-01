@@ -33,8 +33,10 @@ class StudentRequests(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager | IsTeacher)
 
     def get(self, request):
-
-        all_classes = request.user.school.class_set.all()
+        try:
+            all_classes = request.user.school.class_set.all()
+        except Exception:
+            return Response(data={'details':'شما مدرسه ای ندارید.'},status=400)
         output = []
         for cls in all_classes:
             class_requests = cls.studentrequest_set.all()
@@ -60,13 +62,14 @@ class TeacherRequests(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager)
 
     def get(self, request):
-
-        all_classes = request.user.school.class_set.all()
-
+        try:
+            all_classes = request.user.school.class_set.all()
+        except Exception:
+            return Response(data={'details':'شما مدرسه ای ندارید.'},status=400)
         output = []
         for cls in all_classes:
-            # class_requests = cls.teacherrequest_set.all()
-            class_requests = Class.objects.all()[0].teacherrequest_set.all()
+            class_requests = cls.teacherrequest_set.all()
+            # class_requests = Class.objects.all()[0].teacherrequest_set.all()
             for req in class_requests:
                 output.append(
                     {
