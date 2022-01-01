@@ -1,7 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import School
+from .models import School, Class
 from .permissions import IsManager, IsProfileCompleted, IsTeacher
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer
@@ -35,7 +35,6 @@ class StudentRequests(APIView):
     def get(self, request):
 
         all_classes = request.user.school.class_set.all()
-
         output = []
         for cls in all_classes:
             class_requests = cls.studentrequest_set.all()
@@ -43,6 +42,35 @@ class StudentRequests(APIView):
                 output.append(
                     {
                         'student': {
+                            'name': req.student.user.fullname,
+                            'email': req.student.user.email,
+                            'photo': req.student.user.photo_link
+                        },
+                        'class': {
+                            'name': req.clazz.name,
+                            'school_name': req.clazz.school.name
+                        },
+                        'status': req.status
+                    }
+                )
+        return Response(data={'requests': output}, status=200)
+
+
+class TeacherRequests(APIView):
+    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager)
+
+    def get(self, request):
+
+        all_classes = request.user.school.class_set.all()
+
+        output = []
+        for cls in all_classes:
+            # class_requests = cls.teacherrequest_set.all()
+            class_requests = Class.objects.all()[0].teacherrequest_set.all()
+            for req in class_requests:
+                output.append(
+                    {
+                        'teacher': {
                             'name': req.student.user.fullname,
                             'email': req.student.user.email,
                             'photo': req.student.user.photo_link
