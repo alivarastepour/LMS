@@ -6,7 +6,8 @@ import useGet from "../../custom-hooks/useGet";
 
 const CreateSchool = lazy(() => import('../CreateSchool/CreateSchool'));
 const CreateSchoolButton = lazy(() => import('../CreateSchool.Button/CreateSchool.Button'));
-const SchoolStatus = lazy(() => import('../SchoolStatus/SchoolStatus'))
+const SchoolStatus = lazy(() => import('../SchoolStatus/SchoolStatus'));
+const SchoolInformation = lazy(() => import('../SchoolInformation/SchoolInformation'));
 
 const SchoolManagement = () => {
     const URL = 'http://localhost:8000/study/school';
@@ -21,7 +22,9 @@ const SchoolManagement = () => {
             {
             false ? <CreateSchool/> :
             false ? <CreateSchoolButton setShowCreateSchool={setShowCreateSchool}/> : 
-            <SchoolStatus status='rejected'/>}
+            false ? <SchoolStatus status='rejected'/>:
+            <SchoolInformation/>
+            }
         </Wrapper>
     </>
 }   
