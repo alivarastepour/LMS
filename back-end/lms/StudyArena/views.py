@@ -36,26 +36,21 @@ class StudentRequests(APIView):
         try:
             all_classes = request.user.school.class_set.all()
         except Exception:
-            return Response(data={'details':'شما مدرسه ای ندارید.'},status=400)
+            return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
         for cls in all_classes:
             class_requests = cls.studentrequest_set.all()
             for req in class_requests:
                 output.append(
                     {
-                        'student': {
-                            'name': req.student.user.fullname,
-                            'email': req.student.user.email,
-                            'photo': req.student.user.photo_link
-                        },
-                        'class': {
-                            'name': req.clazz.name,
-                            'school_name': req.clazz.school.name
-                        },
+                        'student_name': req.student.user.fullname,
+                        'student_username': req.student.user.username,
+                        'student_photo': req.student.user.photo_link,
+                        'class_name': req.clazz.name,
                         'status': req.status
                     }
                 )
-        return Response(data={'requests': output}, status=200)
+        return Response(data=output, status=200)
 
 
 class TeacherRequests(APIView):
@@ -65,7 +60,7 @@ class TeacherRequests(APIView):
         try:
             all_classes = request.user.school.class_set.all()
         except Exception:
-            return Response(data={'details':'شما مدرسه ای ندارید.'},status=400)
+            return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
         for cls in all_classes:
             class_requests = cls.teacherrequest_set.all()
@@ -73,16 +68,11 @@ class TeacherRequests(APIView):
             for req in class_requests:
                 output.append(
                     {
-                        'teacher': {
-                            'name': req.teacher.user.fullname,
-                            'email': req.teacher.user.email,
-                            'photo': req.teacher.user.photo_link
-                        },
-                        'class': {
-                            'name': req.clazz.name,
-                            'school_name': req.clazz.school.name
-                        },
+                        'teacher_name': req.teacher.user.fullname,
+                        'teacher_username': req.teacher.user.username,
+                        'teacher_photo': req.teacher.user.photo_link,
+                        'class_name': req.clazz.name,
                         'status': req.status
                     }
                 )
-        return Response(data={'requests': output}, status=200)
+        return Response(data=output, status=200)
