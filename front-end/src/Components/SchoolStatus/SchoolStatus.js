@@ -1,6 +1,6 @@
 import { Wrapper } from "./SchoolStatus.styles";
 import Spinner from "../Spinner/Spinner";
-const SchoolStatus = ({status}) => {
+const SchoolStatus = ({status,setShowCreateSchool}) => {
     return <> 
         <Wrapper>
 
@@ -10,7 +10,7 @@ const SchoolStatus = ({status}) => {
         :
         <div>
         <div className="error">متاسفانه درخواست شما توسط مدیریت سایت مورد پذیرش واقع نشده است.</div>
-        <button className="button">درخواست مجدد</button>
+        <button onClick={() => setShowCreateSchool(true)} className="button">درخواست مجدد</button>
         </div>
         
     }

@@ -1,6 +1,7 @@
-import {lazy, useState} from "react";
+import {lazy, Suspense, useState} from "react";
 
 import { Wrapper } from "./SchoolManagement.styles";
+import Spinner from "../Spinner/Spinner";
 
 import useGet from "../../custom-hooks/useGet";
 
@@ -18,14 +19,57 @@ const SchoolManagement = () => {
     const {data, error} = useGet(URL, TOKEN) ;
 
     return <>
-        <Wrapper>
-            {
-            false ? <CreateSchool/> :
-            false ? <CreateSchoolButton setShowCreateSchool={setShowCreateSchool}/> : 
-            false ? <SchoolStatus status='rejected'/>:
-            <SchoolInformation/>
-            }
-        </Wrapper>
+    <Suspense fallback={<Spinner color={{c:'white'}}/>}>
+    <Wrapper>
+        {
+            data.has_requested && data.status !== 'rejected' ?
+            data.status === 'accepted' ? 
+            <SchoolInformation/> : 
+            <SchoolStatus status={data.status} /> : 
+            data.status === 'rejected' && !showCreateSchool ? 
+            <SchoolStatus status={data.status} setShowCreateSchool={setShowCreateSchool}/> : 
+            showCreateSchool ? 
+            <CreateSchool/> : 
+            <CreateSchoolButton setShowCreateSchool={setShowCreateSchool}/>
+        }
+    </Wrapper>
+    </Suspense>
     </>
+    // if (data.has_requested && data.status !== 'rejected') {
+    //     if (data.status === 'accepted') {
+    //         return <>
+    //         <Wrapper>
+    //             <SchoolInformation/>
+    //         </Wrapper>
+    //         </>
+    //     }else{
+    //         return <>
+    //         <Wrapper>
+    //         <SchoolStatus status={data.status} />
+    //         </Wrapper>
+    //         </>
+    //     }
+    // }else{
+    //     if(data.status === 'rejected' && !showCreateSchool){
+    //         return <>
+    //         <Wrapper>
+    //         <SchoolStatus status={data.status} setShowCreateSchool={setShowCreateSchool}/>
+    //         </Wrapper>
+    //         </>
+    //     }
+    //     if (showCreateSchool) {
+    //         return <>
+    //         <Wrapper>
+    //         <CreateSchool/>
+    //         </Wrapper>
+    //         </>
+    //     }else{
+    //         return <>
+    //         <Wrapper>
+    //         <CreateSchoolButton setShowCreateSchool={setShowCreateSchool}/>
+    //         </Wrapper>
+    //         </>
+    //     }
+    // }
 }   
 export default SchoolManagement ;
