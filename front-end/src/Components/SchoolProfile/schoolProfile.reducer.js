@@ -7,6 +7,9 @@ export const schoolProfileReducer = (state, action) => {
         case 'SET-SCHOOL-ADDRESS':
             newState = {...state, schoolAddress:action.payload};
             break;
+        case 'SET-SCHOOL-ID':
+            newState = {...state, schoolId:action.payload};
+            break;    
         default:
             break;
     }
