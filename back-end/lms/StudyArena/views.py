@@ -43,14 +43,14 @@ class StudentRequests(APIView):
             for req in class_requests:
                 output.append(
                     {
-                        'student_name': req.student.user.fullname,
-                        'student_username': req.student.user.username,
-                        'student_photo': req.student.user.photo_link,
+                        'name': req.student.user.fullname,
+                        'username': req.student.user.username,
+                        'photo': req.student.user.photo_link,
                         'class_name': req.clazz.name,
                         'status': req.status
                     }
                 )
-        return Response(data=output, status=200)
+        return Response(data={'requests':output}, status=200)
 
 
 class TeacherRequests(APIView):
@@ -68,11 +68,11 @@ class TeacherRequests(APIView):
             for req in class_requests:
                 output.append(
                     {
-                        'teacher_name': req.teacher.user.fullname,
-                        'teacher_username': req.teacher.user.username,
-                        'teacher_photo': req.teacher.user.photo_link,
+                        'name': req.teacher.user.fullname,
+                        'username': req.teacher.user.username,
+                        'photo': req.teacher.user.photo_link,
                         'class_name': req.clazz.name,
                         'status': req.status
                     }
                 )
-        return Response(data=output, status=200)
+        return Response(data={'requests':output}, status=200)
