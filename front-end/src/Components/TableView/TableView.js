@@ -1,31 +1,41 @@
-import { useState } from "react";
-
-import {Autocomplete, InputAdornment, TextField} from "@mui/material";
+import { useEffect, useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
+import {Autocomplete, InputAdornment, TextField} from "@mui/material";
 
 import { Table } from "./TableView.styles";
 
+import useGet from "../../custom-hooks/useGet";
 import {handleSearch} from "./TableView.handlers";
 
-const TableView = () => {
-    const obj = [ //example
-        {no:1, name:'علی وارسته پور',id:'1273672021', status:'پذیرفته شده'},
-        {no:2, name:'رضا تخنی',id:'2343435', status:'پذیرفته شده'},
-        {no:3, name:'ییبسون',id:'67866', status:'پذیرفته شده'},
-        {no:4, name:'اذر',id:'5345345', status:'پذیرفته شده'},
-    ]
+const TableView = ({content}) => {
+
+    const URL = `http://localhost:8000/study/${content}-list/` ;
+    const TOKEN = sessionStorage.getItem('token');
+
+    const {data} = useGet(URL,TOKEN);
+    
+    const [information, setInformation] = useState(data.requests);
+
+    const [staticInformation, setStaticInformation] = useState(data.requests);
 
     const [searchTerm, setSearchTerm] = useState('نام');
 
     const [searchValue, setSearchValue] = useState('');
 
-    const [data, setData] = useState(obj);
+
+
+    useEffect(() => {
+        setInformation(data.requests);
+        setStaticInformation(data.requests)
+    },[data]);
 
     return <>
         <Table>
             <tbody>
             <tr>
-                <td colSpan={2} className="input-container">
+                <td 
+                colSpan={2} 
+                className="input-container">
                     <TextField
                         InputProps={{
                             startAdornment: (
@@ -41,12 +51,12 @@ const TableView = () => {
                         value={searchValue}
                         onChange={(e) => {
                             setSearchValue(e.target.value)
-                            handleSearch(e,obj, setData, searchTerm);
-                        }
-                        }
+                            handleSearch(e,staticInformation, setInformation, searchTerm);
+                        }}
                         type='text'/>
                 </td>
-                <td colSpan={2}>
+                <td 
+                colSpan={2}>
                     <Autocomplete 
                     className='autocomplete'
                     size="small"
@@ -67,19 +77,26 @@ const TableView = () => {
                 <td className="header">کدملی</td>
                 <td className="header">وضعیت</td>
             </tr>
+
             {
-                data && data.length !== 0 ? data.map(e => {
-                    return <tr key={e.no}>
-                        <td>{e.no}</td>
-                        <td>{e.name}</td>
-                        <td>{e.id}</td>
-                        <td>{e.status}</td>
+                information && information.length !== 0  ? information.map((element) => {
+                    return <tr key={Math.random()}>
+                        <td>1</td>
+                        <td>{element.name}</td>
+                        <td>{element.username}</td>
+                        <td>{element.status}</td>
                     </tr>
-                }) :
-                    <td colSpan={4} className='no-result'>موردی یافت نشد</td>
+            }) 
+            : 
+                    <tr>
+                        <td colSpan={4} className='no-result'>
+                            موردی یافت نشد
+                        </td>
+                    </tr>
             }
             </tbody>
         </Table>
     </>
 }
+
 export default TableView;
