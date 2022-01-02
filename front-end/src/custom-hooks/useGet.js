@@ -15,7 +15,6 @@ const useGet = (URL,TOKEN ) => {
             setData(ans.data)
         })
           .catch(e => {
-              console.log(e);
               setError(e);
           });
     },[TOKEN, URL]);
