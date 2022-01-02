@@ -1,7 +1,9 @@
 import {ChangeEvent} from "react";
 
-export const handleSearch = (e:ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, obj:{no:number, id:string, name:string, status:string}[], setData:Function, searchTerm:string) => {
+export const handleSearch = (e:ChangeEvent<HTMLTextAreaElement | HTMLInputElement>, obj:{name:string, username:string}[], setData:Function, searchTerm:string):void => {
+
     const value:string = e.target.value;
+
     if (value.trim() === ''){
         setData(obj);
         return;
@@ -13,8 +15,9 @@ export const handleSearch = (e:ChangeEvent<HTMLTextAreaElement | HTMLInputElemen
         })
     }else{
         newObj = obj.filter(a => {
-            return a.id.startsWith(value);
+            return a.username.startsWith(value);
         })
     }
+    
     setData(newObj);
 }
