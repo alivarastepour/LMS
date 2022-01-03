@@ -27,7 +27,7 @@ export const Wrapper = styled.div`
   }
 
   .active{
-    background-color: #E8E8E8;  
+    background-color: white;
     color: black;
   }
 

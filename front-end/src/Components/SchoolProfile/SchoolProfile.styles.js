@@ -52,7 +52,8 @@ export const Wrapper = styled.div`
     background-color: white;
     border: none;
     border-radius: 10px;
-  }
+    box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
+    }
   .button:hover{
     transition: 0.6s;
     background-color: #8b9ce8;
