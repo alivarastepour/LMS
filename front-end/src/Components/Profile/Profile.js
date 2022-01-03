@@ -6,7 +6,7 @@ import Spinner from '../Spinner/Spinner'
 
 import {profileReducer} from "./Profile.reducer";
 import { profileEditHandler } from "./profile-edit.handler";
-import { profileImageEditHandler } from "./profile-edit.handler";
+import { profileImageEditHandler } from "../../Global/global-functions";
 import useGet from "../../custom-hooks/useGet";
 
 import photo from "../../Assets/profile-placeholder.jpg";
