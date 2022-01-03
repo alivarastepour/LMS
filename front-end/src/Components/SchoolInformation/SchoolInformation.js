@@ -17,8 +17,10 @@ const SchoolInformation = () => {
                     state === 'student' ? 
                     <TableView content='student'/> : 
                     state === 'info' ? 
-                    <SchoolProfile/> : 
-                    <TableView content='teacher'/>
+                    <SchoolProfile/> :
+                    state === 'teacher' ?
+                    <TableView content='teacher'/>:
+                    <div>fuck off</div>
                 }
             </Content>
         </Wrapper>
