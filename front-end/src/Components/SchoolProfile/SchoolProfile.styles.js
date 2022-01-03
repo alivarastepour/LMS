@@ -24,6 +24,14 @@ export const Wrapper = styled.div`
     display: block;
     margin-bottom: 10px;
     border-radius: 50%;
+
+    @media only screen and (max-width:1000px){
+      height: 200px;
+      width: 200px;
+      margin: auto;
+      margin-bottom: 40px;
+      margin-top: 20px;
+    }
   }
   .label{
     font-family: 'vazir', sans-serif;
