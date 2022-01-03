@@ -79,7 +79,7 @@ class StudentRequests(APIView):
                         'status': req.status
                     }
                 )
-        return Response(data=output, status=200)
+        return Response(data={'requests': output}, status=200)
 
 
 class TeacherRequests(APIView):
@@ -104,4 +104,4 @@ class TeacherRequests(APIView):
                         'status': req.status
                     }
                 )
-        return Response(data=output, status=200)
+        return Response(data={'requests': output}, status=200)
