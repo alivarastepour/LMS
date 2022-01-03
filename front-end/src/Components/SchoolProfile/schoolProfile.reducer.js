@@ -9,7 +9,10 @@ export const schoolProfileReducer = (state, action) => {
             break;
         case 'SET-SCHOOL-ID':
             newState = {...state, schoolId:action.payload};
-            break;    
+            break;   
+        case 'SET-SCHOOL-IMAGE':
+            newState = {...state, schoolImage:action.payload};
+            break;       
         default:
             break;
     }
