@@ -16,7 +16,7 @@ const SchoolManagement = () => {
 
     const [showCreateSchool, setShowCreateSchool] = useState(false);
 
-    const {data, error} = useGet(URL, TOKEN) ;
+    const {data} = useGet(URL, TOKEN) ;
 
     return <>
     <Suspense fallback={<Spinner color={{c:'white'}}/>}>
