@@ -6,6 +6,9 @@ from .models import School, Class
 from .permissions import IsManager, IsProfileCompleted, IsTeacher
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer
+import io
+
+IMAGES_LOCATION = '/var/www/html/'  # TODO: set relative path
 
 
 class SchoolView(APIView):
@@ -29,9 +32,25 @@ class SchoolView(APIView):
         res_dic = school.to_json()
         return Response(data=res_dic)
 
+    def file_handler(self, file, school_id, extension):
+        # TODO: generate a random name to keep privacy
+        with io.open(f'{IMAGES_LOCATION}/profilepic_{school_id}.{extension}', 'wb') as o:
+            for b in file.readlines():
+                o.write(b)
+                o.flush()
+        return f'profilepic_{school_id}.{extension}'
+
     def put(self, request):
         school = get_object_or_404(School, manager__username=request.user.username)
         school_serializer = SchoolSerializer(school, request.data, partial=True)
+        try:
+            f = request.FILES.getlist('image')[0]
+            photo_name = self.file_handler(f, school.school_id, f.name.split('.')[-1])
+            school.set_photo_link(photo_name)
+            school.save()
+        except Exception:
+            pass
+
         if school_serializer.is_valid():
             school_serializer.save()
             return Response(data=school.to_json(), status=200)
