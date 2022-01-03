@@ -1,3 +1,4 @@
+from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -28,6 +29,14 @@ class SchoolView(APIView):
         res_dic = school.to_json()
         return Response(data=res_dic)
 
+    def put(self, request):
+        school = get_object_or_404(School, manager__username=request.user.username)
+        school_serializer = SchoolSerializer(school, request.data, partial=True)
+        if school_serializer.is_valid():
+            school_serializer.save()
+            return Response(data=school.to_json(), status=200)
+        return Response(data={'message': 'something is wrong.', 'errors': school_serializer.errors}, status=400)
+
 
 class StudentRequests(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager | IsTeacher)
@@ -43,14 +52,15 @@ class StudentRequests(APIView):
             for req in class_requests:
                 output.append(
                     {
+                        'id': req.id,
+                        'class_name': req.clazz.name,
                         'name': req.student.user.fullname,
                         'username': req.student.user.username,
                         'photo': req.student.user.photo_link,
-                        'class_name': req.clazz.name,
                         'status': req.status
                     }
                 )
-        return Response(data={'requests':output}, status=200)
+        return Response(data=output, status=200)
 
 
 class TeacherRequests(APIView):
@@ -64,10 +74,10 @@ class TeacherRequests(APIView):
         output = []
         for cls in all_classes:
             class_requests = cls.teacherrequest_set.all()
-            # class_requests = Class.objects.all()[0].teacherrequest_set.all()
             for req in class_requests:
                 output.append(
                     {
+                        'id': req.id,
                         'name': req.teacher.user.fullname,
                         'username': req.teacher.user.username,
                         'photo': req.teacher.user.photo_link,
@@ -75,4 +85,4 @@ class TeacherRequests(APIView):
                         'status': req.status
                     }
                 )
-        return Response(data={'requests':output}, status=200)
+        return Response(data=output, status=200)
