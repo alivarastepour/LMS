@@ -9,12 +9,18 @@ export const Table = styled.table`
 
   tr{
     height: 60px;
-
   }
+
   td{
     border-bottom: 1px #F0F0F0 solid;
     padding-top: 10px;
     font-size: 1.2rem;
+
+    @media only screen and (max-width:920px){
+      &{
+        font-size: 1rem;
+      }
+    }
   }
 
   tr:hover{
@@ -24,6 +30,12 @@ export const Table = styled.table`
 
   .header{
     font-size: 1.5rem;
+
+    @media only screen and (max-width:920px){
+      &{
+        font-size: 1.3rem;
+      }
+    }
   }
 
   .input{
@@ -47,14 +59,11 @@ export const Table = styled.table`
   .css-1pysi21-MuiFormLabel-root-MuiInputLabel-root,
   .css-1ua80n0-MuiInputBase-input-MuiOutlinedInput-input,
   .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root.Mui-focused,
-  .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root{
-    font-family: 'vazir', sans-serif;
-  }
-
+  .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root,
   input{
     font-family: 'vazir', sans-serif;
   }
-  
+
   .no-result{
     width: 100%;
     font-family: 'vazir', sans-serif;
