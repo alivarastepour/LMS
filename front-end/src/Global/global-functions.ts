@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 
-export const profileImageEditHandler = (event:React.ChangeEvent<HTMLInputElement>, dispatch:Function) => {
-    const url = 'http://localhost:8000/auth/whoami/';
+export const profileImageEditHandler = (event:React.ChangeEvent<HTMLInputElement>, dispatch:Function, url:string) => {
     const TOKEN = sessionStorage.getItem('token');
     // @ts-ignore
     const temp = URL.createObjectURL(event.target.files[0]);
@@ -10,14 +9,14 @@ export const profileImageEditHandler = (event:React.ChangeEvent<HTMLInputElement
     const file = event.target.files[0];
     let formData = new FormData();
     formData.append('image', file, file.name);
-    axios.post(url, formData, {
+    axios.put(url, formData, {
         headers: {
           'content-type': 'multipart/form-data',
           'Authorization':`Token ${TOKEN}`
         }
       })
           .then((res) => {    
-            dispatch({type:'SET-PROFILE-PHOTO', payload:temp});
+            dispatch({type:'SET-PHOTO', payload:temp});
           })
           .catch((e) => {
             console.log(e);

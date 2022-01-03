@@ -9,8 +9,6 @@ import { profileEditHandler } from "./profile-edit.handler";
 import { profileImageEditHandler } from "../../Global/global-functions";
 import useGet from "../../custom-hooks/useGet";
 
-import photo from "../../Assets/profile-placeholder.jpg";
-
 const Profile = () => {
     const [loading, setLoading] = useState(true);
 
@@ -20,7 +18,7 @@ const Profile = () => {
     const [edit, setEdit] = useState(false);
     const {data} = useGet(URL, TOKEN);
     const [profileData, dispatch] = useReducer(profileReducer, {});
-    console.log(profileData.image);
+
     useEffect(() => {
         dispatch({type:'SET-FIRSTNAME', payload:data.first_name || ''});
         dispatch({type:'SET-LASTNAME', payload:data.last_name || ''});
@@ -28,7 +26,7 @@ const Profile = () => {
         dispatch({type:'SET-ADDRESS', payload:data.address || ''});
         dispatch({type:'SET-USERNAME', payload:data.username || ''});
         dispatch({type:'SET-ROLE', payload:data.role  || ''});
-        dispatch({type:'SET-PROFILE-PHOTO', payload:data.image || ''});
+        dispatch({type:'SET-PHOTO', payload:data.image || ''});
         if (data.username) {
             setLoading(false);
         }
@@ -41,11 +39,11 @@ const Profile = () => {
                     :
                     <Wrapper>
                         <div className="grid-item item1">
-                            <img className="profile-image" alt="oi" src={profileData.image || photo}/>
+                            <img className="profile-image" alt="oi" src={profileData.image}/>
                             <div>
                             <button className='button'>
                                 <label htmlFor="label">تغییر عکس کاربری</label>
-                                <input onChange={e => profileImageEditHandler(e, dispatch)} id="label" accept="image/*" type='file'/>
+                                <input onChange={e => profileImageEditHandler(e, dispatch, URL)} id="label" accept="image/*" type='file'/>
                             </button>
                             </div>
                         </div>

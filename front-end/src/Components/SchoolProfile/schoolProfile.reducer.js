@@ -2,16 +2,16 @@ export const schoolProfileReducer = (state, action) => {
     let newState ;
     switch (action.type) {
         case 'SET-SCHOOL-NAME':
-            newState = {...state, schoolName:action.payload};
+            newState = {...state, name:action.payload};
             break;
         case 'SET-SCHOOL-ADDRESS':
-            newState = {...state, schoolAddress:action.payload};
+            newState = {...state, address:action.payload};
             break;
         case 'SET-SCHOOL-ID':
-            newState = {...state, schoolId:action.payload};
+            newState = {...state, school_id:action.payload};
             break;   
-        case 'SET-SCHOOL-IMAGE':
-            newState = {...state, schoolImage:action.payload};
+        case 'SET-PHOTO':
+            newState = {...state, image:action.payload};
             break;       
         default:
             break;

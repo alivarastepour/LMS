@@ -19,7 +19,7 @@ export const profileReducer = (state, action) => {
         case 'SET-ROLE':
             newState = {...state, role: action.payload};
             break;
-        case 'SET-PROFILE-PHOTO':
+        case 'SET-PHOTO':
             newState = {...state, image: action.payload};
             break;
         default:

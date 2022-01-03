@@ -7,14 +7,11 @@ import { schoolProfileReducer } from "./schoolProfile.reducer";
 import useGet from "../../custom-hooks/useGet";
 
 import { profileImageEditHandler } from "../../Global/global-functions";
+import { schoolProfileEditHandler } from "./schoolProfile-edit.handler";
 
 const SchoolProfile = () => {
 
-    const initialState = {
-        schoolName:'',
-        schoolId:'',
-        schoolAddress:''
-    }
+
     
     const URL = 'http://localhost:8000/study/school/';
     const TOKEN = sessionStorage.getItem('token');
@@ -22,53 +19,57 @@ const SchoolProfile = () => {
     const {data} = useGet(URL, TOKEN);
 
 
-    const [state, setState] = useState(false);
+    const [edit, setEdit] = useState(false);
 
-    const [info, dispatch] = useReducer(schoolProfileReducer,initialState);
+    const [info, dispatch] = useReducer(schoolProfileReducer,{});
 
     useEffect(() => {
         dispatch({type:'SET-SCHOOL-ADDRESS',payload:data.address});
         dispatch({type:'SET-SCHOOL-ID',payload:data.school_id});
         dispatch({type:'SET-SCHOOL-NAME',payload:data.name});
-        dispatch({type:'SET-SCHOOL-IMAGE',payload:data.image});
+        dispatch({type:'SET-PHOTO',payload:data.image});
     },[data])
+    console.log(info);
+
 
     return <>
         <Wrapper>
             <div className="flex-item image">
-                <img src={info.schoolImage || photo} alt="img not found"/>
+                <img src={(info && info.image) || photo} alt="img not found"/>
                 <button className="button">
                     <label htmlFor="photo">تغییر عکس مدرسه</label>
-                    <input onChange={e => profileImageEditHandler(e, dispatch)} id="photo" accept="image/*" type='file'/>
+                    <input onChange={e => profileImageEditHandler(e, dispatch,URL)} id="photo" accept="image/*" type='file'/>
                 </button>
             </div>
             <div className="flex-item content">
                 <div className="label">شناسه مدرسه</div>
                 <Field
-                edit={state}
-                content={info.schoolId}
+                edit={edit}
+                content={info && info.school_id}
                 editable={false}/>
             </div>
             <div className="flex-item content">
                 <div className="label">نام مدرسه</div>
                 <Field
-                edit={state} 
-                content={info.schoolName} 
+                edit={edit} 
+                content={info && info.name} 
                 editable={true} 
                 onChange={{change:dispatch, type:'SET-SCHOOL-NAME'}}/>
             </div>
             <div className="flex-item content">
                 <div className="label">آدرس مدرسه</div>
                 <Field 
-                edit={state} 
-                content={info.schoolAddress} 
+                edit={edit} 
+                content={info && info.address}
                 editable={true} 
                 onChange={{change:dispatch, type:'SET-SCHOOL-ADDRESS'}}/>
             </div>
             <div className="flex-item content change">
                 <button
-                onClick={() => setState((prev) => setState(!prev))} 
-                className="button">{state ? 'ثبت تغییرات' : 'تغییر اطلاعات'}</button>
+                onClick={() => {
+                    schoolProfileEditHandler(edit, setEdit, info, URL);
+                }} 
+                className="button">{edit ? 'ثبت تغییرات' : 'تغییر اطلاعات'}</button>
             </div>
         </Wrapper>
     </>
