@@ -9,10 +9,15 @@ export const Wrapper = styled.div`
   direction: rtl;
   text-align: right;
   align-content: center;
+
   .image{
     text-align: center;
   }
 
+  input[type='file']{
+    display: none;
+  }
+  
   img{
     width: 300px;
     height: 300px;
