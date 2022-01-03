@@ -23,6 +23,7 @@ export const Wrapper = styled.div`
     height: 300px;
     display: block;
     margin-bottom: 10px;
+    border-radius: 50%;
   }
   .label{
     font-family: 'vazir', sans-serif;
