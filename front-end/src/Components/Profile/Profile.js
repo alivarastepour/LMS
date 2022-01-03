@@ -40,12 +40,10 @@ const Profile = () => {
                     <Wrapper>
                         <div className="grid-item item1">
                             <img className="profile-image" alt="oi" src={profileData.image}/>
-                            <div>
                             <button className='button'>
                                 <label htmlFor="label">تغییر عکس کاربری</label>
                                 <input onChange={e => profileImageEditHandler(e, dispatch, URL)} id="label" accept="image/*" type='file'/>
                             </button>
-                            </div>
                         </div>
                         <div className="grid-item item2">
                             <div className="label">نام</div>

@@ -35,15 +35,11 @@ export const Wrapper = styled.div`
       }
   
       .show{
-          background-color: #F5F5F5;  
+          background-color: #edf0ff;  
       }
   
       .hide{
           background-color: transparent;
-      }
-  
-      .show1{
-          background-color: #edf0ff;
       }
   
       .header-link{

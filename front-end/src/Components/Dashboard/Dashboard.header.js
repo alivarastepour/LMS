@@ -19,7 +19,7 @@ const DashboardHeader = ({show, setShow}) => {
                 <Link className="header-link" to='./managment'>
                     <button
                         onClick={() => setShow(false)}
-                        className={`header-button ${show ? 'hide' : 'show1'}`}>
+                        className={`header-button ${show ? 'hide' : 'show'}`}>
                         مدیریت مدرسه
                     </button>
                 </Link>

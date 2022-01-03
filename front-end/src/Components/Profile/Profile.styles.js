@@ -1,29 +1,23 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-    width: 90%; 
-    height: 90%;
+    width: 50%; 
+    height: 88%;
     margin: auto;
-    background-color: #F5F5F5;
+    background-color: #edf0ff;
     border-radius: 10px;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-template-rows: auto auto auto auto;
     direction: rtl;
-    justify-content: space-evenly;
-
-    @media only screen and (max-width:1355px){
-        & { 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    
+    @media only screen and (max-width:915px){
+        &{
+            width: 90%;
         }
     }
 
-    @media only screen and (max-width:1205px){
-        & { 
-            grid-template-columns: 200px;
-            grid-template-rows: auto auto auto;
-        }
-    }
 
     input[type="file"] {
         display: none;
@@ -31,11 +25,11 @@ export const Wrapper = styled.div`
     
     .label{
         font-family: 'vazir', sans-serif;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         direction: rtl;
     }
     .content{
-        font-size: 1.2rem;
+        font-size: 1.1rem;
     }
 
     .grid-item{
@@ -44,37 +38,23 @@ export const Wrapper = styled.div`
 
     .profile-image{
         border-radius: 50%;
-        width: 299px;
-        height: 299px;
-        @media only screen and (max-width: 1205px){
+        width: 200px;
+        height: 200px;
+
+        @media only screen and (max-width: 405px){
             &{
-                width: 200px;
-                height: 200px;
+                width: 150px;
+                height: 150px;
+                display: block;
+                float: right;
             }
         }
     }
-    .item1{
-        grid-row: 1/4;
 
-        @media only screen and (max-width:1205px){
-            grid-row: 1/1;
-        }
-    }
-    
-
-    .item8{
-        grid-column: 1/4;
-
-        @media only screen and (max-width:1205px){
-            &{
-                grid-column: 1/1;
-            }
-        }
-        
-    }
     .label{
         direction: rtl;
     }
+
     .button{
       background-color: white;
       border: none;
@@ -85,24 +65,28 @@ export const Wrapper = styled.div`
       padding: 10px;
       margin: auto;
       display: block;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
+
+      @media only screen and (max-width: 405px){
+            &{
+                width: 150px;
+                font-size: 1rem;
+                float: right;
+                align-content: center;
+
+            }
+        }
+
     }
     .button:hover{
-      transition: 1s;
+      transition: 0.4s;
       color: white;
       background-color: #8b9ce8;
     }
     .button:not(:hover){
-      transition: 1s;
+      transition: 0.4s;
       color: black;
       background-color: white;
-    }
-    @media only screen and (max-width: 1060px){
-        & {
-            grid-template-rows: auto auto auto auto;
-        }
-        .item1{
-            grid-row: 1/3;
-        }
-
     }
 `;
