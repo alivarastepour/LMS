@@ -1,6 +1,7 @@
 from django.db import models
 from AuthArena.models import CustomUser
 
+IMAGE_URL = 'http://localhost/'
 
 class School(models.Model):
     school_id = models.CharField(max_length=25, unique=True)
@@ -12,6 +13,7 @@ class School(models.Model):
     manager = models.OneToOneField(CustomUser, on_delete=models.DO_NOTHING)
     accepted = models.BooleanField(default=False)
     denied = models.BooleanField(default=False)
+    photo_link = models.URLField(default=IMAGE_URL + 'default.jpg')
 
     @property
     def status(self):
@@ -27,8 +29,13 @@ class School(models.Model):
             'school_id': self.school_id,
             'name': self.name,
             'address': self.address,
-            'status': self.status
+            'status': self.status,
+            'image': self.photo_link
         }
+
+    def set_photo_link(self, name):
+        self.photo_link = IMAGE_URL + name
+        self.save()
 
 
 class Class(models.Model):
