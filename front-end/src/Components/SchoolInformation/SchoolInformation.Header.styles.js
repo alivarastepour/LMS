@@ -10,17 +10,27 @@ export const Wrapper = styled.div`
   margin: auto;
 
   .button{
-      height: 50px;
-      font-size: 1.1rem;
-      border: none;
-      outline: none;
-      border-radius: 10px 10px 0 0 ;
-      font-family: 'vazir', sans-serif;
+    height: 50px;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    border-radius: 10px 10px 0 0 ;
+    font-family: 'vazir', sans-serif;
+
+    @media only screen and (max-width:450px){
+      &{
+        width: 70px;
+        font-size: 0.8rem;
+      }
+    }
+
   }
+
   .active{
-    background-color: 	#E8E8E8;  
+    background-color: #E8E8E8;  
     color: black;
   }
+
   .inactive{
     background-color: transparent;
     color: #8b9ce8;
@@ -30,6 +40,7 @@ export const Wrapper = styled.div`
       background-color: #bdc9ff;
       color: white;
     }
+
     &:not(:hover){
       transition: 0.4s;
       background-color: transparent;
@@ -38,8 +49,12 @@ export const Wrapper = styled.div`
   }
 
   .margin{
-      margin-right: 10px;
+    margin-right: 10px;
+
+    @media only screen and (max-width:450px){
+      &{
+        margin-right: 0;
+      }
+    }
   }
-
-
 `;
