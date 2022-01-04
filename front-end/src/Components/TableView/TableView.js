@@ -80,8 +80,8 @@ const TableView = ({content}) => {
 
             {
                 information && information.length !== 0  ? information.map((element) => {
-                    return <tr key={Math.random()}>
-                        <td>1</td>
+                    return <tr key={element.id}>
+                        <td>{element.id}</td>
                         <td>{element.name}</td>
                         <td>{element.username}</td>
                         <td>{element.status}</td>
