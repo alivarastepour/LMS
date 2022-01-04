@@ -4,6 +4,7 @@ import { Wrapper, Content } from "./SchoolInformation.styles";
 import SchoolInformationHeader from "./SchoolInformation.Header";
 import TableView from "../TableView/TableView";
 import SchoolProfile from "../SchoolProfile/SchoolProfile";
+import CreateClass from "../ClassList/ClassList";
 
 const SchoolInformation = () => {
 
@@ -20,7 +21,7 @@ const SchoolInformation = () => {
                     <SchoolProfile/> :
                     state === 'teacher' ?
                     <TableView content='teacher'/>:
-                    <div>fuck off</div>
+                    <CreateClass/>
                 }
             </Content>
         </Wrapper>
