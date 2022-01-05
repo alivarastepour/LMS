@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import SearchIcon from '@mui/icons-material/Search';
-import {Autocomplete, InputAdornment, TextField} from "@mui/material";
+import {Autocomplete, TextField} from "@mui/material";
 
 import { Table } from "./TableView.styles";
 
 import useGet from "../../custom-hooks/useGet";
 import {handleSearch} from "./TableView.handlers";
+import SearchBox from "../SearchBox/SearchBox";
 
 const TableView = ({content}) => {
 
@@ -36,24 +36,15 @@ const TableView = ({content}) => {
                 <td 
                 colSpan={2} 
                 className="input-container">
-                    <TextField
-                        InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <SearchIcon />
-                                </InputAdornment>
-                            ),
-                        }}
-                        size="small"
-                        sx={{width:300,boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',background:'#F8F8F8'}}
-                        label='جستجو'
-                        placeholder='جستجو بر اساس نام, کدملی...'
-                        value={searchValue}
-                        onChange={(e) => {
-                            setSearchValue(e.target.value)
-                            handleSearch(e,staticInformation, setInformation, searchTerm);
-                        }}
-                        type='text'/>
+                    <SearchBox
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                    handleSearch={handleSearch}
+                    staticInformation={staticInformation}
+                    setInformation={setInformation}
+                    searchTerm={searchTerm}
+                    placeHolder='جستجو بر اساس نام, کد ملی ...'
+                    />
                 </td>
                 <td 
                 colSpan={2}>
