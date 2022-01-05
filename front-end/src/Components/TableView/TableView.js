@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import {Autocomplete, TextField} from "@mui/material";
+
+import AutoComplete from "../AutoComplete/AutoComplete";
+import SearchBox from "../SearchBox/SearchBox";
 
 import { Table } from "./TableView.styles";
 
 import useGet from "../../custom-hooks/useGet";
 import {handleSearch} from "./TableView.handlers";
-import SearchBox from "../SearchBox/SearchBox";
 
 const TableView = ({content}) => {
 
@@ -21,8 +22,6 @@ const TableView = ({content}) => {
     const [searchTerm, setSearchTerm] = useState('نام');
 
     const [searchValue, setSearchValue] = useState('');
-
-
 
     useEffect(() => {
         setInformation(data.requests);
@@ -48,17 +47,10 @@ const TableView = ({content}) => {
                 </td>
                 <td 
                 colSpan={2}>
-                    <Autocomplete 
-                    className='autocomplete'
-                    size="small"
-                    options={['نام','کدملی']}
-                    renderInput={(p) => <TextField {...p} label='فیلتر'/>}
-                    sx={{width:300,'boxShadow': 'rgba(0, 0, 0, 0.16) 0px 1px 4px',background:'#F8F8F8'}}
-                    onChange={(e,v) => {
-                        setSearchTerm(v);
-                    }}
-                    value={searchTerm}
-                    defaultValue='نام'
+                    <AutoComplete
+                    setSearchTerm={setSearchTerm}
+                    searchTerm={searchTerm} 
+                    options={['کدملی','نام']}
                     />
                 </td>
             </tr>
