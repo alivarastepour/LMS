@@ -1,24 +1,23 @@
 import { Wrapper } from "./ClassList.styles";
 import SearchBox from "../SearchBox/SearchBox";
 import AutoComplete from "../AutoComplete/AutoComplete";
+import useGet from "../../custom-hooks/useGet";
+import { useEffect, useState } from "react";
 const CreateClass = () => {
-    const obj = [
-        {no:1,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:2,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:3,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:4,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:5,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:6,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:7,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:8,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:9,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:10,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:11,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:12,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:13,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:14,name:'سلام',instructor:'me', staus:'fucked up'},
-        {no:15,name:'سلام',instructor:'me', staus:'fucked up'}
-    ]
+
+    const URL = 'http://localhost:8000/study/class';
+    const TOKEN = sessionStorage.getItem('token') ; 
+    const {data} = useGet(URL, TOKEN);
+
+    const [info, setInfo] = useState([]);
+    const [staticInfo, setStaticInfo] = useState([]);
+
+    useEffect(() => {
+        setStaticInfo(data.classes);
+        setInfo(data.classes);
+    },[data])
+
+
     return <>
         <Wrapper>
                 <table className="table">
@@ -50,11 +49,11 @@ const CreateClass = () => {
                             <td className="header">ارائه دهنده</td>
                         </tr>
                     {
-                        obj.map((e) => {
-                            return <tr key={e.no}>
-                                <td>{e.no}</td>
+                        info && info.map((e) => {
+                            return <tr key={e.id}>
+                                <td>{e.id}</td>
                                 <td>{e.name}</td>
-                                <td>{e.instructor}</td>
+                                <td>{e.teacher || 'مشخص نشده'}</td>
                             </tr>
                         })
                     }
