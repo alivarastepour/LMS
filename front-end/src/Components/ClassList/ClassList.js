@@ -1,5 +1,6 @@
 import { Wrapper } from "./ClassList.styles";
-
+import SearchBox from "../SearchBox/SearchBox";
+import AutoComplete from "../AutoComplete/AutoComplete";
 const CreateClass = () => {
     const obj = [
         {no:1,name:'سلام',instructor:'me', staus:'fucked up'},
@@ -24,9 +25,22 @@ const CreateClass = () => {
                     <tbody>
                         <tr>
                             <td colSpan={2}>
+                                <SearchBox
+                                className='s-box'
+                                placeHolder='جستجو بر اساس نام کلاس , ارائه دهنده ...'
+                                />
+                            </td>
+                            <td colSpan={1}>
+                                <AutoComplete
+                                options={['ارائه دهنده','نام کلاس']}
+                                />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colSpan={2}>
                                 <input placeholder="برای افزودن کلاس نام کلاس را وارد کنید." id="input" className="input" type='text'/>
                             </td>
-                            <td>
+                            <td style={{textAlign:'right', paddingRight:100}}>
                                 <button className="button">افزودن</button>
                             </td>
                         </tr>
