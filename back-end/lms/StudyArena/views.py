@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .models import School, Class
 from .permissions import IsManager, IsProfileCompleted, IsTeacher
 from rest_framework.views import APIView
-from .serilizers import SchoolSerializer
+from .serilizers import SchoolSerializer, ClassSerializer
 import io
 
 IMAGES_LOCATION = '/var/www/html/'  # TODO: set relative path
@@ -105,3 +105,17 @@ class TeacherRequests(APIView):
                     }
                 )
         return Response(data={'requests': output}, status=200)
+
+
+class ClassView(APIView):
+    serializer_class = ClassSerializer
+    permission_classes = (IsAuthenticated, IsManager)
+
+    def get(self, request):
+        try:
+            classes = Class.objects.filter(school__id__exact=request.user.school.id)
+        except Exception:
+            return Response({"class_count": 0}, status=200)
+
+        return Response({"class_count": classes.all().count(), "classes": [
+            clazz.to_json() for clazz in classes]}, status=200)
