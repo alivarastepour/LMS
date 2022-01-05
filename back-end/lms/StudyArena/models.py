@@ -3,6 +3,7 @@ from AuthArena.models import CustomUser
 
 IMAGE_URL = 'http://localhost/'
 
+
 class School(models.Model):
     school_id = models.CharField(max_length=25, unique=True)
     name = models.CharField(max_length=100, null=False, blank=False)
@@ -41,6 +42,14 @@ class School(models.Model):
 class Class(models.Model):
     name = models.CharField(max_length=50)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
+
+    def to_json(self):
+        teacher = self.teacherrequest_set.filter(status__exact='pending')
+        return {
+            "id": self.id,
+            "name": self.name,
+            "teacher": teacher[0].teacher.user.fullname if teacher.count() != 0 else "",
+        }
 
 
 class Teacher(models.Model):
