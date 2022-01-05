@@ -20,14 +20,20 @@ const CreateClass = () => {
     ]
     return <>
         <Wrapper>
-            <div className="flex-item item1">
                 <table className="table">
                     <tbody>
+                        <tr>
+                            <td colSpan={2}>
+                                <input placeholder="برای افزودن کلاس نام کلاس را وارد کنید." id="input" className="input" type='text'/>
+                            </td>
+                            <td>
+                                <button className="button">افزودن</button>
+                            </td>
+                        </tr>
                         <tr>
                             <td className="header">ردیف</td>
                             <td className="header">نام کلاس</td>
                             <td className="header">ارائه دهنده</td>
-                            <td className="header">وضعیت</td>
                         </tr>
                     {
                         obj.map((e) => {
@@ -35,18 +41,13 @@ const CreateClass = () => {
                                 <td>{e.no}</td>
                                 <td>{e.name}</td>
                                 <td>{e.instructor}</td>
-                                <td>{e.staus}</td>
                             </tr>
                         })
                     }
                     </tbody>
                 </table>
-            </div>
-            <div className="flex-item item2">
-                <input placeholder="برای افزودن کلاس نام کلاس را وارد کنید." id="input" className="input" type='text'/>
-                <button className="button">افزودن</button>
-            </div>
         </Wrapper>
     </>
 }
+
 export default CreateClass;

@@ -3,39 +3,6 @@ import styled from 'styled-components'
 export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: row;
-
-    .flex-item{
-        width: 50%;
-        height: 100%;
-    }
-
-    .item1{
-        overflow-y: auto;
-    }
-
-    .item2{
-        display: block;
-        direction: rtl;
-        padding: 300px 30px;
-
-        @media only screen and (max-width:1000px){
-            &{
-                padding: 50px 50px;
-            }
-        }
-        @media only screen and (max-width:935px){
-            &{
-                padding: 50px 10px;
-            }
-        }
-        @media only screen and (max-width:680px){
-            &{
-                padding: 50px 0;
-            }
-        }
-    }
 
     .table{
         width: 100%;
@@ -46,7 +13,7 @@ export const Wrapper = styled.div`
     }
     
     .header{
-    font-size: 1.4rem;
+        font-size: 1.4rem;
 
     @media only screen and (max-width:920px){
       &{
@@ -68,16 +35,6 @@ export const Wrapper = styled.div`
       border-bottom: 1px #F0F0F0 solid;
       padding-top: 10px;
       font-size: 1.2rem;
-    }
-
-    @media only screen and (max-width:1000px){
-        flex-direction: column;
-
-        .flex-item{
-          border: 1px solid black;
-          width: 100%;
-          height: 50%;
-        }
     }
 
     .input{
@@ -108,15 +65,8 @@ export const Wrapper = styled.div`
             color: white;
         }  
 
-        @media only screen and (max-width:1500px){
-            .input{
-                display: block;
-            }
-        }
-
         @media only screen and (max-width:460px){
             &{
-                width: 95%;
                 font-size: 1rem;
             }
         }
@@ -144,25 +94,6 @@ export const Wrapper = styled.div`
             background-color: white;
             transition: 0.4s;
             color: black;
-        }
-
-        @media only screen and (max-width:1500px){
-            &{
-                margin-top: 40px;
-                margin-right: 0;
-            }
-        }
-
-        @media only screen and (max-width:960px){
-            &{
-                margin-right: 40px;
-            }
-        }
-
-        @media only screen and (max-width:680px){
-            &{
-                margin-right: 0;
-            }
         }
     }
 `;
