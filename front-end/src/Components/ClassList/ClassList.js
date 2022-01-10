@@ -2,7 +2,7 @@ import { Wrapper } from "./ClassList.styles";
 import SearchBox from "../SearchBox/SearchBox";
 import AutoComplete from "../AutoComplete/AutoComplete";
 import useGet from "../../custom-hooks/useGet";
-import { handleSearch } from "./classListHandlers";
+import { handleSearch, addClass } from "./classListHandlers";
 import { useEffect, useState } from "react";
 const CreateClass = () => {
 
@@ -18,6 +18,8 @@ const CreateClass = () => {
     const [searchValue, setSearchValue] = useState('');
 
     const [searchTerm, setSearchTerm] = useState('نام کلاس');
+
+    const [className, setClassName] = useState('');
 
     useEffect(() => {
         setStaticInfo(data.classes);
@@ -49,10 +51,20 @@ const CreateClass = () => {
                                 />
                             </td>
                             <td colSpan={1}>
-                                <input placeholder="برای افزودن کلاس نام کلاس را وارد کنید." id="input" className="input" type='text'/>
+                                <input
+                                placeholder="برای افزودن کلاس نام کلاس را وارد کنید."
+                                id="input" 
+                                className="input" 
+                                type='text'
+                                value={className}
+                                onChange={e => setClassName(e.target.value)}
+                                />
                             </td>
                             <td style={{textAlign:'right', paddingRight:100}}>
-                                <button className="button">افزودن</button>
+                                <button
+                                className="button"
+                                onClick={() => {addClass(className)}}
+                                >افزودن</button>
                             </td>
                         </tr>
                         <tr>
