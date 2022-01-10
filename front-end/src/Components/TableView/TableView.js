@@ -42,7 +42,8 @@ const TableView = ({content}) => {
                     staticInformation={staticInformation}
                     setInformation={setInformation}
                     searchTerm={searchTerm}
-                    placeHolder='جستجو بر اساس نام, کد ملی ...'
+                    placeHolder='جستجو بر اساس نام, کدملی ...'
+                    optionsMap={[{'name':'نام'},{'username':'کدملی'}]}
                     />
                 </td>
                 <td 
