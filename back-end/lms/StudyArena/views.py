@@ -1,3 +1,5 @@
+from typing import Union
+
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -58,7 +60,7 @@ class SchoolView(APIView):
 
 
 class StudentRequests(APIView):
-    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager | IsTeacher)
+    permission_classes = (IsAuthenticated, IsProfileCompleted, Union[IsManager, IsTeacher])
 
     def get(self, request):
         try:
@@ -119,3 +121,11 @@ class ClassView(APIView):
 
         return Response({"class_count": classes.all().count(), "classes": [
             clazz.to_json() for clazz in classes]}, status=200)
+
+    def post(self, request):
+        class_serializer = ClassSerializer(data=request.data)
+        if class_serializer.is_valid():
+            class_serializer.save()
+            return Response(data={"message": "Class Successfully created."}, status=200)
+        # TODO: avoid duplicate naming...
+        return Response(data={"message": "Something is wrong!"}, status=400)
