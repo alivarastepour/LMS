@@ -48,7 +48,7 @@ class Class(models.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "teacher": teacher[0].teacher.user.fullname if teacher.count() != 0 else "",
+            "teacher": teacher[0].teacher.user.fullname if teacher.count() != 0 else "unknown",
         }
 
 
