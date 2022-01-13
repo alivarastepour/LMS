@@ -8,6 +8,19 @@ import { Table } from "./TableView.styles";
 import useGet from "../../custom-hooks/useGet";
 import {handleSearch} from "./TableView.handlers";
 
+const fakeData = [
+    {name:'رضا', status:'pending', username:8567858, id:3},
+    {name:'مجید', status:'pending', username:'67547', id:8},
+    {name:'سهراب', status:'pending', username:35435, id:6},
+    {name:'علی', status:'accepted', username:1234, id:1},
+    {name:'تقی', status:'accepted', username:345354, id:4},
+    {name:'نقی', status:'accepted', username:675745, id:5},
+    {name:'خدا', status:'accepted', username:'4874', id:10},
+    {name:'متین', status:'rejected', username:'8677586', id:7},
+    {name:'محبوب', status:'rejected', username:'5353', id:9},
+    {name:'محمد', status:'rejected', username:54654, id:2},
+]
+
 const TableView = ({content}) => {
 
     const URL = `http://localhost:8000/study/${content}-list/` ;
@@ -27,6 +40,19 @@ const TableView = ({content}) => {
         setInformation(data.requests);
         setStaticInformation(data.requests)
     },[data]);
+
+    const renderButton = (state) => {
+        if (state === 'accepted') {
+            return <div className="acc">پذیرفته شده</div>
+        }else if (state === 'pending') {
+            return <div>
+            <button className="st-button reject">رد کردن</button>
+            <button className="st-button accept">پذیرفتن</button>
+            </div>
+        }else{
+            return <div className="rej">رد شده</div>
+        }
+    }
 
     return <>
         <Table>
@@ -63,12 +89,12 @@ const TableView = ({content}) => {
             </tr>
 
             {
-                information && information.length !== 0  ? information.map((element) => {
+                fakeData  ? fakeData.map((element) => {
                     return <tr key={element.id}>
                         <td>{element.id}</td>
                         <td>{element.name}</td>
                         <td>{element.username}</td>
-                        <td>{element.status}</td>
+                        <td>{renderButton(element.status)}</td>
                     </tr>
             }) 
             : 
