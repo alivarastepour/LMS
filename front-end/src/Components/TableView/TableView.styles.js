@@ -23,9 +23,9 @@ export const Table = styled.table`
     }
   }
 
-  tr:hover{
+  .hover:hover{
     transition: .2s;
-    background-color: #F0F0F0;
+    background-color: #F8F8F8;
   }
 
   .header{

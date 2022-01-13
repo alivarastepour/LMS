@@ -30,6 +30,5 @@ export const addClass = (className:string) => {
     const TOKEN = sessionStorage.getItem('token'); 
     axios.post('http://localhost:8000/study/class/',className, {
         headers:{'Authorization':`Token ${TOKEN}`}
-    }).catch(e => console.log(className)
-    )
+    }).catch(e => console.log(e))
 }

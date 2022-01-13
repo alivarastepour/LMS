@@ -43,11 +43,14 @@ const TableView = ({content}) => {
 
     const renderButton = (state) => {
         if (state === 'accepted') {
-            return <div className="acc">پذیرفته شده</div>
+            return <>
+            <div className="acc st">پذیرفته شده</div>
+            <button className="st-button reject">حذف</button>
+            </>
         }else if (state === 'pending') {
             return <div>
-            <button className="st-button reject">رد کردن</button>
             <button className="st-button accept">پذیرفتن</button>
+            <button className="st-button reject">رد کردن</button>
             </div>
         }else{
             return <div className="rej">رد شده</div>
@@ -57,7 +60,7 @@ const TableView = ({content}) => {
     return <>
         <Table>
             <tbody>
-            <tr>
+            <tr className="no-hover">
                 <td 
                 colSpan={2} 
                 className="input-container">
@@ -81,7 +84,7 @@ const TableView = ({content}) => {
                     />
                 </td>
             </tr>
-            <tr>
+            <tr className="no-hover">
                 <td className="header">ردیف</td>
                 <td className="header">نام</td>
                 <td className="header">کدملی</td>
@@ -90,7 +93,7 @@ const TableView = ({content}) => {
 
             {
                 fakeData  ? fakeData.map((element) => {
-                    return <tr key={element.id}>
+                    return <tr className="hover" key={element.id}>
                         <td>{element.id}</td>
                         <td>{element.name}</td>
                         <td>{element.username}</td>
