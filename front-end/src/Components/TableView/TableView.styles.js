@@ -42,4 +42,56 @@ export const Table = styled.table`
     width: 100%;
     font-family: 'vazir', sans-serif;
   }
+  .st{
+    display: inline-block;
+  }
+  
+  .st-button{
+    font-family: 'vazir', sans-serif;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent;
+    margin-right: 14px;
+    cursor: pointer;
+    font-size: 1rem;
+    width: 80px;
+    height: 30px;
+  }
+  .accept{
+    color: #17b327;
+  }
+  .reject{
+    color: #ff5c5c;
+  }
+
+  .accept:hover{
+    background-color: #17b327;
+    color: white;
+    transition: 0.4s;
+  }
+  .accept:not(:hover){
+    background-color: transparent;
+    color: #17b327;
+    transition: 0.4s;
+  }
+
+  .reject:hover{
+    background-color: #ff5c5c;
+    color: white;
+    transition: 0.4s;
+  }
+  .reject:not(:hover){
+    background-color: transparent;
+    color: #ff5c5c;
+    transition: 0.4s;
+  }
+  
+  .acc{
+    color: #17b327;
+  }
+
+  .rej{
+    color: #ff5c5c;
+  }
 `;
