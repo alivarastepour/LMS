@@ -60,7 +60,7 @@ class SchoolView(APIView):
 
 
 class StudentRequests(APIView):
-    permission_classes = (IsAuthenticated, IsProfileCompleted, Union[IsManager, IsTeacher])
+    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager | IsTeacher)
 
     def get(self, request):
         try:
