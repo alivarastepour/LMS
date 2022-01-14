@@ -104,8 +104,8 @@ const CreateClass = () => {
                                 <td>{e.name}</td>
                                 <td colSpan={1}>{e.teacher || 'مشخص نشده'}</td>
                                 <td>
-                                    <button>حذف</button>
-                                    <button onClick={() => setOpenSetting(true)}>تنظیمات کلاس</button>
+                                    <button className="button-table rem">حذف</button>
+                                    <button className="button-table" onClick={() => setOpenSetting(true)}>تنظیمات کلاس</button>
                                 <Dialog
                                 sx={{}}
                                 className='a'

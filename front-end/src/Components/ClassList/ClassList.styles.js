@@ -85,4 +85,27 @@ export const Wrapper = styled.div`
         }
     }
 
+    .button-table{
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-family: 'vazir', sans-serif;
+        margin-left: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .rem{
+        color: #ff5c5c;
+    }
+    .rem:hover{
+        color: white;
+        background-color: #ff5c5c;
+        transition: 0.5s;
+    }
+    .rem:not(:hover){
+        color: #ff5c5c;
+        background-color: transparent;
+        transition: 0.5s;
+    }
+
 `;
