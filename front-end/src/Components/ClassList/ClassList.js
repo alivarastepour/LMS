@@ -5,6 +5,7 @@ import useGet from "../../custom-hooks/useGet";
 import { handleSearch, addClass } from "./classListHandlers";
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
+import ClassSettings from "../ClassSettings/ClassSettings";
 
 
 
@@ -114,6 +115,8 @@ const CreateClass = () => {
                                     <DialogTitle
                                     sx={{textAlign:'right', fontFamily:'vazir'}}
                                     >تنظیمات</DialogTitle>
+                                    <ClassSettings/>
+
                                 </Dialog>
                                 </td>
                             </tr>
