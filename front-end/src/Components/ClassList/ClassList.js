@@ -11,20 +11,6 @@ import ClassSettings from "../ClassSettings/ClassSettings";
 
 import { useEffect, useState } from "react";
 
-const fakeData = [
-    {id:'0', name:'سلام', teacher:'اون'},
-    {id:'1', name:'ممد', teacher:'این'},
-    {id:'2', name:'هوی', teacher:'اونا'},
-    {id:'3', name:'میز', teacher:'همونا'},
-    {id:'4', name:'صندلی', teacher:'همون'},
-    {id:'5', name:'موز', teacher:'ندارد'},
-    {id:'6', name:'فا', teacher:'سیکو'},
-    {id:'7', name:'فی', teacher:''},
-    {id:'8', name:'فو', teacher:''},
-    {id:'9', name:'فیس', teacher:''},
-    {id:'10', name:'هیس', teacher:''},
-]
-
 
 const CreateClass = () => {
 
@@ -98,7 +84,7 @@ const CreateClass = () => {
                             <td className="header">وضعیت</td>
                         </tr>
                     {
-                        fakeData.map((e) => {
+                        info && info.length !== 0 ? info.map((e) => {
                             return <tr className="hover" key={e.id}>
                                 <td>{e.id}</td>
                                 <td>{e.name}</td>
@@ -120,7 +106,12 @@ const CreateClass = () => {
                                 </Dialog>
                                 </td>
                             </tr>
-                        })
+                        }) :
+                        <tr>
+                        <td colSpan={4} className='no-result'>
+                            موردی یافت نشد
+                        </td>
+                    </tr>
                     }
                     </tbody>
                 </table>

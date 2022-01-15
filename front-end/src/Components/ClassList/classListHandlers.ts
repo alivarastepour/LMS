@@ -23,12 +23,12 @@ export const handleSearch = (e:ChangeEvent<HTMLTextAreaElement | HTMLInputElemen
     setData(newObj);
 }
 
-export const addClass = (className:string) => {
-    if (className.trim() === '') {
+export const addClass = (name:string) => {
+    if (name.trim() === '') {
         return;
     }
     const TOKEN = sessionStorage.getItem('token'); 
-    axios.post('http://localhost:8000/study/class/',className, {
+    axios.post('http://localhost:8000/study/class/',{name:name}, {
         headers:{'Authorization':`Token ${TOKEN}`}
-    }).catch(e => console.log(e))
+    }).then(a => console.log(a)).catch(e => console.log(e))
 }
