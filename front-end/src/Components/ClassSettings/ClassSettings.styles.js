@@ -1,68 +1,71 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
-    width: 600px;
-    height: 800px;
-    direction: rtl;
-    text-align: right;
-    padding-right: 30px;
-    padding-left: 30px;
+  width: 600px;
+  height: 800px;
+  direction: rtl;
+  text-align: right;
+  padding-right: 30px;
+  padding-left: 30px;
 
-    @media only screen and (max-width:675px){
-        &{
-            width: 450px;
-            padding-left: 6px;
-            padding-right: 6px;
-        }
-    } 
-    
-    @media only screen and (max-width:520px){
-        &{
-            width: 250px;
-            padding-left: 6px;
-            padding-right: 6px;
-        }
-    } 
-    
-    .input, .select, .label{
-        display: block;
-        font-family: 'vazir', sans-serif;
+  @media only screen and (max-width: 675px) {
+    & {
+      width: 450px;
+      padding-left: 6px;
+      padding-right: 6px;
     }
+  }
 
-    .input, .select{
-        margin-top: 5px;
-        height: 30px;
-        font-size: 0.8rem;
+  @media only screen and (max-width: 520px) {
+    & {
+      width: 250px;
+      padding-left: 6px;
+      padding-right: 6px;
     }
-    .label{
-        margin-top: 10px;
-        font-size: 1.0rem;
-    }
+  }
 
-    .input{
-        width: 100%;
-        padding-right: 10px;
-    }
+  .input,
+  .select,
+  .label {
+    display: block;
+    font-family: "vazir", sans-serif;
+  }
 
-    .button{
-        float: left;
-        border: none;
-        outline: none;
-        font-family: 'vazir', sans-serif;
-        margin-left: 10px;
-        width: 80px;
-        height: 50px;
-        border-radius: 5px;
-        font-size: 1.2rem;
-        background-color: #F8F8F8;
-    }
+  .input,
+  .select {
+    margin-top: 5px;
+    height: 30px;
+    font-size: 0.8rem;
+  }
+  .label {
+    margin-top: 10px;
+    font-size: 1rem;
+  }
 
-    .acc{
-        background-color: #17b327;
-        color: white;
-    }
+  .input {
+    width: 100%;
+    padding-right: 10px;
+  }
 
-    .acc:hover{
-        opacity: 0.9;
-    }
+  .button {
+    float: left;
+    border: none;
+    outline: none;
+    font-family: "vazir", sans-serif;
+    margin-left: 10px;
+    width: 80px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    background-color: #f8f8f8;
+  }
+
+  .acc {
+    background-color: #17b327;
+    color: white;
+  }
+
+  .acc:hover {
+    opacity: 0.9;
+  }
 `;

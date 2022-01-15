@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -10,22 +10,22 @@ export const Wrapper = styled.div`
   text-align: right;
   align-content: center;
 
-  .image{
+  .image {
     text-align: center;
   }
 
-  input[type='file']{
+  input[type="file"] {
     display: none;
   }
-  
-  img{
+
+  img {
     width: 300px;
     height: 300px;
     display: block;
     margin-bottom: 10px;
     border-radius: 50%;
 
-    @media only screen and (max-width:1000px){
+    @media only screen and (max-width: 1000px) {
       height: 200px;
       width: 200px;
       margin: auto;
@@ -33,16 +33,16 @@ export const Wrapper = styled.div`
       margin-top: 20px;
     }
   }
-  .label{
-    font-family: 'vazir', sans-serif;
+  .label {
+    font-family: "vazir", sans-serif;
     font-size: 1.4rem;
   }
-  .content{
+  .content {
     font-size: 1.3rem;
     padding-top: 20px;
   }
-  .button{
-    font-family: 'vazir', sans-serif;
+  .button {
+    font-family: "vazir", sans-serif;
     width: 200px;
     height: 50px;
     margin: auto;
@@ -53,28 +53,28 @@ export const Wrapper = styled.div`
     border: none;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 2.4px 2.4px 3.2px;
-    }
-  .button:hover{
+  }
+  .button:hover {
     transition: 0.6s;
     background-color: #8b9ce8;
     color: white;
   }
 
-  .button:not(:hover){
+  .button:not(:hover) {
     transition: 0.4s;
     background-color: white;
   }
 
-  .change{
+  .change {
     margin-top: 40px;
   }
 
-  input{
-    font-family: 'vazir', sans-serif;
+  input {
+    font-family: "vazir", sans-serif;
     width: 500px !important;
     text-align: right;
   }
-  input::placeholder{
+  input::placeholder {
     text-align: right;
   }
 `;
