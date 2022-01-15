@@ -1,5 +1,5 @@
 import { Wrapper } from "./ClassSettings.styles";
-
+import { Switch } from "@mui/material";
 const ClassSettings = () => {
   return (
     <>
@@ -29,30 +29,6 @@ const ClassSettings = () => {
           placeholder=""
         />
 
-        <label className="label" htmlFor="rec">
-          قابلیت ضبط
-        </label>
-        <select id="rec" className="select">
-          <option value="true">فعال</option>
-          <option value="false">غیرفعال</option>
-        </select>
-
-        <label className="label" htmlFor="auto-rec">
-          شروع خودکار ضبط
-        </label>
-        <select id="auto-rec" className="select">
-          <option value="true">فعال</option>
-          <option value="false">غیرفعال</option>
-        </select>
-
-        <label className="label" htmlFor="pause-rec">
-          توقف/ادامه ضبط
-        </label>
-        <select id="pause-rec" className="select">
-          <option value="true">فعال</option>
-          <option value="false">غیرفعال</option>
-        </select>
-
         <label className="label" htmlFor="duration">
           مدت زمان
         </label>
@@ -64,24 +40,42 @@ const ClassSettings = () => {
           max={120}
           placeholder=""
         />
+        <div>
+          <label className="label switch" htmlFor="rec">
+            قابلیت ضبط
+          </label>
 
-        <label className="label" htmlFor="pm">
-          پیام شرکت کننده
-        </label>
+          <Switch id="rec" />
+        </div>
+        <div>
+          <label className="label switch" htmlFor="auto-rec">
+            شروع خودکار ضبط
+          </label>
 
-        <select id="pm" className="select">
-          <option value="true">فعال</option>
-          <option value="false">غیرفعال</option>
-        </select>
+          <Switch id="auto-rec" />
+        </div>
+        <div>
+          <label className="label switch" htmlFor="pause-rec">
+            توقف/ادامه ضبط
+          </label>
 
-        <label className="label" htmlFor="wc">
-          وب‌کم شرکت کننده
-        </label>
+          <Switch id="pause-rec" />
+        </div>
+        <div>
+          <label className="label switch" htmlFor="pm">
+            پیام شرکت کننده
+          </label>
 
-        <select id="wc" className="select">
-          <option value="true">فعال</option>
-          <option value="false">غیرفعال</option>
-        </select>
+          <Switch id="pm" />
+        </div>
+        <div>
+          <label className="label switch" htmlFor="wc">
+            وب‌کم شرکت کننده
+          </label>
+
+          <Switch id="wc" />
+        </div>
+
         <button className="button acc">ذخیره</button>
         <button className="button rej">نمی‌خوام</button>
       </Wrapper>

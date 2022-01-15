@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 600px;
-  height: 800px;
+  height: 650px;
   direction: rtl;
   text-align: right;
   padding-right: 30px;
@@ -40,6 +40,10 @@ export const Wrapper = styled.div`
   .label {
     margin-top: 10px;
     font-size: 1rem;
+  }
+
+  .switch {
+    display: inline-block;
   }
 
   .input {
