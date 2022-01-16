@@ -151,7 +151,9 @@ class ClassView(APIView):
     def post(self, request):
         class_serializer = ClassSerializer(data=request.data)
         if class_serializer.is_valid():
-            class_serializer.save(school=School.objects.get(manager__username=request.user.username))
-            return Response(data={"message": "Class Successfully created."}, status=200)
+            clazz = class_serializer.save(school=School.objects.get(manager__username=request.user.username))
+            return Response(data={
+                "name": clazz.name,
+                "message": "Class Successfully created."}, status=200)
         # TODO: avoid duplicate naming...
         return Response(data={"message": "Something is wrong!"}, status=400)
