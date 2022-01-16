@@ -1,10 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import Typewriter from "typewriter-effect";
 
-import { Wrapper, Content, Heading } from "./MainPage.styles";
+import { Wrapper, Content, Heading, Footer } from "./MainPage.styles";
 import Header from "../Header/Header";
 import SignIn from "../Sign-in/Sign-in";
-
 import SignUp from "../Sign-up/Sign-up";
 
 import { authContext } from "../../App";
@@ -49,6 +48,10 @@ const MainPage = () => {
           />
         </Heading>
       </Wrapper>
+      <Footer>
+        <div className="p-des">.تمامی حقوق برای شرکت آتی‌گستر محفوظ است</div>
+        <div className="e-des">Ati-Gostar 2022 All rights reserved &copy;</div>
+      </Footer>
     </>
   );
 };
