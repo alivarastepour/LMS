@@ -9,6 +9,7 @@ const DashboardHeader = lazy(() => import("./Dashboard.header"));
 const SchoolManagement = lazy(() =>
   import("../SchoolManagement/SchoolManagement")
 );
+const Footer = lazy(() => import("../Footer/Footer"));
 
 const Dashboard = () => {
   const defaultPage = useParams().profile;
@@ -23,6 +24,7 @@ const Dashboard = () => {
           {show ? <Profile /> : <SchoolManagement />}
         </Suspense>
       </Wrapper>
+      <Footer />
     </>
   );
 };
