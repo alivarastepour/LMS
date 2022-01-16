@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 90%;
@@ -9,50 +9,49 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   margin: auto;
 
-  .button{
+  .button {
     height: 50px;
     font-size: 1.1rem;
     border: none;
     outline: none;
-    border-radius: 10px 10px 0 0 ;
-    font-family: 'vazir', sans-serif;
+    border-radius: 10px 10px 0 0;
+    font-family: "vazir", sans-serif;
 
-    @media only screen and (max-width:450px){
-      &{
+    @media only screen and (max-width: 450px) {
+      & {
         width: 70px;
         font-size: 0.8rem;
       }
     }
-
   }
 
-  .active{
+  .active {
     background-color: white;
     color: black;
   }
 
-  .inactive{
+  .inactive {
     background-color: transparent;
     color: #8b9ce8;
 
-    &:hover{
+    &:hover {
       transition: 0.4s;
       background-color: #bdc9ff;
       color: white;
     }
 
-    &:not(:hover){
+    &:not(:hover) {
       transition: 0.4s;
       background-color: transparent;
       color: #8b9ce8;
     }
   }
 
-  .margin{
+  .margin {
     margin-right: 10px;
 
-    @media only screen and (max-width:450px){
-      &{
+    @media only screen and (max-width: 450px) {
+      & {
         margin-right: 0;
       }
     }

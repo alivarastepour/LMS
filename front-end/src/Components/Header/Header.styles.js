@@ -11,12 +11,12 @@ export const Wrapper = styled.div`
     border: none;
     width: 120px;
     height: 70px;
-    font-family: 'vazir', sans-serif;
+    font-family: "vazir", sans-serif;
     font-size: 1.5rem;
     margin-left: 10px;
-    background-color: #F5F5F5;
+    background-color: #f5f5f5;
 
-    @media only screen and (max-width:325px){
+    @media only screen and (max-width: 325px) {
       & {
         width: 90px;
       }
