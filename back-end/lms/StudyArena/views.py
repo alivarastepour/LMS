@@ -4,7 +4,7 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import School, Class, TeacherRequest
+from .models import School, Class, TeacherRequest, StudentRequest
 from .permissions import IsManager, IsProfileCompleted, IsTeacher
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
@@ -82,6 +82,19 @@ class StudentRequests(APIView):
                     }
                 )
         return Response(data={'requests': output}, status=200)
+
+    def post(self, request, student_id):
+        student_req = get_object_or_404(StudentRequest, id=student_id)
+        if request.data.get('operation', 'reject') == 'accept':
+            student_req.status = 'accepted'
+            student_req.save()
+            return Response(data={'message': f'Student {student_req.student.user.fullname} accepted for Class '
+                                             f'{student_req.clazz.name}'}, status=200)
+        else:
+            student_req.status = 'rejected'
+            student_req.save()
+            return Response(data={'message': f'Student {student_req.student.user.fullname} rejected for Class '
+                                             f'{student_req.clazz.name}'}, status=200)
 
 
 class TeacherRequests(APIView):
