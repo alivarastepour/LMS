@@ -12,7 +12,7 @@ const Background = lazy(() => import("./Components/Background/Background"));
 export const authContext = createContext(false);
 
 const App = () => {
-  const [auth, setAuth] = useState(false);
+  const [auth, setAuth] = useState(sessionStorage.getItem("token"));
 
   return (
     <Suspense fallback={<Spinner color={{ c: "#8b9ce8" }} />}>
