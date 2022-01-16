@@ -62,14 +62,36 @@ class SchoolView(APIView):
 class StudentRequests(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager | IsTeacher)
 
+    def get_accepted(self, school):
+        return StudentRequest.objects.filter(clazz__school=school).filter(status='accepted')
+
+    def get_rejected(self, school):
+        return StudentRequest.objects.filter(clazz__school=school).filter(status='rejected')
+
+    def get_pending(self, school):
+        return StudentRequest.objects.filter(clazz__school=school).filter(status='pending')
+
     def get(self, request):
+        filter_option = request.data.get('filter', 'all')
+        query_sets = []
         try:
-            all_classes = request.user.school.class_set.all()
+            if filter_option == 'all':
+                query_sets.append(self.get_pending(request.user.school))
+                query_sets.append(self.get_accepted(request.user.school))
+                query_sets.append(self.get_rejected(request.user.school))
+            elif filter_option == 'pending':
+                query_sets.append(self.get_pending(request.user.school))
+            elif filter_option == 'accepted':
+                query_sets.append(self.get_accepted(request.user.school))
+            elif filter_option == 'rejected':
+                query_sets.append(self.get_rejected(request.user.school))
         except Exception:
             return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
-        for cls in all_classes:
-            class_requests = cls.studentrequest_set.all()
+        for class_requests in query_sets:
+            # all_classes = query_set.objects.all()
+            # for cls in all_classes:
+            #     class_requests = cls.studentrequest_set.all()
             for req in class_requests:
                 output.append(
                     {
@@ -100,14 +122,34 @@ class StudentRequests(APIView):
 class TeacherRequests(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager)
 
+    def get_accepted(self, school):
+        return TeacherRequest.objects.filter(clazz__school=school).filter(status='accepted')
+
+    def get_rejected(self, school):
+        return TeacherRequest.objects.filter(clazz__school=school).filter(status='rejected')
+
+    def get_pending(self, school):
+        return TeacherRequest.objects.filter(clazz__school=school).filter(status='pending')
+
     def get(self, request):
+
+        filter_option = request.data.get('filter', 'all')
+        query_sets = []
         try:
-            all_classes = request.user.school.class_set.all()
+            if filter_option == 'all':
+                query_sets.append(self.get_pending(request.user.school))
+                query_sets.append(self.get_accepted(request.user.school))
+                query_sets.append(self.get_rejected(request.user.school))
+            elif filter_option == 'pending':
+                query_sets.append(self.get_pending(request.user.school))
+            elif filter_option == 'accepted':
+                query_sets.append(self.get_accepted(request.user.school))
+            elif filter_option == 'rejected':
+                query_sets.append(self.get_rejected(request.user.school))
         except Exception:
             return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
-        for cls in all_classes:
-            class_requests = cls.teacherrequest_set.all()
+        for class_requests in query_sets:
             for req in class_requests:
                 output.append(
                     {
@@ -153,7 +195,7 @@ class ClassView(APIView):
         if class_serializer.is_valid():
             clazz = class_serializer.save(school=School.objects.get(manager__username=request.user.username))
             return Response(data={
-                "name": clazz.name,
+                **clazz.to_json(),
                 "message": "Class Successfully created."}, status=200)
         # TODO: avoid duplicate naming...
         return Response(data={"message": "Something is wrong!"}, status=400)
