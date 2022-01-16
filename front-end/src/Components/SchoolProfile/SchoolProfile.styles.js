@@ -5,10 +5,11 @@ export const Wrapper = styled.div`
   height: 100%;
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
+  flex-direction: row;
   direction: rtl;
   text-align: right;
   align-content: center;
+  justify-content: space-around;
 
   .image {
     text-align: center;
@@ -19,8 +20,8 @@ export const Wrapper = styled.div`
   }
 
   img {
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     display: block;
     margin-bottom: 10px;
     border-radius: 50%;
@@ -71,7 +72,7 @@ export const Wrapper = styled.div`
 
   input {
     font-family: "vazir", sans-serif;
-    width: 500px !important;
+    width: 300px !important;
     text-align: right;
   }
   input::placeholder {

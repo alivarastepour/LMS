@@ -31,7 +31,7 @@ const SchoolProfile = () => {
     <>
       <Wrapper>
         <div className="flex-item image">
-          <img src={(info && info.image) || photo} alt="img not found" />
+          <img src={info.image || photo} alt="img not found" />
           <button className="button">
             <label htmlFor="photo">تغییر عکس مدرسه</label>
             <input
@@ -42,41 +42,39 @@ const SchoolProfile = () => {
             />
           </button>
         </div>
-        <div className="flex-item content">
-          <div className="label">شناسه مدرسه</div>
-          <Field
-            edit={edit}
-            content={info && info.school_id}
-            editable={false}
-          />
-        </div>
-        <div className="flex-item content">
-          <div className="label">نام مدرسه</div>
-          <Field
-            edit={edit}
-            content={info && info.name}
-            editable={true}
-            onChange={{ change: dispatch, type: "SET-SCHOOL-NAME" }}
-          />
-        </div>
-        <div className="flex-item content">
-          <div className="label">آدرس مدرسه</div>
-          <Field
-            edit={edit}
-            content={info && info.address}
-            editable={true}
-            onChange={{ change: dispatch, type: "SET-SCHOOL-ADDRESS" }}
-          />
-        </div>
-        <div className="flex-item content change">
-          <button
-            onClick={() => {
-              schoolProfileEditHandler(edit, setEdit, info, URL);
-            }}
-            className="button"
-          >
-            {edit ? "ثبت تغییرات" : "تغییر اطلاعات"}
-          </button>
+        <div className="flex-item">
+          <div className="content">
+            <div className="label">شناسه مدرسه</div>
+            <Field edit={edit} content={info.school_id} editable={false} />
+          </div>
+          <div className="content">
+            <div className="label">نام مدرسه</div>
+            <Field
+              edit={edit}
+              content={info.name}
+              editable={true}
+              onChange={{ change: dispatch, type: "SET-SCHOOL-NAME" }}
+            />
+          </div>
+          <div className="content">
+            <div className="label">آدرس مدرسه</div>
+            <Field
+              edit={edit}
+              content={info.address}
+              editable={true}
+              onChange={{ change: dispatch, type: "SET-SCHOOL-ADDRESS" }}
+            />
+          </div>
+          <div className="content change">
+            <button
+              onClick={() => {
+                schoolProfileEditHandler(edit, setEdit, info, URL);
+              }}
+              className="button"
+            >
+              {edit ? "ثبت تغییرات" : "تغییر اطلاعات"}
+            </button>
+          </div>
         </div>
       </Wrapper>
     </>

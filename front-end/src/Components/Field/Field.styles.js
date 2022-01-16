@@ -36,7 +36,6 @@ export const Wrapper = styled.div`
     text-align: right;
     font-size: 1.2rem;
     font-family: "vazir", sans-serif;
-    padding-right: 10px;
     color: #50a0de;
 
     @media only screen and (max-width: 1375px) {
