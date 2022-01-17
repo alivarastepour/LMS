@@ -7,8 +7,9 @@ import { Switch } from "@mui/material";
 import { ClassSettingsReducer } from "./classSettings.reducer";
 
 import useGet from "../../custom-hooks/useGet";
+import { updateClassSettings } from "./classSettings.handler";
 
-const ClassSettings = ({ class_id }) => {
+const ClassSettings = ({ class_id, setOpenSettings }) => {
   const fakeData = {
     name: " ",
     id: " ",
@@ -177,8 +178,18 @@ const ClassSettings = ({ class_id }) => {
           />
         </div>
 
-        <button className="button acc">ذخیره</button>
-        <button className="button rej">نمی‌خوام</button>
+        <button
+          onClick={() => {
+            updateClassSettings(value);
+            setOpenSettings(false);
+          }}
+          className="button acc"
+        >
+          ذخیره
+        </button>
+        <button onClick={() => setOpenSettings(false)} className="button rej">
+          نمی‌خوام
+        </button>
       </Wrapper>
     </>
   );

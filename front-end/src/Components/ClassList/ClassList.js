@@ -25,7 +25,7 @@ const CreateClass = () => {
 
   const [className, setClassName] = useState("");
 
-  const [openSetting, setOpenSetting] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
 
   const [id, setId] = useState("");
 
@@ -99,16 +99,15 @@ const CreateClass = () => {
                         className="button-table"
                         onClick={() => {
                           setId(e.id);
-
-                          setOpenSetting(true);
+                          setOpenSettings(true);
                         }}
                       >
                         تنظیمات کلاس
                       </button>
                       <Dialog
-                        open={openSetting}
+                        open={openSettings}
                         onClose={() => {
-                          setOpenSetting(false);
+                          setOpenSettings(false);
                         }}
                       >
                         <DialogTitle
@@ -116,7 +115,10 @@ const CreateClass = () => {
                         >
                           تنظیمات
                         </DialogTitle>
-                        <ClassSettings class_id={id} />
+                        <ClassSettings
+                          class_id={id}
+                          setOpenSettings={setOpenSettings}
+                        />
                       </Dialog>
                     </td>
                   </tr>
