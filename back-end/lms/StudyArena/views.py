@@ -211,7 +211,6 @@ class ClassView(APIView):
         # TODO: avoid duplicate naming...
         return Response(data={
             "message": "Something is wrong!",
-            "errors": class_serializer.errors,
         }, status=400)
 
     def put(self, request, class_id):
@@ -220,6 +219,9 @@ class ClassView(APIView):
         if class_serializer.is_valid():
             class_serializer.save()
             return Response(data={"message": "Class Successfully updated."}, status=200)
+        print("----------------------")
+        print(class_serializer.errors)
+        print("----------------------")
         return Response(data={
             "message": "Something is wrong!",
             "errors": class_serializer.errors,
