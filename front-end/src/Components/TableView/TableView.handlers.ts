@@ -1,6 +1,15 @@
 import axios from "axios";
 import { ChangeEvent } from "react";
 
+type Tuser = {
+  class_name: string;
+  id: number;
+  name: string;
+  photo: string;
+  status: string;
+  username: string;
+};
+
 export const handleSearch = (
   e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   obj: { name: string; username: string }[],
@@ -27,17 +36,15 @@ export const handleSearch = (
 };
 
 export const userHandler = (
-  user: any,
+  user: Tuser,
   type: string,
   status: string,
   setInformation: Function,
   setStaticInformation: Function
-) => {
+): void => {
   const data = { operation: status };
   const TOKEN = sessionStorage.getItem("token");
-  const URL = `http://localhost:8000/study/${type}-request/${parseInt(
-    user.id
-  )}/`;
+  const URL = `http://localhost:8000/study/${type}-request/${user.id}/`;
 
   axios
     .post(URL, data, {
@@ -54,19 +61,19 @@ export const userHandler = (
 const handleTableChange = (
   setInformation: Function,
   setStaticInformation: Function,
-  user: any,
+  user: Tuser,
   status: string
-) => {
-  setInformation((prev: any) => {
-    return prev.map((item: any) => {
+): void => {
+  setInformation((prev: Tuser[]) => {
+    return prev.map((item: Tuser) => {
       if (item.id === user.id) {
         item.status = status;
       }
       return item;
     });
   });
-  setStaticInformation((prev: any) => {
-    return prev.map((item: any) => {
+  setStaticInformation((prev: Tuser[]) => {
+    return prev.map((item: Tuser) => {
       if (item.id === user.id) {
         item.status = status;
       }
