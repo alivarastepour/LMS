@@ -51,6 +51,7 @@ class Class(models.Model):
     autoStartRecording = models.BooleanField(default=True)
     webcamsOnlyForModerator = models.BooleanField(default=True)
     maxParticipants = models.IntegerField(default=0)
+    allowStartStopRecording = models.BooleanField(default=True)
 
     def to_json(self):
         teacher = self.teacherrequest_set.filter(status__exact='pending')
@@ -62,6 +63,7 @@ class Class(models.Model):
 
     def get_settings(self):
         return {
+            "id": self.id,
             "name": self.name,
             "meetingID": self.meetingID,
             "welcome": self.welcome,
@@ -70,8 +72,8 @@ class Class(models.Model):
             "autoStartRecording": self.autoStartRecording,
             "webcamsOnlyForModerator": self.webcamsOnlyForModerator,
             "maxParticipants": self.maxParticipants,
+            "allowStartStopRecording": self.allowStartStopRecording,
         }
-
 
 
 class Teacher(models.Model):
