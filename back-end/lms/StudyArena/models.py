@@ -42,8 +42,8 @@ class School(models.Model):
 class Class(models.Model):
     name = models.CharField(max_length=50)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
-    meetingID = models.CharField(max_length=20)
-    welcome = models.CharField(max_length=1000,default='خوش آمدید.')
+    meetingID = models.CharField(default='', max_length=20)
+    welcome = models.CharField(max_length=1000, default='خوش آمدید.')
     duration = models.IntegerField(default=0)
     moderatorPW = models.CharField(default='m0D3R@1oR', max_length=10)
     attendeePW = models.CharField(default='@tT3nd33', max_length=10)
@@ -59,6 +59,19 @@ class Class(models.Model):
             "name": self.name,
             "teacher": teacher[0].teacher.user.fullname if teacher.count() != 0 else "unknown",
         }
+
+    def get_settings(self):
+        return {
+            "name": self.name,
+            "meetingID": self.meetingID,
+            "welcome": self.welcome,
+            "duration": self.duration,
+            "record": self.record,
+            "autoStartRecording": self.autoStartRecording,
+            "webcamsOnlyForModerator": self.webcamsOnlyForModerator,
+            "maxParticipants": self.maxParticipants,
+        }
+
 
 
 class Teacher(models.Model):
