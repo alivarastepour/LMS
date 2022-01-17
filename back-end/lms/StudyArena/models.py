@@ -42,6 +42,15 @@ class School(models.Model):
 class Class(models.Model):
     name = models.CharField(max_length=50)
     school = models.ForeignKey(School, on_delete=models.CASCADE)
+    meetingID = models.CharField(max_length=20)
+    welcome = models.CharField(max_length=1000,default='خوش آمدید.')
+    duration = models.IntegerField(default=0)
+    moderatorPW = models.CharField(default='m0D3R@1oR', max_length=10)
+    attendeePW = models.CharField(default='@tT3nd33', max_length=10)
+    record = models.BooleanField(default=True)
+    autoStartRecording = models.BooleanField(default=True)
+    webcamsOnlyForModerator = models.BooleanField(default=True)
+    maxParticipants = models.IntegerField(default=0)
 
     def to_json(self):
         teacher = self.teacherrequest_set.filter(status__exact='pending')
