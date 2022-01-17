@@ -16,9 +16,10 @@ class SchoolSerializer(serializers.ModelSerializer):
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
-        fields = ('name',)
+        fields = ('__all__')
 
     def create(self, validated_data):
         c = Class.objects.create(**validated_data)
         c.save()
         return c
+
