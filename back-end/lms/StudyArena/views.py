@@ -165,7 +165,7 @@ class TeacherRequests(APIView):
 
     def post(self, request, teacher_id):
         teacher_req = get_object_or_404(TeacherRequest, id=teacher_id)
-        if request.data.get('operation', 'reject') == 'accept':
+        if request.data.get('operation', 'rejected') == 'accepted':
             teacher_req.status = 'accepted'
             teacher_req.save()
             return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} accepted for Class '
