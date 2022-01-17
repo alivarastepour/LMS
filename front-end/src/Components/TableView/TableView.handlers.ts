@@ -26,10 +26,18 @@ export const handleSearch = (
   setData(newObj);
 };
 
-export const userHandler = (id: string, type: string, status: string) => {
+export const userHandler = (
+  user: any,
+  type: string,
+  status: string,
+  setInformation: Function,
+  setStaticInformation: Function
+) => {
   const data = { operation: status };
   const TOKEN = sessionStorage.getItem("token");
-  const URL = `http://localhost:8000/study/${type}-request/${parseInt(id)}/`;
+  const URL = `http://localhost:8000/study/${type}-request/${parseInt(
+    user.id
+  )}/`;
 
   axios
     .post(URL, data, {
@@ -37,6 +45,32 @@ export const userHandler = (id: string, type: string, status: string) => {
         Authorization: `Token ${TOKEN}`,
       },
     })
-    .then((res) => console.log(res))
+    .then(() =>
+      handleTableChange(setInformation, setStaticInformation, user, status)
+    )
     .catch((e) => console.log(e));
+};
+
+const handleTableChange = (
+  setInformation: Function,
+  setStaticInformation: Function,
+  user: any,
+  status: string
+) => {
+  setInformation((prev: any) => {
+    return prev.map((item: any) => {
+      if (item.id === user.id) {
+        item.status = status;
+      }
+      return item;
+    });
+  });
+  setStaticInformation((prev: any) => {
+    return prev.map((item: any) => {
+      if (item.id === user.id) {
+        item.status = status;
+      }
+      return item;
+    });
+  });
 };

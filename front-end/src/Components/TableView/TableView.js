@@ -27,30 +27,54 @@ const TableView = ({ content }) => {
     setStaticInformation(data.requests);
   }, [data]);
 
-  const renderButton = (state, id) => {
-    if (state === "accepted") {
+  const renderButton = (user) => {
+    if (user.status === "accepted") {
       return (
         <>
           <div className="acc st">پذیرفته شده</div>
           <button
-            onClick={() => userHandler(id, content, "reject")}
+            onClick={() =>
+              userHandler(
+                user,
+                content,
+                "rejected",
+                setInformation,
+                setStaticInformation
+              )
+            }
             className="st-button reject"
           >
             حذف
           </button>
         </>
       );
-    } else if (state === "pending") {
+    } else if (user.status === "pending") {
       return (
         <div>
           <button
-            onClick={() => userHandler(id, content, "accept")}
+            onClick={() =>
+              userHandler(
+                user,
+                content,
+                "accepted",
+                setInformation,
+                setStaticInformation
+              )
+            }
             className="st-button accept"
           >
             پذیرفتن
           </button>
           <button
-            onClick={() => userHandler(id, content, "reject")}
+            onClick={() =>
+              userHandler(
+                user,
+                content,
+                "rejected",
+                setInformation,
+                setStaticInformation
+              )
+            }
             className="st-button reject"
           >
             رد کردن
@@ -101,7 +125,7 @@ const TableView = ({ content }) => {
                   <td>{element.id}</td>
                   <td>{element.name}</td>
                   <td>{element.username}</td>
-                  <td>{renderButton(element.status, element.id)}</td>
+                  <td>{renderButton(element)}</td>
                 </tr>
               );
             })
