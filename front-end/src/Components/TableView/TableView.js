@@ -6,20 +6,7 @@ import SearchBox from "../SearchBox/SearchBox";
 import { Table } from "./TableView.styles";
 
 import useGet from "../../custom-hooks/useGet";
-import { handleSearch } from "./TableView.handlers";
-
-const fakeData = [
-  { name: "رضا", status: "pending", username: 8567858, id: 3 },
-  { name: "مجید", status: "pending", username: "67547", id: 8 },
-  { name: "سهراب", status: "pending", username: 35435, id: 6 },
-  { name: "علی", status: "accepted", username: 1234, id: 1 },
-  { name: "تقی", status: "accepted", username: 345354, id: 4 },
-  { name: "نقی", status: "accepted", username: 675745, id: 5 },
-  { name: "خدا", status: "accepted", username: "4874", id: 10 },
-  { name: "متین", status: "rejected", username: "8677586", id: 7 },
-  { name: "محبوب", status: "rejected", username: "5353", id: 9 },
-  { name: "محمد", status: "rejected", username: 54654, id: 2 },
-];
+import { handleSearch, userHandler } from "./TableView.handlers";
 
 const TableView = ({ content }) => {
   const URL = `http://localhost:8000/study/${content}-list/`;
@@ -40,19 +27,34 @@ const TableView = ({ content }) => {
     setStaticInformation(data.requests);
   }, [data]);
 
-  const renderButton = (state) => {
+  const renderButton = (state, id) => {
     if (state === "accepted") {
       return (
         <>
           <div className="acc st">پذیرفته شده</div>
-          <button className="st-button reject">حذف</button>
+          <button
+            onClick={() => userHandler(id, content, "reject")}
+            className="st-button reject"
+          >
+            حذف
+          </button>
         </>
       );
     } else if (state === "pending") {
       return (
         <div>
-          <button className="st-button accept">پذیرفتن</button>
-          <button className="st-button reject">رد کردن</button>
+          <button
+            onClick={() => userHandler(id, content, "accept")}
+            className="st-button accept"
+          >
+            پذیرفتن
+          </button>
+          <button
+            onClick={() => userHandler(id, content, "reject")}
+            className="st-button reject"
+          >
+            رد کردن
+          </button>
         </div>
       );
     } else {
@@ -92,14 +94,14 @@ const TableView = ({ content }) => {
             <td className="header">وضعیت</td>
           </tr>
 
-          {fakeData ? (
-            fakeData.map((element) => {
+          {information && information.length !== 0 ? (
+            information.map((element) => {
               return (
                 <tr className="hover" key={element.id}>
                   <td>{element.id}</td>
                   <td>{element.name}</td>
                   <td>{element.username}</td>
-                  <td>{renderButton(element.status)}</td>
+                  <td>{renderButton(element.status, element.id)}</td>
                 </tr>
               );
             })

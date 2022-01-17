@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 600px;
-  height: 650px;
+  height: 540px;
   direction: rtl;
   text-align: right;
   padding-right: 30px;
