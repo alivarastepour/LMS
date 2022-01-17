@@ -1,21 +1,59 @@
+import { useEffect, useReducer } from "react";
+
 import { Wrapper } from "./ClassSettings.styles";
+
 import { Switch } from "@mui/material";
+
 import { ClassSettingsReducer } from "./classSettings.reducer";
-import { useReducer } from "react";
-const ClassSettings = () => {
+
+import useGet from "../../custom-hooks/useGet";
+
+const ClassSettings = ({ class_id }) => {
   const fakeData = {
-    name: "کلاس اول گل‌ها",
-    id: "salamp",
-    msg: "به کلاس گلهای لاله خوش آمدید",
-    maxAttendees: 32,
-    duration: 100,
-    rec: true,
-    autoRec: true,
-    pauseRec: true,
-    msgAttendees: true,
-    wcAttendees: true,
+    name: " ",
+    id: " ",
+    meetingID: " ",
+    welcome: " ",
+    maxParticipants: 0,
+    duration: 0,
+    record: false,
+    autoStartRecording: false,
+    allowStartStopRecording: false,
+    webcamsOnlyForModerator: false,
   };
+
+  const URL = `http://localhost:8000/study/class/${class_id}/`;
+  const TOKEN = sessionStorage.getItem("token");
+
+  const { data } = useGet(URL, TOKEN);
+
   const [value, dispatch] = useReducer(ClassSettingsReducer, fakeData);
+
+  useEffect(() => {
+    dispatch({ type: "SET-CLASS-NAME", payload: data.name });
+    dispatch({ type: "SET-CLASS-WELCOME-MSG", payload: data.welcome });
+    dispatch({
+      type: "SET-CLASS-MAX-ATTENDEES",
+      payload: data.maxParticipants,
+    });
+    dispatch({ type: "SET-CLASS-DURATION", payload: data.duration });
+    dispatch({ type: "SET-CLASS-RECORD", payload: data.record });
+    dispatch({
+      type: "SET-CLASS-AUTO-RECORD",
+      payload: data.autoStartRecording,
+    });
+    dispatch({
+      type: "SET-CLASS-PAUSE-RECORD",
+      payload: data.allowStartStopRecording,
+    });
+    dispatch({
+      type: "SET-CLASS-WC-ATTENDEES",
+      payload: data.webcamsOnlyForModerator,
+    });
+    dispatch({ type: "SET-MEETING-ID", payload: data.meetingID });
+    dispatch({ type: "SET-ID", payload: data.id });
+  }, [data]);
+
   return (
     <>
       <Wrapper>
@@ -27,7 +65,6 @@ const ClassSettings = () => {
           className="input"
           type="text"
           placeholder={value.name}
-          value={value.name}
           onChange={(e) =>
             dispatch({ type: "SET-CLASS-NAME", payload: e.target.value })
           }
@@ -43,8 +80,7 @@ const ClassSettings = () => {
           onChange={(e) =>
             dispatch({ type: "SET-CLASS-WELCOME-MSG", payload: e.target.value })
           }
-          placeholder={value.msg}
-          value={value.msg}
+          placeholder={value.welcome}
         />
 
         <label className="label" htmlFor="">
@@ -54,14 +90,13 @@ const ClassSettings = () => {
           id="max-attendees"
           className="input"
           type="number"
-          placeholder={value.maxAttendees}
           onChange={(e) =>
             dispatch({
               type: "SET-CLASS-MAX-ATTENDEES",
               payload: e.target.value,
             })
           }
-          value={value.maxAttendees}
+          placeholder={value.maxParticipants}
         />
 
         <label className="label" htmlFor="duration">
@@ -73,11 +108,10 @@ const ClassSettings = () => {
           type="number"
           min={1}
           max={120}
-          placeholder={value.duration}
           onChange={(e) =>
             dispatch({ type: "SET-CLASS-DURATION", payload: e.target.value })
           }
-          value={value.duration}
+          placeholder={value.duration}
         />
         <div>
           <label className="label switch" htmlFor="rec">
@@ -85,7 +119,7 @@ const ClassSettings = () => {
           </label>
 
           <Switch
-            checked={value.rec}
+            checked={!!value.record}
             onChange={(e) =>
               dispatch({ type: "SET-CLASS-RECORD", payload: e.target.checked })
             }
@@ -98,14 +132,14 @@ const ClassSettings = () => {
           </label>
 
           <Switch
-            checked={value.autoRec}
+            checked={!!value.autoStartRecording}
+            disabled={!value.record}
             onChange={(e) =>
               dispatch({
                 type: "SET-CLASS-AUTO-RECORD",
                 payload: e.target.checked,
               })
             }
-            disabled={!value.rec}
             id="auto-rec"
           />
         </div>
@@ -115,8 +149,8 @@ const ClassSettings = () => {
           </label>
 
           <Switch
-            checked={value.pauseRec}
-            disabled={!value.rec}
+            checked={!!value.allowStartStopRecording}
+            disabled={!value.record}
             id="pause-rec"
             onChange={(e) =>
               dispatch({
@@ -138,7 +172,7 @@ const ClassSettings = () => {
                 payload: e.target.checked,
               })
             }
-            checked={value.wcAttendees}
+            checked={!!value.webcamsOnlyForModerator}
             id="wc"
           />
         </div>

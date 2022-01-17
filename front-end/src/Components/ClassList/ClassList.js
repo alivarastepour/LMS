@@ -27,6 +27,8 @@ const CreateClass = () => {
 
   const [openSetting, setOpenSetting] = useState(false);
 
+  const [id, setId] = useState("");
+
   useEffect(() => {
     setStaticInfo(data.classes);
     setInfo(data.classes);
@@ -95,22 +97,26 @@ const CreateClass = () => {
                       <button className="button-table rem">حذف</button>
                       <button
                         className="button-table"
-                        onClick={() => setOpenSetting(true)}
+                        onClick={() => {
+                          setId(e.id);
+
+                          setOpenSetting(true);
+                        }}
                       >
                         تنظیمات کلاس
                       </button>
                       <Dialog
-                        sx={{}}
-                        className="a"
                         open={openSetting}
-                        onClose={() => setOpenSetting(false)}
+                        onClose={() => {
+                          setOpenSetting(false);
+                        }}
                       >
                         <DialogTitle
                           sx={{ textAlign: "right", fontFamily: "vazir" }}
                         >
                           تنظیمات
                         </DialogTitle>
-                        <ClassSettings />
+                        <ClassSettings class_id={id} />
                       </Dialog>
                     </td>
                   </tr>
