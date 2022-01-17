@@ -209,7 +209,10 @@ class ClassView(APIView):
                 **clazz.to_json(),
                 "message": "Class Successfully created."}, status=200)
         # TODO: avoid duplicate naming...
-        return Response(data={"message": "Something is wrong!"}, status=400)
+        return Response(data={
+            "message": "Something is wrong!",
+            "errors": class_serializer.errors,
+        }, status=400)
 
     def put(self, request, class_id):
         clazz = get_object_or_404(Class, id=class_id)
@@ -217,4 +220,7 @@ class ClassView(APIView):
         if class_serializer.is_valid():
             class_serializer.save()
             return Response(data={"message": "Class Successfully updated."}, status=200)
-        return Response(data={"message": "Something is wrong!"}, status=400)
+        return Response(data={
+            "message": "Something is wrong!",
+            "errors": class_serializer.errors,
+        }, status=400)
