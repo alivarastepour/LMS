@@ -181,19 +181,30 @@ class ClassView(APIView):
     serializer_class = ClassSerializer
     permission_classes = (IsAuthenticated, IsManager)
 
-    def get(self, request):
-        try:
-            classes = Class.objects.filter(school__id__exact=request.user.school.id)
-        except Exception:
-            return Response({"class_count": 0}, status=200)
+    def get(self, request, *args, **kwargs):
+        clazz_id = kwargs.get('class_id', None)
+        if clazz_id is None:
+            try:
+                classes = Class.objects.filter(school__id__exact=request.user.school.id)
+            except Exception:
+                return Response({"class_count": 0}, status=200)
 
-        return Response({"class_count": classes.all().count(), "classes": [
-            clazz.to_json() for clazz in classes]}, status=200)
+            return Response({"class_count": classes.all().count(), "classes": [
+                clazz.to_json() for clazz in classes]}, status=200)
+        else:
+            clazz = Class.objects.get(id=clazz_id)
+            return Response(data={
+                **clazz.get_settings()
+            }, status=200)
 
     def post(self, request):
-        class_serializer = ClassSerializer(data=request.data)
+        class_serializer = ClassSerializer(data=request.data, partial=True)
         if class_serializer.is_valid():
-            clazz = class_serializer.save(school=School.objects.get(manager__username=request.user.username))
+            school = School.objects.get(manager__username=request.user.username)
+
+            clazz = class_serializer.save(school=school)
+            clazz.meetingID = f'{clazz.school.school_id}_{clazz.id}'
+            clazz.save()
             return Response(data={
                 **clazz.to_json(),
                 "message": "Class Successfully created."}, status=200)
