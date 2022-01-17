@@ -4,9 +4,6 @@ export const ClassSettingsReducer = (state, action) => {
     case "SET-CLASS-NAME":
       newState = { ...state, name: action.payload };
       break;
-    case "SET-CLASS-ID":
-      newState = { ...state, id: action.payload };
-      break;
     case "SET-CLASS-WELCOME-MSG":
       newState = { ...state, msg: action.payload };
       break;
@@ -24,9 +21,6 @@ export const ClassSettingsReducer = (state, action) => {
       break;
     case "SET-CLASS-PAUSE-RECORD":
       newState = { ...state, pauseRec: action.payload };
-      break;
-    case "SET-CLASS-MSG-ATTENDEES":
-      newState = { ...state, msgAttendees: action.payload };
       break;
     case "SET-CLASS-WC-ATTENDEES":
       newState = { ...state, wcAttendees: action.payload };

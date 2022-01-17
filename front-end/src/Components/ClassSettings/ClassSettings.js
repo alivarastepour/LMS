@@ -33,20 +33,6 @@ const ClassSettings = () => {
           }
         />
 
-        <label className="label" htmlFor="id">
-          شناسه کلاس
-        </label>
-        <input
-          id="id"
-          className="input"
-          type="text"
-          onChange={(e) =>
-            dispatch({ type: "SET-CLASS-ID", payload: e.target.value })
-          }
-          placeholder={value.id}
-          value={value.id}
-        />
-
         <label className="label" htmlFor="msg">
           پیام خوش‌آمد
         </label>
@@ -138,22 +124,6 @@ const ClassSettings = () => {
                 payload: e.target.checked,
               })
             }
-          />
-        </div>
-        <div>
-          <label className="label switch" htmlFor="pm">
-            پیام شرکت کننده
-          </label>
-
-          <Switch
-            onChange={(e) =>
-              dispatch({
-                type: "SET-CLASS-MSG-ATTENDEES",
-                payload: e.target.checked,
-              })
-            }
-            checked={value.msgAttendees}
-            id="pm"
           />
         </div>
         <div>
