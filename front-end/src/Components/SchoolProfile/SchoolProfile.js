@@ -25,7 +25,6 @@ const SchoolProfile = () => {
     dispatch({ type: "SET-SCHOOL-NAME", payload: data.name });
     dispatch({ type: "SET-PHOTO", payload: data.image });
   }, [data]);
-  console.log(info);
 
   return (
     <>
