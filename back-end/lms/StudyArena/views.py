@@ -107,7 +107,7 @@ class StudentRequests(APIView):
 
     def post(self, request, student_id):
         student_req = get_object_or_404(StudentRequest, id=student_id)
-        if request.data.get('operation', 'reject') == 'accept':
+        if request.data.get('operation', 'rejected') == 'accepted':
             student_req.status = 'accepted'
             student_req.save()
             return Response(data={'message': f'Student {student_req.student.user.fullname} accepted for Class '
@@ -192,7 +192,7 @@ class ClassView(APIView):
             return Response({"class_count": classes.all().count(), "classes": [
                 clazz.to_json() for clazz in classes]}, status=200)
         else:
-            clazz = Class.objects.get(id=clazz_id)
+            clazz = get_object_or_404(Class, id=clazz_id)
             return Response(data={
                 **clazz.get_settings()
             }, status=200)
@@ -209,4 +209,12 @@ class ClassView(APIView):
                 **clazz.to_json(),
                 "message": "Class Successfully created."}, status=200)
         # TODO: avoid duplicate naming...
+        return Response(data={"message": "Something is wrong!"}, status=400)
+
+    def put(self, request, class_id):
+        clazz = get_object_or_404(Class, id=class_id)
+        class_serializer = ClassSerializer(instance=clazz, data=request.data, partial=True)
+        if class_serializer.is_valid():
+            class_serializer.save()
+            return Response(data={"message": "Class Successfully updated."}, status=200)
         return Response(data={"message": "Something is wrong!"}, status=400)
