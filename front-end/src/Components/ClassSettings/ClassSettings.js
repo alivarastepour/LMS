@@ -120,9 +120,9 @@ const ClassSettings = ({ class_id }) => {
 
           <Switch
             checked={!!value.record}
-            onChange={(e) =>
-              dispatch({ type: "SET-CLASS-RECORD", payload: e.target.checked })
-            }
+            onChange={(e) => {
+              dispatch({ type: "SET-CLASS-RECORD", payload: e.target.checked });
+            }}
             id="rec"
           />
         </div>

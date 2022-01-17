@@ -14,7 +14,19 @@ export const ClassSettingsReducer = (state, action) => {
       newState = { ...state, duration: action.payload };
       break;
     case "SET-CLASS-RECORD":
-      newState = { ...state, record: action.payload };
+      if (!action.paylaod) {
+        newState = {
+          ...state,
+          record: action.payload,
+          autoStartRecording: !!action.paylaod,
+          allowStartStopRecording: !!action.paylaod,
+        };
+      } else {
+        newState = {
+          ...state,
+          record: action.payload,
+        };
+      }
       break;
     case "SET-CLASS-AUTO-RECORD":
       newState = { ...state, autoStartRecording: action.payload };
