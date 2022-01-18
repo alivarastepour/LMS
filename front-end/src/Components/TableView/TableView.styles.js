@@ -94,4 +94,15 @@ export const Table = styled.table`
   .rej {
     color: #ff5c5c;
   }
+
+  .flex-td {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .name {
+    margin-right: 5px;
+  }
 `;

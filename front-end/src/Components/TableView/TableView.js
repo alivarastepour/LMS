@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Avatar } from "@mui/material";
 
 import AutoComplete from "../AutoComplete/AutoComplete";
 import SearchBox from "../SearchBox/SearchBox";
@@ -124,7 +125,14 @@ const TableView = ({ content }) => {
               return (
                 <tr className="hover" key={element.id}>
                   <td>{element.id}</td>
-                  <td>{element.name}</td>
+                  <td>
+                    <div className="flex-td">
+                      <div>
+                        <Avatar src={element.photo} />
+                      </div>
+                      <div className="name">{element.name}</div>
+                    </div>
+                  </td>
                   <td>{element.username}</td>
                   {content === "teacher" && <td>{element.class_name}</td>}
                   <td>{renderButton(element)}</td>
