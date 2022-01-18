@@ -4,16 +4,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Wrapper } from "./Dashboard.styles";
 import Spinner from "../Spinner/Spinner";
 import { authContext } from "../../App";
+import AccessibilityIdentifier from "./AccessibilityIdentifier";
 
 const Profile = lazy(() => import("../Profile/Profile"));
 const DashboardHeader = lazy(() => import("./Dashboard.header"));
-const SchoolManagement = lazy(() =>
-  import("../SchoolManagement/SchoolManagement")
-);
+
 const Footer = lazy(() => import("../Footer/Footer"));
 
 const Dashboard = () => {
   const nav = () => navigator("/");
+  const role = "student";
 
   const defaultPage = useParams().profile;
 
@@ -34,7 +34,7 @@ const Dashboard = () => {
       <Wrapper>
         <Suspense fallback={<Spinner color={{ c: "white" }} />}>
           <DashboardHeader show={show} setShow={setShow} />
-          {show ? <Profile /> : <SchoolManagement />}
+          {show ? <Profile /> : <AccessibilityIdentifier role={role} />}
         </Suspense>
       </Wrapper>
       <Footer />
