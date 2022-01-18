@@ -59,10 +59,3 @@ export const valid_email = (email: string, dispatch: Function) => {
   if (!valid) dispatch({ type: "VALID-EMAIL", payload: false });
   else dispatch({ type: "VALID-EMAIL", payload: true });
 };
-
-const clearFields = (dispatch: Function) => {
-  dispatch({ type: "SET-USERNAME", payload: "" });
-  dispatch({ type: "SET-PASSWORD", payload: "" });
-  dispatch({ type: "SET-EMAIL", payload: "" });
-  dispatch({ type: "SET-ROLE", payload: "" });
-};

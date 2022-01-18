@@ -16,22 +16,22 @@ export const submitHandler = (
   setAuth: Function,
   nav: Function
 ): void => {
-  let vu, vp;
+  let validUsername, validPassword;
   if (state.username.length !== 10) {
     dispatch({ type: "VALID-USERNAME", payload: false });
-    vu = false;
+    validUsername = false;
   } else {
     dispatch({ type: "VALID-USERNAME", payload: true });
-    vu = true;
+    validUsername = true;
   }
   if (state.password.trim() === "") {
     dispatch({ type: "VALID-PASSWORD", payload: false });
-    vp = false;
+    validPassword = false;
   } else {
     dispatch({ type: "VALID-PASSWORD", payload: true });
-    vp = true;
+    validPassword = true;
   }
-  if (vu && vp) {
+  if (validUsername && validPassword) {
     axios
       .post("http://localhost:8000/auth/login/", {
         username: state.username,

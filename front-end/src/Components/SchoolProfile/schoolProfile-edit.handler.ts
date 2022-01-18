@@ -12,7 +12,6 @@ export const schoolProfileEditHandler = (
       .put(url, info, {
         headers: { Authorization: `Token ${TOKEN}` },
       })
-      .then((a) => console.log(a))
       .catch((e) => console.log(e));
   }
   setEdit(!edit);
