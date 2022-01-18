@@ -2,7 +2,17 @@ import { Link } from "react-router-dom";
 
 import { Wrapper } from "./Dashboad.header.styles";
 
-const DashboardHeader = ({ show, setShow }) => {
+const DashboardHeader = ({ show, setShow, dashboradTitle }) => {
+  const holder = () => {
+    if (dashboradTitle === "manager") {
+      return "مدیریت مدرسه";
+    } else if (dashboradTitle === "teacher") {
+      return "مدیریت کلاس‌ها";
+    } else {
+      return "کلاس‌ها";
+    }
+  };
+
   return (
     <>
       <Wrapper>
@@ -22,7 +32,7 @@ const DashboardHeader = ({ show, setShow }) => {
               onClick={() => setShow(false)}
               className={`header-button ${show ? "hide" : "show"}`}
             >
-              مدیریت مدرسه
+              {holder()}
             </button>
           </Link>
         </div>

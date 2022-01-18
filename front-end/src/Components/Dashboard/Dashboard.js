@@ -33,7 +33,11 @@ const Dashboard = () => {
     <>
       <Wrapper>
         <Suspense fallback={<Spinner color={{ c: "white" }} />}>
-          <DashboardHeader show={show} setShow={setShow} />
+          <DashboardHeader
+            show={show}
+            setShow={setShow}
+            dashboradTitle={role}
+          />
           {show ? <Profile /> : <AccessibilityIdentifier role={role} />}
         </Suspense>
       </Wrapper>
