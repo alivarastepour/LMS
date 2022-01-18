@@ -177,7 +177,10 @@ const ClassSettings = ({ class_id, setOpenSettings }) => {
             id="wc"
           />
         </div>
-
+        <div className="flex-id">
+          <div className="title-id">شناسه کلاس:</div>
+          <div className="id">{data.meetingID}</div>
+        </div>
         <button
           onClick={() => {
             updateClassSettings(value);

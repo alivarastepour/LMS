@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 600px;
-  height: 540px;
+  height: 600px;
   direction: rtl;
   text-align: right;
   padding-right: 30px;
@@ -71,5 +71,26 @@ export const Wrapper = styled.div`
 
   .acc:hover {
     opacity: 0.9;
+  }
+
+  .ltr {
+    direction: ltr;
+    text-align: left;
+  }
+
+  .flex-id {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    margin-top: 20px;
+  }
+
+  .id {
+    font-family: sans-serif;
+    font-size: 1.2rem;
+  }
+
+  .title-id {
+    font-size: 1.2rem;
   }
 `;
