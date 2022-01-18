@@ -1,4 +1,5 @@
 import SchoolManagement from "../SchoolManagement/SchoolManagement";
+import StudentManagement from "../StudentManagement/StudentManagement";
 
 const AccessibilityIdentifier = ({ role }) => {
   if (role === "manager") {
@@ -6,7 +7,7 @@ const AccessibilityIdentifier = ({ role }) => {
   } else if (role === "teacher") {
     return <div>hi im a teacher</div>;
   } else {
-    return <div>hi im a student</div>;
+    return <StudentManagement />;
   }
 };
 export default AccessibilityIdentifier;
