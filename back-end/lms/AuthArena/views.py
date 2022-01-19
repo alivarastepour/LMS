@@ -89,7 +89,7 @@ class Profile(APIView):
         if filter_option == 'role':
             return Response({
                 'id': user.id,
-                'role': self.get_complete_role(user.role),
+                'role': 'manager' if user.role == 'M' else ('student' if user.role == 'S' else 'teacher'),
             }, status=200)
         return Response({
             # TODO: add picture address
