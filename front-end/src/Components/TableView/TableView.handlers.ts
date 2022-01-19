@@ -25,11 +25,11 @@ export const handleSearch = (
   let newObj;
   if (searchTerm === "نام کلاس") {
     newObj = obj.filter((a) => {
-      return a.name.startsWith(value);
+      return a.name.includes(value);
     });
   } else {
     newObj = obj.filter((a) => {
-      return a.username.startsWith(value);
+      return a.username.includes(value);
     });
   }
   setData(newObj);
