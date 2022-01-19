@@ -1,27 +1,35 @@
-import { useState, lazy, Suspense, useContext, useEffect } from "react";
+import {
+  useState,
+  lazy,
+  Suspense,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { Wrapper } from "./Dashboard.styles";
 import Spinner from "../Spinner/Spinner";
+import AccessibilityIdentifier from "./AccessibilityIdentifier";
+
 import { authContext } from "../../App";
 
 const Profile = lazy(() => import("../Profile/Profile"));
 const DashboardHeader = lazy(() => import("./Dashboard.header"));
-const SchoolManagement = lazy(() =>
-  import("../SchoolManagement/SchoolManagement")
-);
 const Footer = lazy(() => import("../Footer/Footer"));
 
 const Dashboard = () => {
-  const nav = () => navigator("/");
+  const navigator = useNavigate();
 
-  const defaultPage = useParams().profile;
+  const nav = useCallback(() => navigator("/"), [navigator]);
+
+  const role = "manager";
+
+  const defaultPage = useParams().management;
 
   const [show, setShow] = useState(defaultPage !== "management");
 
   const { auth } = useContext(authContext);
-
-  const navigator = useNavigate();
 
   useEffect(() => {
     if (!auth) {
@@ -33,8 +41,12 @@ const Dashboard = () => {
     <>
       <Wrapper>
         <Suspense fallback={<Spinner color={{ c: "white" }} />}>
-          <DashboardHeader show={show} setShow={setShow} />
-          {show ? <Profile /> : <SchoolManagement />}
+          <DashboardHeader
+            show={show}
+            setShow={setShow}
+            dashboradTitle={role}
+          />
+          {show ? <Profile /> : <AccessibilityIdentifier role={role} />}
         </Suspense>
       </Wrapper>
       <Footer />

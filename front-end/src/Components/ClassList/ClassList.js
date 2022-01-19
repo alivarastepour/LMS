@@ -2,7 +2,7 @@ import { Wrapper } from "./ClassList.styles";
 import SearchBox from "../SearchBox/SearchBox";
 import AutoComplete from "../AutoComplete/AutoComplete";
 import useGet from "../../custom-hooks/useGet";
-import { handleSearch, addClass } from "./classListHandlers";
+import { handleSearch, addClass, deleteClass } from "./classListHandlers";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import ClassSettings from "../ClassSettings/ClassSettings";
@@ -73,7 +73,7 @@ const CreateClass = () => {
                 <button
                   className="button"
                   onClick={() => {
-                    addClass(className);
+                    addClass(className, setInfo, setStaticInfo);
                   }}
                 >
                   افزودن
@@ -94,7 +94,14 @@ const CreateClass = () => {
                     <td>{e.name}</td>
                     <td colSpan={1}>{e.teacher || "مشخص نشده"}</td>
                     <td>
-                      <button className="button-table rem">حذف</button>
+                      <button
+                        onClick={() =>
+                          deleteClass(e.id, setInfo, setStaticInfo)
+                        }
+                        className="button-table rem"
+                      >
+                        حذف
+                      </button>
                       <button
                         className="button-table"
                         onClick={() => {

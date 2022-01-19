@@ -26,7 +26,11 @@ export const handleSearch = (
   setData(newObj);
 };
 
-export const addClass = (name: string) => {
+export const addClass = (
+  name: string,
+  setInfo: Function,
+  setStaticInfo: Function
+) => {
   if (name.trim() === "") {
     return;
   }
@@ -39,6 +43,57 @@ export const addClass = (name: string) => {
         headers: { Authorization: `Token ${TOKEN}` },
       }
     )
-    .then((a) => console.log(a))
+    .then((res) => handleAddClass(res.data, setInfo, setStaticInfo))
     .catch((e) => console.log(e));
+};
+
+const handleAddClass = (
+  data: any,
+  setInfo: Function,
+  setStaticInfo: Function
+) => {
+  setInfo((prev: any) => {
+    const newList = prev.concat({
+      name: data.name,
+      teacher: data.teacher,
+      id: data.id,
+    });
+    return newList;
+  });
+
+  setStaticInfo((prev: any) => {
+    const newList = prev.concat({
+      name: data.name,
+      teacher: data.teacher,
+      id: data.id,
+    });
+    return newList;
+  });
+};
+
+export const deleteClass = (
+  id: string,
+  setInfo: Function,
+  setStaticInfo: Function
+): void => {
+  const URL = `http://localhost:8000/study/class/${id}`;
+  const TOKEN = sessionStorage.getItem("token");
+  axios
+    .delete(URL, {
+      headers: { Authorization: `Token ${TOKEN}` },
+    })
+    .then(() => handleDeleteClass(id, setInfo, setStaticInfo));
+};
+
+const handleDeleteClass = (
+  id: string,
+  setInfo: Function,
+  setStaticInfo: Function
+) => {
+  setInfo((prev: any) => {
+    return prev.filter((clazz: any) => clazz.id !== id);
+  });
+  setStaticInfo((prev: any) => {
+    return prev.filter((clazz: any) => clazz.id !== id);
+  });
 };
