@@ -73,7 +73,7 @@ const CreateClass = () => {
                 <button
                   className="button"
                   onClick={() => {
-                    addClass(className);
+                    addClass(className, setInfo, setStaticInfo);
                   }}
                 >
                   افزودن
