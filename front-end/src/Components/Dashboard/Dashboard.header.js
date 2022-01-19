@@ -1,31 +1,50 @@
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Wrapper } from "./Dashboad.header.styles";
 
-const DashboardHeader = ({show, setShow}) => {
+const DashboardHeader = ({ show, setShow, dashboradTitle }) => {
+  const navigator = useNavigate();
 
-    return <>
-        <Wrapper>
-            <div className="flex-item">
-                <Link className="header-link" to='./'>
-                    <button
-                        onClick={() => setShow(true)}
-                        className={`header-button ${show ? 'show' : 'hide'}`}>
-                        پروفایل
-                    </button>
-                </Link>
-            </div>
-            <div className="flex-item">
-                <Link className="header-link" to='./'>
-                    <button
-                        onClick={() => setShow(false)}
-                        className={`header-button ${show ? 'hide' : 'show'}`}>
-                        مدیریت مدرسه
-                    </button>
-                </Link>
-            </div>
-        </Wrapper>
+  const nav = (url) => navigator(url);
+
+  const holder = () => {
+    if (dashboradTitle === "manager") {
+      return "مدیریت مدرسه";
+    } else if (dashboradTitle === "teacher") {
+      return "مدیریت کلاس‌ها";
+    } else {
+      return "کلاس‌ها";
+    }
+  };
+
+  return (
+    <>
+      <Wrapper>
+        <div className="flex-item">
+          <button
+            onClick={() => {
+              nav("./profile");
+              setShow(true);
+            }}
+            className={`header-button ${show ? "show" : "hide"}`}
+          >
+            پروفایل
+          </button>
+        </div>
+        <div className="flex-item">
+          <button
+            onClick={() => {
+              nav("./management");
+              setShow(false);
+            }}
+            className={`header-button ${show ? "hide" : "show"}`}
+          >
+            {holder()}
+          </button>
+        </div>
+      </Wrapper>
     </>
-}
+  );
+};
 
 export default DashboardHeader;

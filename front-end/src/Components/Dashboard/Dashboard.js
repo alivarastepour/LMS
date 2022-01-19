@@ -1,37 +1,61 @@
-import {useContext, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {
+  useState,
+  lazy,
+  Suspense,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { Wrapper } from "./Dashboard.styles";
-import Profile from "../Profile/Profile";
-import DashboardHeader from "./Dashboard.header";
+import Spinner from "../Spinner/Spinner";
+import AccessibilityIdentifier from "./AccessibilityIdentifier";
 
-import {authContext} from "../../App";
+import { authContext } from "../../App";
+import useGet from "../../custom-hooks/useGet";
 
+const Profile = lazy(() => import("../Profile/Profile"));
+const DashboardHeader = lazy(() => import("./Dashboard.header"));
+const Footer = lazy(() => import("../Footer/Footer"));
 
 const Dashboard = () => {
+  const navigator = useNavigate();
 
-    const navigator = useNavigate();
+  const nav = useCallback(() => navigator("/"), [navigator]);
 
-    const nav = () => navigator(`/`);
+  const { data } = useGet(
+    "http://localhost:8000/auth/whoami/role/",
+    sessionStorage.getItem("token")
+  );
 
-    const [state, setState] = useState(true);
+  const defaultPage = useParams().management;
 
-    const {auth, setAuth} = useContext(authContext);
+  const [show, setShow] = useState(defaultPage !== "management");
 
-    useEffect(() => {
-        if (!auth) {
-            nav();
-        }
-    });
+  const { auth } = useContext(authContext);
 
-    return <>
-        <Wrapper>
-            <DashboardHeader show={state} setShow={setState}/>
-            {
-                state ? <Profile/> : <div>hi there</div>
-            }
-        </Wrapper>
+  useEffect(() => {
+    if (!auth) {
+      nav();
+    }
+  }, [auth, nav]);
+
+  return (
+    <>
+      <Wrapper>
+        <Suspense fallback={<Spinner color={{ c: "white" }} />}>
+          <DashboardHeader
+            show={show}
+            setShow={setShow}
+            dashboradTitle={data}
+          />
+          {show ? <Profile /> : <AccessibilityIdentifier role={data.role} />}
+        </Suspense>
+      </Wrapper>
+      <Footer />
     </>
-}
+  );
+};
 
 export default Dashboard;

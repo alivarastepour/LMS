@@ -9,13 +9,13 @@ export const Content = styled.div`
   flex-direction: column;
 
   * {
-    font-family: 'vazir', sans-serif;
+    font-family: "vazir", sans-serif;
   }
 
   .flex-item {
     width: 350px;
 
-    @media only screen and (max-width:420px){
+    @media only screen and (max-width: 420px) {
       & {
         width: 200px;
       }
@@ -27,7 +27,7 @@ export const Content = styled.div`
     direction: rtl;
     font-size: 1.4rem;
 
-    @media only screen and (max-width:420px){
+    @media only screen and (max-width: 420px) {
       & {
         margin-top: 5px;
       }
@@ -48,10 +48,10 @@ export const Content = styled.div`
     border: none;
     outline: none;
     border-radius: 10px;
-    font-size: 1.0rem;
+    font-size: 1rem;
     text-align: center;
 
-    @media only screen and (max-width:420px){
+    @media only screen and (max-width: 420px) {
       & {
         width: 200px;
       }
@@ -68,18 +68,22 @@ export const Content = styled.div`
     background-color: white;
     border: none;
     border-radius: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+      rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   }
 
-  .button:hover, .inp:hover {
+  .button:hover,
+  .inp:hover {
     transition: 0.6s;
     background-color: #8b9ce8;
   }
 
-  .inp:hover::placeholder{
+  .inp:hover::placeholder {
     color: white;
   }
 
-  .button:not(:hover), .inp:not(:hover) {
+  .button:not(:hover),
+  .inp:not(:hover) {
     transition: 0.4s;
     background-color: white;
   }
@@ -90,11 +94,11 @@ export const Content = styled.div`
     border: none;
     outline: none;
     border-radius: 10px;
-    font-size: 1.0rem;
+    font-size: 1rem;
     text-align: center;
     background-color: #fff;
 
-    @media only screen and (max-width:420px){
+    @media only screen and (max-width: 420px) {
       & {
         width: 200px;
       }
@@ -106,35 +110,39 @@ export const Content = styled.div`
     animation: fade 5s;
   }
 
-  @keyframes fade{
-    0%{opacity:0}
-    100%{opacity:1}
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
-  .error-msg-show{
+  .error-msg-show {
     visibility: visible;
     color: red;
 
-    @media only screen and (max-width:420px){
+    @media only screen and (max-width: 420px) {
       & {
         font-size: 0.7rem;
       }
     }
   }
 
-  .error-msg-hide{
+  .error-msg-hide {
     visibility: hidden;
   }
 
-  .errorSignup{
+  .errorSignup {
     text-align: center;
     direction: rtl;
   }
 
-  @media only screen and (max-width:695px){
-      &{
-        max-width: 99%;
-        align-content: center;  
-      }
+  @media only screen and (max-width: 695px) {
+    & {
+      max-width: 99%;
+      align-content: center;
     }
+  }
 `;

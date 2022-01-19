@@ -75,8 +75,22 @@ class Profile(APIView):
             return 'دبیر / استاد'
         return 'ادمین'
 
-    def get(self, request):
+    def file_handler(self, file, user_id, extension):
+        # TODO: generate a random name to keep privacy
+        with io.open(f'{IMAGES_LOCATION}/profilepic_{user_id}.{extension}', 'wb') as o:
+            for b in file.readlines():
+                o.write(b)
+                o.flush()
+        return f'profilepic_{user_id}.{extension}'
+
+    def get(self, request, **kwargs):
         user = get_object_or_404(CustomUser, username=request.user.username)
+        filter_option = kwargs.get('filter_option', 'all')
+        if filter_option == 'role':
+            return Response({
+                'id': user.id,
+                'role': 'manager' if user.role == 'M' else ('student' if user.role == 'S' else 'teacher'),
+            }, status=200)
         return Response({
             # TODO: add picture address
             'id': user.id,
@@ -93,6 +107,13 @@ class Profile(APIView):
         user = get_object_or_404(CustomUser, username=request.user.username)
         user_serializer = UserSerializer(instance=user, data={k: v for k, v in request.data.items() if k != 'role'},
                                          partial=True)
+        try:
+            f = request.FILES.getlist('image')[0]
+            photo_name = self.file_handler(f, request.user.username, f.name.split('.')[-1])
+            user.set_photo_link(photo_name)
+            user.save()
+        except Exception:
+            pass
         if user_serializer.is_valid():
             user_serializer.save()
             return Response({
@@ -105,27 +126,9 @@ class Profile(APIView):
                 'email': user.email,
                 'address': user.address,
                 'role': self.get_complete_role(user.role),
+                'image': user.photo_link,
             }, status=200)
         return Response({
             'message': 'something is wrong!',
             'errors': user_serializer.errors
         }, status=400)
-
-    def file_handler(self, file, user_id, extension):
-        # TODO: generate a random name to keep privacy
-        with io.open(f'{IMAGES_LOCATION}/profilepic_{user_id}.{extension}', 'wb') as o:
-            for b in file.readlines():
-                o.write(b)
-                o.flush()
-        return f'profilepic_{user_id}.{extension}'
-
-    def post(self, request):
-        f = request.FILES.getlist('image')[0]
-        photo_name = self.file_handler(f, request.user.username, f.name.split('.')[-1])
-        user = get_object_or_404(CustomUser, username=request.user.username)
-        user.set_photo_link(photo_name)
-        user.save()
-        return Response({
-            'message': 'profile photo saved!',
-            'image': user.photo_link,
-        }, status=200)
