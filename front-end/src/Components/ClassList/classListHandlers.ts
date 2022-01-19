@@ -42,3 +42,30 @@ export const addClass = (name: string) => {
     .then((a) => console.log(a))
     .catch((e) => console.log(e));
 };
+
+export const deleteClass = (
+  id: string,
+  setInfo: Function,
+  setStaticInfo: Function
+): void => {
+  const URL = `http://localhost:8000/study/class/${id}`;
+  const TOKEN = sessionStorage.getItem("token");
+  axios
+    .delete(URL, {
+      headers: { Authorization: `Token ${TOKEN}` },
+    })
+    .then(() => handleDeleteClass(id, setInfo, setStaticInfo));
+};
+
+const handleDeleteClass = (
+  id: string,
+  setInfo: Function,
+  setStaticInfo: Function
+) => {
+  setInfo((prev: any) => {
+    return prev.filter((clazz: any) => clazz.id !== id);
+  });
+  setStaticInfo((prev: any) => {
+    return prev.filter((clazz: any) => clazz.id !== id);
+  });
+};
