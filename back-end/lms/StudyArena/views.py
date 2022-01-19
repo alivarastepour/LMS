@@ -222,3 +222,13 @@ class ClassView(APIView):
         return Response(data={
             "message": "Something is wrong!",
         }, status=400)
+
+    def delete(self, request, class_id):
+        try:
+            clazz = get_object_or_404(Class, id=class_id)
+            clazz.delete()
+            return Response(data={"message": f"Class {clazz.name} deleted."})
+        except Exception:
+            return Response(data={
+                "message": "Something is wrong!",
+            }, status=400)

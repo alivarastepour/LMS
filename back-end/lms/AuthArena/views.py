@@ -83,8 +83,14 @@ class Profile(APIView):
                 o.flush()
         return f'profilepic_{user_id}.{extension}'
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         user = get_object_or_404(CustomUser, username=request.user.username)
+        filter_option = kwargs.get('filter_option', 'all')
+        if filter_option == 'role':
+            return Response({
+                'id': user.id,
+                'role': self.get_complete_role(user.role),
+            }, status=200)
         return Response({
             # TODO: add picture address
             'id': user.id,
