@@ -8,4 +8,20 @@ export const Wrapper = styled.div`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+
+  .list-title {
+    font-family: "vazir", sans-serif;
+    font-size: 1.3rem;
+    direction: rtl;
+    padding-right: 10px;
+  }
+
+  .list-item {
+    font-family: "vazir", sans-serif;
+  }
+
+  .p {
+    margin-right: 20px;
+  }
 `;
