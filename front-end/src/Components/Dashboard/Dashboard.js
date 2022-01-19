@@ -13,6 +13,7 @@ import Spinner from "../Spinner/Spinner";
 import AccessibilityIdentifier from "./AccessibilityIdentifier";
 
 import { authContext } from "../../App";
+import useGet from "../../custom-hooks/useGet";
 
 const Profile = lazy(() => import("../Profile/Profile"));
 const DashboardHeader = lazy(() => import("./Dashboard.header"));
@@ -23,7 +24,10 @@ const Dashboard = () => {
 
   const nav = useCallback(() => navigator("/"), [navigator]);
 
-  const role = "manager";
+  const { data } = useGet(
+    "http://localhost:8000/auth/whoami/role/",
+    sessionStorage.getItem("token")
+  );
 
   const defaultPage = useParams().management;
 
@@ -44,9 +48,9 @@ const Dashboard = () => {
           <DashboardHeader
             show={show}
             setShow={setShow}
-            dashboradTitle={role}
+            dashboradTitle={data}
           />
-          {show ? <Profile /> : <AccessibilityIdentifier role={role} />}
+          {show ? <Profile /> : <AccessibilityIdentifier role={data.role} />}
         </Suspense>
       </Wrapper>
       <Footer />
