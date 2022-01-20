@@ -25,10 +25,9 @@ const SignIn = () => {
   const { username, password, validUsername, validPassword, validLogin } =
     state;
 
-  const nav = () =>
-    navigator(
-      `./accounts/manager/${sessionStorage.getItem("user")}/management`
-    );
+  const nav = () => {
+    navigator(`./accounts/${sessionStorage.getItem("user")}/management`);
+  };
 
   return (
     <>

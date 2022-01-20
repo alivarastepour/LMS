@@ -9,15 +9,15 @@ const Router = () => {
   return useRoutes([
     { path: "/", element: <Background component={<MainPage />} /> },
     {
-      path: "/accounts/manager/:id",
+      path: "/accounts/:id",
       element: <Background component={<Dashboard />} />,
       children: [
         {
-          path: "/accounts/manager/:id/:management",
+          path: "/accounts/:id/:management",
           element: <Background component={<Dashboard />} />,
         },
         {
-          path: "/accounts/manager/:id/:profile",
+          path: "/accounts/:id/:profile",
           element: <Background component={<Dashboard />} />,
         },
       ],
