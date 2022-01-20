@@ -27,3 +27,16 @@ export const profileImageEditHandler = (
       console.log(e);
     });
 };
+
+export const setParam = (param: string): string => {
+  switch (param) {
+    case "manager":
+      return "management";
+    case "student":
+      return "studentManagement";
+    case "teacher":
+      return "teachermanagement";
+    default:
+      return "";
+  }
+};
