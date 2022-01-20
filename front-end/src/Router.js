@@ -9,6 +9,9 @@ const CreateClass = lazy(() => import("./Components/ClassList/ClassList"));
 const SchoolProfile = lazy(() =>
   import("./Components/SchoolProfile/SchoolProfile")
 );
+const StudentManagement = lazy(() =>
+  import("./Components/StudentManagement/StudentManagement")
+);
 
 const Router = () => {
   return useRoutes([
@@ -41,6 +44,15 @@ const Router = () => {
         {
           path: "/accounts/:id/:profile",
           element: <Background component={<Dashboard />} />,
+        },
+        {
+          path: "/accounts/:id/:studentManagement",
+          children: [
+            {
+              path: "/accounts/:id/:studentManagement/:info",
+              element: <Background component={<StudentManagement />} />,
+            },
+          ],
         },
       ],
     },
