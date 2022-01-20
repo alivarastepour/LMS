@@ -34,7 +34,7 @@ const DashboardHeader = ({ show, setShow, dashboradTitle }) => {
         <div className="flex-item">
           <button
             onClick={() => {
-              nav("./management");
+              nav("./management/info");
               setShow(false);
             }}
             className={`header-button ${show ? "hide" : "show"}`}

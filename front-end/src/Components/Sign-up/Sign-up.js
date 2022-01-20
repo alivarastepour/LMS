@@ -41,7 +41,7 @@ const SignUp = ({ action }) => {
   } = state;
 
   const nav = () =>
-    navigator(`./accounts/${sessionStorage.getItem("user")}/management`);
+    navigator(`./accounts/${sessionStorage.getItem("user")}/management/info`);
 
   return (
     <>

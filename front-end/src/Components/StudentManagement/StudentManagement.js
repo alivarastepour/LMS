@@ -14,7 +14,7 @@ const StudentManagement = () => {
   };
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const nav = () => navigate(`./${Math.random()}`);
+  const nav = () => navigate(`./randomeShit`);
   return (
     <>
       <Wrapper>

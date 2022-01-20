@@ -4,6 +4,11 @@ import { useRoutes } from "react-router-dom";
 const MainPage = lazy(() => import("./Components/MainPage/MainPage"));
 const Dashboard = lazy(() => import("./Components/Dashboard/Dashboard"));
 const Background = lazy(() => import("./Components/Background/Background"));
+const TableView = lazy(() => import("./Components/TableView/TableView"));
+const CreateClass = lazy(() => import("./Components/ClassList/ClassList"));
+const SchoolProfile = lazy(() =>
+  import("./Components/SchoolProfile/SchoolProfile")
+);
 
 const Router = () => {
   return useRoutes([
@@ -14,7 +19,24 @@ const Router = () => {
       children: [
         {
           path: "/accounts/:id/:management",
-          element: <Background component={<Dashboard />} />,
+          children: [
+            {
+              path: "/accounts/:id/:management/:info",
+              element: <SchoolProfile />,
+            },
+            {
+              path: "/accounts/:id/:management/:teachers",
+              element: <TableView content="teacher" />,
+            },
+            {
+              path: "/accounts/:id/:management/:students",
+              element: <TableView content="student" />,
+            },
+            {
+              path: "/accounts/:id/:management/:classes",
+              element: <CreateClass />,
+            },
+          ],
         },
         {
           path: "/accounts/:id/:profile",
