@@ -49,6 +49,10 @@ const Router = () => {
           path: "/accounts/:id/:studentManagement",
           children: [
             {
+              path: "/accounts/:id/:studentManagement/:schoolClasses",
+              element: <Background component={<StudentManagement />} />,
+            },
+            {
               path: "/accounts/:id/:studentManagement/:info",
               element: <Background component={<StudentManagement />} />,
             },
