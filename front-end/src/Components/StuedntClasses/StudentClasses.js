@@ -4,22 +4,16 @@ import ListItemButton from "@mui/material/ListItemButton";
 import List from "@mui/material/List";
 import { useState } from "react";
 import StudentClassesHeader from "./StudentClasses.Header";
-const items = [
-  "درس۱",
-  "درس۲",
-  "درس۳",
-  "درس۴",
-  "درس۵",
-  "درس۶",
-  "درس۷",
-  "درس۸",
-  "درس۹",
-  "درس۱۰",
-];
+const items = ["درس۱", "درس۲", "درس۳", "درس۴", "درس۵", "درس۶"];
 const classes = ["مدرسه۱", "مدرسه۲", "مدرس۳", "مدرسه۴", "پالام پولوم پیلیش"];
-const listItemStyles = {
+
+const listItemTextStyles = {
   direction: "rtl",
   textAlign: "right",
+};
+const listItemButtonStyles = {
+  marginTop: "20px",
+  borderRadius: 4,
 };
 const listStyles = {
   width: "95%",
@@ -46,8 +40,8 @@ const StudentClasses = () => {
           {items.length !== 0 ? (
             items.map((e) => {
               return (
-                <ListItemButton key={e}>
-                  <ListItemText sx={listItemStyles}>
+                <ListItemButton sx={listItemButtonStyles} key={e}>
+                  <ListItemText sx={listItemTextStyles}>
                     <div className="list-item">{e}</div>
                   </ListItemText>
                 </ListItemButton>

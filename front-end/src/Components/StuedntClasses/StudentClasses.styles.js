@@ -6,6 +6,7 @@ export const Wrapper = styled.div`
 
   .list-item {
     font-family: "vazir", sans-serif;
+    font-size: 1.3rem;
   }
 
   .no-class {
