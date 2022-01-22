@@ -4,8 +4,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import School, Class, TeacherRequest, StudentRequest
-from .permissions import IsManager, IsProfileCompleted, IsTeacher
+from .models import School, Class, TeacherRequest, StudentRequest, Student
+from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
 import io
@@ -232,3 +232,15 @@ class ClassView(APIView):
             return Response(data={
                 "message": "Something is wrong!",
             }, status=400)
+
+
+class StudentView(APIView):
+    permission_classes = (IsAuthenticated, IsManager | IsStudent)
+
+    def get(self, request, **kwargs):
+        student_id = kwargs.get('student_id', None)
+        school_id = kwargs.get('school_id', None)
+        classes = School.objects.get(school_id=school_id).class_set.exclude(student__id=student_id)
+        return Response(data=[
+            {**clazz.to_json()} for clazz in classes
+        ], status=200)
