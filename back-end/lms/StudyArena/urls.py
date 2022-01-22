@@ -10,4 +10,5 @@ urlpatterns = [
     path('teacher-request/<int:teacher_id>/', TeacherRequests.as_view()),
     path('student-request/<int:student_id>/', StudentRequests.as_view()),
     path('student/classes/<str:school_id>/', StudentView.as_view()),
+    path('student/classes/', StudentView.as_view()),
 ]
