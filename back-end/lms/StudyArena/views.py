@@ -236,16 +236,24 @@ class ClassView(APIView):
 
 class StudentView(APIView):
     permission_classes = (IsAuthenticated, IsManager | IsStudent)
-
+    mode = ''
     def get(self, request, **kwargs):
         student_id = request.user.id
-        school_id = kwargs.get('school_id', None)
-        if school_id is not None:
-            classes = School.objects.get(school_id=school_id).class_set.exclude(student__id=student_id)
-            return Response(data=[
-                {**clazz.to_json()} for clazz in classes
-            ], status=200)
+        if self.mode == 'classes':
+            school_id = kwargs.get('school_id', None)
+            if school_id is not None:
+                classes = School.objects.get(school_id=school_id).class_set.exclude(student__id=student_id)
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in classes
+                ], status=200)
+            else:
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in Student.objects.get(id=student_id).classes.all()
+                ], status=200)
         else:
+            s = set()
+            for clazz in Student.objects.get(id=student_id).classes.all():
+                s.add(clazz.school)
             return Response(data=[
-                {**clazz.to_json()} for clazz in Student.objects.get(id=student_id).classes.all()
-            ], status=200)
+                {**school.to_json()} for school in s
+            ],status=200)
