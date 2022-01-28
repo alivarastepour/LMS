@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  padding-bottom: 15px;
+  border-bottom: 1px gray solid;
   .select-item,
   .css-1kty9di-MuiFormLabel-root-MuiInputLabel-root {
     font-family: "vazir", sans-serif;
@@ -12,7 +14,7 @@ export const Wrapper = styled.div`
     padding-right: 10px;
     padding-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
   }
