@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
 import io
 
-IMAGES_LOCATION = '/var/www/html/'  # TODO: set relative path
+IMAGES_LOCATION = '/var/www/html'  # TODO: set relative path
 
 
 class SchoolView(APIView):
