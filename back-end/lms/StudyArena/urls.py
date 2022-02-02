@@ -15,4 +15,5 @@ urlpatterns = [
     path('student/classes/', StudentView.as_view(mode='classes'), ),
     path('student/schools/', StudentView.as_view(mode='schools'), ),
     path('student-request/', StudentRequests.as_view()),
+    path('teacher-request/', TeacherRequests.as_view()),
 ]

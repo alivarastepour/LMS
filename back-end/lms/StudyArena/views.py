@@ -174,18 +174,29 @@ class TeacherRequests(APIView):
                 )
         return Response(data={'requests': output}, status=200)
 
-    def post(self, request, teacher_id):
-        teacher_req = get_object_or_404(TeacherRequest, id=teacher_id)
-        if request.data.get('operation', 'rejected') == 'accepted':
-            teacher_req.status = 'accepted'
-            teacher_req.save()
-            return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} accepted for Class '
+    def post(self, request, **kwargs):
+        teacher_id = kwargs.get('teacher_id',None)
+        if teacher_id is not None:
+            # in this case manager wants to accept or reject a teacher request
+            teacher_req = get_object_or_404(TeacherRequest, id=teacher_id)
+            if request.data.get('operation', 'rejected') == 'accepted':
+                teacher_req.status = 'accepted'
+                teacher_req.save()
+                return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} accepted for Class '
+                                                 f'{teacher_req.clazz.name}'}, status=200)
+            else:
+                teacher_req.status = 'rejected'
+                teacher_req.save()
+                return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} rejected for Class '
                                              f'{teacher_req.clazz.name}'}, status=200)
         else:
-            teacher_req.status = 'rejected'
-            teacher_req.save()
-            return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} rejected for Class '
-                                             f'{teacher_req.clazz.name}'}, status=200)
+            # in this case teacher wants to send join request.
+            classes = request.data.get('classes', [])
+            for clazz in classes:
+                TeacherRequest.objects.create(teacher=Student.objects.get(user=request.user), clazz_id=clazz)
+            return Response({
+                "message": "join request sent."
+            })
 
 
 class ClassView(APIView):
