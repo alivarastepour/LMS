@@ -112,6 +112,7 @@ class StudentRequests(APIView):
             student_req = get_object_or_404(StudentRequest, id=student_id)
             if request.data.get('operation', 'rejected') == 'accepted':
                 student_req.status = 'accepted'
+                student_req.student.classes.add(student_req.clazz)
                 student_req.save()
                 return Response(data={'message': f'Student {student_req.student.user.fullname} accepted for Class '
                                                  f'{student_req.clazz.name}'}, status=200)
@@ -181,6 +182,7 @@ class TeacherRequests(APIView):
             teacher_req = get_object_or_404(TeacherRequest, id=teacher_id)
             if request.data.get('operation', 'rejected') == 'accepted':
                 teacher_req.status = 'accepted'
+                teacher_req.teacher.classes.add(teacher_req.clazz)
                 teacher_req.save()
                 return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} accepted for Class '
                                                  f'{teacher_req.clazz.name}'}, status=200)
@@ -265,17 +267,17 @@ class StudentView(APIView):
         if self.mode == 'classes':
             school_id = kwargs.get('school_id', None)
             if school_id is not None:
-                classes = School.objects.get(school_id=school_id).class_set.exclude(student__id=student_id)
+                classes = School.objects.get(school_id=school_id).class_set.exclude(student__user__id=student_id)
                 return Response(data=[
                     {**clazz.to_json()} for clazz in classes
                 ], status=200)
             else:
                 return Response(data=[
-                    {**clazz.to_json()} for clazz in Student.objects.get(id=student_id).classes.all()
+                    {**clazz.to_json()} for clazz in Student.objects.get(user__id=student_id).classes.all()
                 ], status=200)
         else:
             s = set()
-            for clazz in Student.objects.get(id=student_id).classes.all():
+            for clazz in Student.objects.get(user__id=student_id).classes.all():
                 s.add(clazz.school)
             return Response(data=[
                 {**school.to_json()} for school in s
