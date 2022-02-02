@@ -60,7 +60,7 @@ class SchoolView(APIView):
 
 
 class StudentRequests(APIView):
-    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager | IsTeacher)
+    permission_classes = (IsAuthenticated, IsProfileCompleted)
 
     def get_accepted(self, school):
         return StudentRequest.objects.filter(clazz__school=school).filter(status='accepted')
@@ -105,18 +105,29 @@ class StudentRequests(APIView):
                 )
         return Response(data={'requests': output}, status=200)
 
-    def post(self, request, student_id):
-        student_req = get_object_or_404(StudentRequest, id=student_id)
-        if request.data.get('operation', 'rejected') == 'accepted':
-            student_req.status = 'accepted'
-            student_req.save()
-            return Response(data={'message': f'Student {student_req.student.user.fullname} accepted for Class '
-                                             f'{student_req.clazz.name}'}, status=200)
+    def post(self, request, **kwargs):
+        student_id = kwargs.get('student_id', None)
+        if student_id is not None:
+            # in this case manager wants to accept or reject the requested student
+            student_req = get_object_or_404(StudentRequest, id=student_id)
+            if request.data.get('operation', 'rejected') == 'accepted':
+                student_req.status = 'accepted'
+                student_req.save()
+                return Response(data={'message': f'Student {student_req.student.user.fullname} accepted for Class '
+                                                 f'{student_req.clazz.name}'}, status=200)
+            else:
+                student_req.status = 'rejected'
+                student_req.save()
+                return Response(data={'message': f'Student {student_req.student.user.fullname} rejected for Class '
+                                                 f'{student_req.clazz.name}'}, status=200)
         else:
-            student_req.status = 'rejected'
-            student_req.save()
-            return Response(data={'message': f'Student {student_req.student.user.fullname} rejected for Class '
-                                             f'{student_req.clazz.name}'}, status=200)
+            # in this case student wants to request to join to some classes.
+            classes = request.data.get('classes', [])
+            for clazz in classes:
+                StudentRequest.objects.create(student=Student.objects.get(user=request.user),clazz_id=clazz)
+            return Response({
+                "message": "join request sent."
+            })
 
 
 class TeacherRequests(APIView):
@@ -237,6 +248,7 @@ class ClassView(APIView):
 class StudentView(APIView):
     permission_classes = (IsAuthenticated, IsManager | IsStudent)
     mode = ''
+
     def get(self, request, **kwargs):
         student_id = request.user.id
         if self.mode == 'classes':
@@ -256,4 +268,4 @@ class StudentView(APIView):
                 s.add(clazz.school)
             return Response(data=[
                 {**school.to_json()} for school in s
-            ],status=200)
+            ], status=200)
