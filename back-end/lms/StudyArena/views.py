@@ -15,7 +15,7 @@ IMAGES_LOCATION = '/var/www/html'  # TODO: set relative path
 
 class SchoolView(APIView):
     serializer_class = SchoolSerializer
-    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager)
+    permission_classes = (IsAuthenticated, IsProfileCompleted)
 
     def post(self, request):
         school = SchoolSerializer(data=request.data)
@@ -24,15 +24,24 @@ class SchoolView(APIView):
             return Response(data={'message': f'{request.data["name"]} successfully created.'}, status=200)
         return Response(data={'message': 'some fields are missing.', 'errors': school.errors}, status=400)
 
-    def get(self, request):
-        try:
-            school = School.objects.get(manager__username=request.user.username)
-        except Exception as _:
-            return Response(data={
-                "has_requested": False
-            }, status=200)
-        res_dic = school.to_json()
-        return Response(data=res_dic)
+    def get(self, request, **kwargs):
+        school_username = kwargs.get('school_username', None)
+        if school_username is None:
+            # in this case we return a school that belong to request.user
+            try:
+                school = School.objects.get(manager__username=request.user.username)
+            except Exception as _:
+                return Response(data={
+                    "has_requested": False
+                }, status=200)
+            res_dic = school.to_json()
+            return Response(data=res_dic)
+        else:
+            # in this case we return all schools that their ids contains `school_username`
+            schools = School.objects.filter(school_id__icontains=school_username)
+            return Response(data=[
+                {**school.to_json()} for school in schools
+            ], status=200)
 
     def file_handler(self, file, school_id, extension):
         # TODO: generate a random name to keep privacy
@@ -125,7 +134,7 @@ class StudentRequests(APIView):
             # in this case student wants to request to join to some classes.
             classes = request.data.get('classes', [])
             for clazz in classes:
-                StudentRequest.objects.create(student=Student.objects.get(user=request.user),clazz_id=clazz)
+                StudentRequest.objects.create(student=Student.objects.get(user=request.user), clazz_id=clazz)
             return Response({
                 "message": "join request sent."
             })
@@ -176,7 +185,7 @@ class TeacherRequests(APIView):
         return Response(data={'requests': output}, status=200)
 
     def post(self, request, **kwargs):
-        teacher_id = kwargs.get('teacher_id',None)
+        teacher_id = kwargs.get('teacher_id', None)
         if teacher_id is not None:
             # in this case manager wants to accept or reject a teacher request
             teacher_req = get_object_or_404(TeacherRequest, id=teacher_id)
@@ -190,7 +199,7 @@ class TeacherRequests(APIView):
                 teacher_req.status = 'rejected'
                 teacher_req.save()
                 return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} rejected for Class '
-                                             f'{teacher_req.clazz.name}'}, status=200)
+                                                 f'{teacher_req.clazz.name}'}, status=200)
         else:
             # in this case teacher wants to send join request.
             classes = request.data.get('classes', [])
