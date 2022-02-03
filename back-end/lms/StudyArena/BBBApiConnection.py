@@ -1,5 +1,6 @@
 import hashlib
 import requests
+import xml.etree.ElementTree as ET
 
 SHARED_SECRET = 'XXXXXX'
 SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
@@ -20,6 +21,9 @@ def create_checksum(method: str, **kwargs) -> str:
 def generate_url(method, **kwargs):
     return SERVER_ADDRESS + method + '?' + dict_to_str(**kwargs) + '&checksum=' + create_checksum(method, **kwargs)
 
+def communicate(url, **kwargs):
+    result = requests.post(url, **kwargs)
+    return ET.parse(result.text)
 
 if __name__ == '__main__':
     print(generate_url('getMeetings'))
@@ -30,7 +34,4 @@ if __name__ == '__main__':
    </module>
 </modules>"""
     y = generate_url('create', name='Test+Meeting', meetingID='abc12345', attendeePW='111222', moderatorPW='333444')
-    print(y)
-    x = requests.post(y,data=xml)
-    print(x.text)
-    print(generate_url('join',fullName='mahmood',meetingID='abc12345',password='333444'))
+    print(generate_url('join', fullName='mahmood', meetingID='abc12345', password='333444'))
