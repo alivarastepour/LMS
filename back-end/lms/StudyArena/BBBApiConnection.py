@@ -24,13 +24,23 @@ def generate_url(method, **kwargs):
 
 def communicate(url, **kwargs):
     result = requests.post(url, **kwargs)
+    print(result.text)
     return ET.fromstring(result.text)
 
 
 def create(**kwargs):
     result = communicate(generate_url('create', **kwargs))
-    return result.find('returncode') == 'SUCCESS'
+    return result.find('returncode').text == 'SUCCESS'
 
+
+# def join(**kwargs):
+#     result = communicate(generate_url('join', **kwargs))
+#     return result.find('returncode').text == 'SUCCESS', result.find('url').text
+
+
+def is_meeting_running(**kwargs):
+    result = communicate(generate_url('isMeetingRunning', **kwargs))
+    return result.find('returncode').text == 'SUCCESS', result.find('running').text == 'true'
 
 if __name__ == '__main__':
     print(generate_url('getMeetings'))
@@ -42,3 +52,9 @@ if __name__ == '__main__':
 </modules>"""
     y = generate_url('create', name='Test+Meeting', meetingID='abc12345', attendeePW='111222', moderatorPW='333444')
     print(generate_url('join', fullName='mahmood', meetingID='abc12345', password='333444'))
+    print(create(name='Test+Meeting', meetingID='abc123456', attendeePW='111222', moderatorPW='333444'))
+    print(generate_url('join',fullName='Mahmood_Choopani',meetingID='abc123456',password='333444',redirect='FALSE'))
+    print(is_meeting_running(meetingID='abc123456'))
+    print(is_meeting_running(meetingID='abc12345'))
+    # print(join(fullName='Mahmood_Choopani',meetingID='abc123456',password='333444',redirect='FALSE'))
+
