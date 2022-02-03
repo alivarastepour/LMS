@@ -21,9 +21,16 @@ def create_checksum(method: str, **kwargs) -> str:
 def generate_url(method, **kwargs):
     return SERVER_ADDRESS + method + '?' + dict_to_str(**kwargs) + '&checksum=' + create_checksum(method, **kwargs)
 
+
 def communicate(url, **kwargs):
     result = requests.post(url, **kwargs)
-    return ET.parse(result.text)
+    return ET.fromstring(result.text)
+
+
+def create(**kwargs):
+    result = communicate(generate_url('create', **kwargs))
+    return result.find('returncode') == 'SUCCESS'
+
 
 if __name__ == '__main__':
     print(generate_url('getMeetings'))
