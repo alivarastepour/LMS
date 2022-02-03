@@ -48,6 +48,11 @@ def end(**kwargs):
     return result.find('returncode').text == 'SUCCESS',
 
 
+def get_meeting_info(**kwargs):
+    result = communicate(generate_url('getMeetingInfo', **kwargs))
+    return result.find('returncode').text == 'SUCCESS',  # anything else that is useful
+
+
 if __name__ == '__main__':
     print(generate_url('getMeetings'))
     xml = """<modules>
