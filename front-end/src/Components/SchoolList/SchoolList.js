@@ -1,6 +1,6 @@
-import { Dialog, DialogTitle } from "@mui/material";
+import { Button, Dialog, DialogTitle } from "@mui/material";
 import { useState } from "react";
-import Classes from "./Classse";
+import Classes from "./Classes";
 import { Wrapper } from "./SchoolList.styles";
 const fakeData = [
   {
@@ -94,7 +94,7 @@ const SchoolList = () => {
   return (
     <>
       <Wrapper>
-        <table>
+        {/* <table>
           <tbody>
             <tr>
               <td className="header">ردیف</td>
@@ -122,7 +122,27 @@ const SchoolList = () => {
               );
             })}
           </tbody>
-        </table>
+        </table> */}
+        <div className="flex-container">
+          <div>
+            <input
+              placeholder="جست‌وجوی مدرسه بر اساس شناسه"
+              autoFocus={true}
+              className="input"
+              type="text"
+            />
+          </div>
+          <div>
+            <Button
+              sx={{ fontFamily: "vazir", fontSize: "1.2rem" }}
+              variant="contained"
+              color="inherit"
+            >
+              جست‌وجو
+            </Button>
+          </div>
+        </div>
+
         <Dialog
           open={show}
           onClose={() => {
@@ -130,7 +150,7 @@ const SchoolList = () => {
           }}
         >
           <DialogTitle sx={{ textAlign: "right" }}>لیست کلاس‌ها</DialogTitle>
-          <Classes classes={classes} />
+          <Classes classes={classes} action={setShow} />
         </Dialog>
       </Wrapper>
     </>

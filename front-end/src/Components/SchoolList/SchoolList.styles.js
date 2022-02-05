@@ -2,8 +2,31 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
-
+  /* height: 100%; */
+  .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: auto;
+    direction: rtl;
+    font-family: "vazir", sans-serif;
+    font-size: 1.2rem;
+    padding-top: 100px;
+  }
+  .input {
+    width: 500px;
+    height: 40px;
+    display: block;
+    margin: auto;
+    outline: none;
+    padding-right: 10px;
+    direction: rtl;
+    font-family: "vazir", sans-serif;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: 1px black solid;
+  }
   table {
     width: 100%;
     direction: rtl;
