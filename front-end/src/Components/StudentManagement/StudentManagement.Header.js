@@ -25,7 +25,7 @@ const StudentManagementHeader = ({ state, setState }) => {
             state === "schoolClasses" ? "active" : "inactive"
           }`}
         >
-          کلاس‌های مدرسه
+          مدارس
         </button>
       </Wrapper>
     </>
