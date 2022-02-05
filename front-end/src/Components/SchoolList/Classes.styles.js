@@ -43,4 +43,25 @@ export const Wrapper = styled.div`
       }
     }
   }
+  .button {
+    float: left;
+    border: none;
+    outline: none;
+    font-family: "vazir", sans-serif;
+    margin-left: 10px;
+    width: 130px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f8f8f8;
+    margin: 20px 10px;
+  }
+  .acc {
+    background-color: #17b327;
+    color: white;
+  }
+
+  .acc:hover {
+    opacity: 0.9;
+  }
 `;
