@@ -4,6 +4,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from StudyArena.models import Student, Teacher
 from .serializers import UserSerializer
 from .models import CustomUser
 # import utils
@@ -32,6 +34,10 @@ class SignUp(APIView):
             user = user.save()
             response = requests.post('http://127.0.0.1:8000/auth/login/',
                                      data={'username': user.username, 'password': request.data.get('password', '')})
+            if data['role'] == 'S':
+                Student.objects.create(user=user)
+            elif data['role'] == 'T':
+                Teacher.objects.create(user=user)
             return Response({
                 'id': user.id,
                 'is_signed_up': True,
