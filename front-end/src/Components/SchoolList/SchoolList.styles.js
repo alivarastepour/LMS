@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     direction: rtl;
     font-family: "vazir", sans-serif;
     font-size: 1.2rem;
-    padding-top: 100px;
+    padding-top: 50px;
   }
   .input {
     width: 500px;
@@ -26,6 +26,10 @@ export const Wrapper = styled.div`
     font-size: 1.2rem;
     border-radius: 5px;
     border: 1px black solid;
+  }
+  .alert {
+    width: 100%;
+    margin: auto;
   }
   table {
     width: 100%;
