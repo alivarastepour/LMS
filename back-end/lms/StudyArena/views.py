@@ -40,7 +40,7 @@ class SchoolView(APIView):
             # in this case we return all schools that their ids contains `school_username`
             schools = School.objects.filter(school_id__icontains=school_username)
             return Response(data=[
-                {**school.to_json_set2()} for school in schools
+                {**school.to_json_set2(Student.objects.get(user=request.user))} for school in schools
             ], status=200)
 
     def file_handler(self, file, school_id, extension):
