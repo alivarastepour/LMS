@@ -12,7 +12,7 @@ urlpatterns = [
     path('student-request/<int:student_id>/', StudentRequests.as_view()),
     path('student-request/', StudentRequests.as_view()),
     path('teacher-request/', TeacherRequests.as_view()),
-    path('student/classes/<str:school_id>/', StudentView.as_view()),
+    path('student/classes/<str:school_id>/', StudentView.as_view(mode='classes'),),
     path('student/classes/', StudentView.as_view(mode='classes'), ),
     path('student/schools/', StudentView.as_view(mode='schools'), ),
 ]
