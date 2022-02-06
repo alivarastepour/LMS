@@ -276,7 +276,7 @@ class StudentView(APIView):
         if self.mode == 'classes':
             school_id = kwargs.get('school_id', None)
             if school_id is not None:
-                classes = School.objects.get(school_id=school_id).class_set.exclude(student__user__id=student_id)
+                classes = School.objects.get(school_id=school_id).class_set.filter(student__user__id=student_id)
                 return Response(data=[
                     {**clazz.to_json()} for clazz in classes
                 ], status=200)
