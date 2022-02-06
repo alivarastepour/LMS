@@ -34,8 +34,8 @@ const Classes = ({ classes, action }) => {
                   <Checkbox onClick={(event) => addClass(event, w.id)} />
                 </td>
                 <td>{w.id}</td>
-                <td>{w.instructor}</td>
-                <td>{w.className}</td>
+                <td>{w.teacher}</td>
+                <td>{w.name}</td>
               </tr>
             );
           })}
