@@ -289,5 +289,5 @@ class StudentView(APIView):
             for clazz in Student.objects.get(user__id=student_id).classes.all():
                 s.add(clazz.school)
             return Response(data=[
-                {**school.to_json_set2(Student.objects.get(user=request.user))} for school in s
+                {'id': school.id, 'name': school.name} for school in s
             ], status=200)
