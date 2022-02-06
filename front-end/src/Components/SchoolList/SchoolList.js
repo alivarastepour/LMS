@@ -48,24 +48,22 @@ const SchoolList = () => {
               </tr>
               {result.map((e) => {
                 return (
-                  <>
-                    <tr
-                      className="hover"
-                      key={e.id}
-                      onClick={() => {
-                        setClasses(e.classes);
-                        setShow(true);
-                      }}
-                    >
-                      <td>
-                        <Avatar src={e.image} sx={{ margin: "auto" }} />
-                      </td>
-                      <td>{e.id}</td>
-                      <td>{e.school_id}</td>
-                      <td>{e.name}</td>
-                      <td>{e.manager}</td>
-                    </tr>
-                  </>
+                  <tr
+                    className="hover"
+                    key={e.id}
+                    onClick={() => {
+                      setClasses(e.classes);
+                      setShow(true);
+                    }}
+                  >
+                    <td>
+                      <Avatar src={e.image} sx={{ margin: "auto" }} />
+                    </td>
+                    <td>{e.id}</td>
+                    <td>{e.school_id}</td>
+                    <td>{e.name}</td>
+                    <td>{e.manager}</td>
+                  </tr>
                 );
               })}
             </tbody>
