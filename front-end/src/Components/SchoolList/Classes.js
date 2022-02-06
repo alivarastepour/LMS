@@ -50,6 +50,7 @@ const Classes = ({ classes, action }) => {
         className="button acc"
         onClick={() => {
           joinHandler(selected);
+          action(false);
         }}
       >
         ارسال درخواست

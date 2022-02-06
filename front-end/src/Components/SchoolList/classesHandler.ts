@@ -1,6 +1,18 @@
 import axios from "axios";
 
-export const joinHandler = () => {};
+export const joinHandler = (users: number[]) => {
+  const URL = `http://localhost:8000/study/student-request/`;
+  const TOKEN = sessionStorage.getItem("token");
+  axios
+    .post(
+      URL,
+      { classes: users },
+      {
+        headers: { Authorization: `Token ${TOKEN}` },
+      }
+    )
+    .catch((e) => console.log(e));
+};
 export const findSchool = (searchValue: string, setResult: Function) => {
   if (searchValue.trim() === "") {
     return;
