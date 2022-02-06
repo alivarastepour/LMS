@@ -1,15 +1,16 @@
-import { Alert, Avatar, Button, Dialog, DialogTitle } from "@mui/material";
+import { Avatar, Button, Dialog, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import Classes from "./Classes";
 import { findSchool } from "./classesHandler";
 import { Wrapper } from "./SchoolList.styles";
+import Alert from "../Alert/Alert";
 
 const SchoolList = () => {
   const [show, setShow] = useState(false);
   const [classes, setClasses] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [result, setResult] = useState([]);
-  console.log(result);
+
   return (
     <>
       <Wrapper>
@@ -70,18 +71,7 @@ const SchoolList = () => {
             </tbody>
           </table>
         ) : (
-          <Alert
-            severity="info"
-            sx={{
-              direction: "rtl",
-              fontFamily: "vazir",
-              fontSize: "1.2rem",
-              marginTop: 10,
-            }}
-          >
-            اطلاعاتی برای نمایش وجود ندارد
-          </Alert>
-          // <div className="alert">اطلاعاتی برای نمایش وجود ندارد</div>
+          <Alert />
         )}
         <Dialog
           open={show}
@@ -89,7 +79,9 @@ const SchoolList = () => {
             setShow(false);
           }}
         >
-          <DialogTitle sx={{ textAlign: "right" }}>لیست کلاس‌ها</DialogTitle>
+          <DialogTitle sx={{ textAlign: "right", fontFamily: "vazir" }}>
+            لیست کلاس‌ها
+          </DialogTitle>
           <Classes classes={classes} action={setShow} />
         </Dialog>
       </Wrapper>

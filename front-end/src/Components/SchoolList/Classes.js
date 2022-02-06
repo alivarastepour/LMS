@@ -1,5 +1,6 @@
 import { Checkbox } from "@mui/material";
 import { useState } from "react";
+import Alert from "../Alert/Alert";
 import { Wrapper } from "./Classes.styles";
 import { joinHandler } from "./classesHandler";
 
@@ -19,28 +20,32 @@ const Classes = ({ classes, action }) => {
 
   return (
     <Wrapper>
-      <table className="table1">
-        <tbody>
-          <tr>
-            <td></td>
-            <td>ردیف</td>
-            <td>ارائه دهنده</td>
-            <td>نام کلاس</td>
-          </tr>
-          {classes.map((w) => {
-            return (
-              <tr key={w.id} className="hover">
-                <td>
-                  <Checkbox onClick={(event) => addClass(event, w.id)} />
-                </td>
-                <td>{w.id}</td>
-                <td>{w.teacher}</td>
-                <td>{w.name}</td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      {classes && classes.length !== 0 ? (
+        <table className="table1">
+          <tbody>
+            <tr>
+              <td></td>
+              <td>ردیف</td>
+              <td>ارائه دهنده</td>
+              <td>نام کلاس</td>
+            </tr>
+            {classes.map((w) => {
+              return (
+                <tr key={w.id} className="hover">
+                  <td>
+                    <Checkbox onClick={(event) => addClass(event, w.id)} />
+                  </td>
+                  <td>{w.id}</td>
+                  <td>{w.teacher}</td>
+                  <td>{w.name}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      ) : (
+        <Alert />
+      )}
       <button
         className="button acc"
         onClick={() => {
