@@ -1,7 +1,7 @@
 import { Wrapper } from "./StudentClasses.Header.styles";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
-const StudentClassesHeader = ({ state, setState, classes }) => {
+const StudentClassesHeader = ({ state, setState, schools }) => {
   return (
     <>
       <Wrapper>
@@ -19,17 +19,20 @@ const StudentClassesHeader = ({ state, setState, classes }) => {
                 یک مدرسه را انتخاب کنید
               </InputLabel>
               <Select
-                value={state}
-                onChange={(e) => setState(e.target.value)}
+                value={state ? state : {}}
                 sx={{ width: 400 }}
                 labelId="select"
                 id="select"
                 label="یک مدرسه را انتخاب کنید"
               >
-                {classes &&
-                  classes.map((e) => (
+                {schools.length !== 0 &&
+                  schools.length &&
+                  schools.map((e) => (
                     <MenuItem
-                      value={e.school_id}
+                      value={e}
+                      onChange={(e) => {
+                        setState(e.target.value);
+                      }}
                       key={e.school_id}
                       sx={{
                         textAlign: "right",
