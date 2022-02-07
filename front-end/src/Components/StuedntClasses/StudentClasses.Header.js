@@ -26,19 +26,20 @@ const StudentClassesHeader = ({ state, setState, classes }) => {
                 id="select"
                 label="یک مدرسه را انتخاب کنید"
               >
-                {classes.map((e) => (
-                  <MenuItem
-                    value={e}
-                    key={e}
-                    sx={{
-                      textAlign: "right",
-                      direction: "rtl",
-                      fontFamily: "vazir",
-                    }}
-                  >
-                    <div className="select-item">{e}</div>
-                  </MenuItem>
-                ))}
+                {classes &&
+                  classes.map((e) => (
+                    <MenuItem
+                      value={e.school_id}
+                      key={e.school_id}
+                      sx={{
+                        textAlign: "right",
+                        direction: "rtl",
+                        fontFamily: "vazir",
+                      }}
+                    >
+                      <div className="select-item">{e.name}</div>
+                    </MenuItem>
+                  ))}
               </Select>
             </FormControl>
           </div>
