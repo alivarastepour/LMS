@@ -35,7 +35,10 @@ const StudentClasses = () => {
           classes.data.map((e) => {
             return (
               <div key={e.id} className="flex-item">
-                {e.name}
+                <div className="title">نام کلاس:</div>
+                <div className="school-name">{e.name}</div>
+                <div className="title">ارائه دهنده:</div>
+                <div className="school-teacher">{e.teacher}</div>
               </div>
             );
           })}
