@@ -67,4 +67,11 @@ export const Wrapper = styled.div`
     display: inline-flex;
     align-items: center;
   }
+  .succes {
+    font-family: "vazir", sans-serif;
+    font-size: 1.2rem;
+  }
+  .enter {
+    margin-left: 30px;
+  }
 `;

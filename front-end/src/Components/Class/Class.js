@@ -1,10 +1,19 @@
 import { TextField, InputAdornment, IconButton, Tooltip } from "@mui/material";
 import { Wrapper } from "./Class.styles";
 import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
+import { useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const Class = () => {
+  const [open, setOpen] = useState(false);
   const temp = "دکتر ممدرضا خان قلی زاده";
   const status = true;
+  const url = "https://www.github.com/users/alivarastepour/login";
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(url);
+  };
   const classStatus = () => {
     if (status) {
       return <div className="status on">در حال برگزاری</div>;
@@ -28,14 +37,24 @@ const Class = () => {
             <div className="enter">لینک ورود به کلاس</div>
             <div>
               <TextField
-                defaultValue="https://www.github.com/users/alivarastepour/login"
+                defaultValue={url}
                 InputProps={{
                   readOnly: true,
                   endAdornment: (
                     <InputAdornment position="end">
-                      <Tooltip title="copy to clipboard">
-                        <IconButton>
+                      <Tooltip title="copy class link to clipboard">
+                        <IconButton
+                          onClick={() => {
+                            setOpen(true);
+                            copyToClipboard();
+                          }}
+                        >
                           <ContentCopyTwoToneIcon />
+                        </IconButton>
+                      </Tooltip>
+                      <Tooltip title="open class">
+                        <IconButton disabled={false} onClick={() => {}}>
+                          <OpenInNewIcon />
                         </IconButton>
                       </Tooltip>
                     </InputAdornment>
@@ -47,6 +66,15 @@ const Class = () => {
             </div>
           </div>
         </div>
+        <Snackbar
+          open={open}
+          onClose={() => setOpen(false)}
+          autoHideDuration={3000}
+        >
+          <Alert severity="success" sx={{ borderRadius: "10px" }}>
+            <div className="succes">لینک کلاس به کلیپ‌بورد الصاق شد</div>
+          </Alert>
+        </Snackbar>
       </Wrapper>
     </>
   );
