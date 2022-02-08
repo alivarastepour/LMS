@@ -64,6 +64,17 @@ def get_meetings(**kwargs):
     return status_condition, meetings
 
 
+def get_recordings(**kwargs):
+    result = communicate(generate_url('getRecordings', **kwargs))
+    status_condition = result.find('returncode').text == 'SUCCESS'
+    recordings = []
+    if status_condition:
+        # TODO: return url of recording
+        recordings = [(recording.find('name').text, recording.find('startTime').text, recording.find('endTime').text,
+                       'https://google.com')
+                      for recording in result.find('recordings')]
+    return status_condition, recordings
+
 # TODO: add recording methods
 if __name__ == '__main__':
     print(generate_url('getMeetings'))
