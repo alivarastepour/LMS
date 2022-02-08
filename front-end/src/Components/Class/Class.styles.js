@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
+  overflow-y: auto;
   width: 90%;
   margin: auto;
   height: 800px;
@@ -11,11 +12,13 @@ export const Wrapper = styled.div`
   direction: rtl;
   font-family: "vazir", sans-serif;
   .flex-header {
-    background-color: #fff;
     display: flex;
+    background-color: #fff;
     justify-content: space-evenly;
     flex-wrap: wrap;
     border-radius: 10px;
+    position: sticky;
+    top: 0;
   }
   .flex-item {
     font-size: 1.4rem;
@@ -78,5 +81,31 @@ export const Wrapper = styled.div`
   }
   .enter {
     margin-left: 30px;
+  }
+  table {
+    width: 100%;
+    direction: rtl;
+    font-family: "vazir", sans-serif;
+    text-align: center;
+    border-collapse: collapse;
+    tr {
+      height: 60px;
+    }
+
+    td {
+      border-bottom: 1px white solid;
+      padding-top: 10px;
+      font-size: 1.2rem;
+
+      @media only screen and (max-width: 920px) {
+        & {
+          font-size: 1rem;
+        }
+      }
+    }
+    .hover:hover {
+      transition: 0.2s;
+      background-color: #f8f8f8;
+    }
   }
 `;

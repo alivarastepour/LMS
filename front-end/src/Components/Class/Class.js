@@ -7,6 +7,7 @@ import Alert from "@mui/material/Alert";
 
 import ClassInfo from "./ClassInfo";
 import ClassState from "./ClassState";
+import ClassRecords from "./ClassRecords";
 
 const Class = () => {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,7 @@ const Class = () => {
       <Wrapper>
         <ClassInfo className={temp2} teacher={temp} id={temp1} />
         <ClassState setOpen={setOpen} status={status} url={url} />
+        <ClassRecords />
         <Snackbar
           open={open}
           onClose={() => setOpen(false)}
