@@ -1,15 +1,19 @@
-import { TextField, InputAdornment, IconButton, Tooltip } from "@mui/material";
-import { Wrapper } from "./Class.styles";
-import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
 import { useState } from "react";
+
+import { Wrapper } from "./Class.styles";
+
+import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
+import { TextField, InputAdornment, IconButton, Tooltip } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import ClassInfo from "./ClassInfo";
 
 const Class = () => {
   const [open, setOpen] = useState(false);
   const temp = "دکتر ممدرضا خان قلی زاده";
   const temp1 = "hsdeq0921";
+  const temp2 = "مدار های الکتریکی و الکترونیکی";
   const status = true;
   const url = "https://www.github.com/users/alivarastepour/login";
   const copyToClipboard = () => {
@@ -25,11 +29,7 @@ const Class = () => {
   return (
     <>
       <Wrapper>
-        <div className="flex-header">
-          <div className="flex-item">کلاس مدار های الکتریکی و الکترونیکی</div>
-          <div className="flex-item">ارائه دهنده: {temp}</div>
-          <div className="flex-item">شناسه کلاس: {temp1}</div>
-        </div>
+        <ClassInfo className={temp2} teacher={temp} id={temp1} />
         <div className="state">
           <div className="state-container">
             <div style={{ display: "inline-block" }}>وضعیت کلاس:</div>
