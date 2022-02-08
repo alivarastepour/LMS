@@ -9,7 +9,7 @@ SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
 def dict_to_str(**kwargs):
     query = ''
     for param_name, param_value in kwargs.items():
-        query += f"{param_name}={param_value}&"
+        query += f"{param_name}={param_value if type(param_value)!=bool else 'true' if param_name else 'false'}&"
     return query[:-1]
 
 
@@ -30,12 +30,13 @@ def communicate(url, **kwargs):
 
 def create(**kwargs):
     result = communicate(generate_url('create', **kwargs))
-    return result.find('returncode').text == 'SUCCESS',
+    return result.find('returncode').text == 'SUCCESS'
 
 
-# def join(**kwargs):
-#     result = communicate(generate_url('join', **kwargs))
-#     return result.find('returncode').text == 'SUCCESS', result.find('url').text
+def join(**kwargs):
+    # result = communicate(generate_url('join', **kwargs))
+    # return result.find('returncode').text == 'SUCCESS', result.find('url').text
+    return generate_url('join', **kwargs)
 
 
 def is_meeting_running(**kwargs):
@@ -50,8 +51,10 @@ def end(**kwargs):
 
 def get_meeting_info(**kwargs):
     result = communicate(generate_url('getMeetingInfo', **kwargs))
-    return result.find('returncode').text == 'SUCCESS', result.find('running').text == 'true', result.find(
-        'recording').text == 'true', result.find('createDate').text  # anything else that is useful
+    is_success = result.find('returncode').text == 'SUCCESS'
+    return is_success, result.find('running').text == 'true' if is_success else False, result.find(
+        'recording').text == 'true' if is_success else False, result.find('createDate').text if is_success else 'Never'
+    # anything else that is useful
 
 
 def get_meetings(**kwargs):
