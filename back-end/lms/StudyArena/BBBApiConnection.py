@@ -50,7 +50,8 @@ def end(**kwargs):
 
 def get_meeting_info(**kwargs):
     result = communicate(generate_url('getMeetingInfo', **kwargs))
-    return result.find('returncode').text == 'SUCCESS',  # anything else that is useful
+    return result.find('returncode').text == 'SUCCESS', result.find('running').text == 'true', result.find(
+        'recording').text == 'true', result.find('createDate').text  # anything else that is useful
 
 
 def get_meetings(**kwargs):
@@ -58,10 +59,12 @@ def get_meetings(**kwargs):
     status_condition = result.find('returncode').text == 'SUCCESS'
     meetings = []
     if status_condition:
-        meetings = [(meeting.find('meetingName').text, meeting.find('meetingID').text,) for meeting in result.find('meetings')]
+        meetings = [(meeting.find('meetingName').text, meeting.find('meetingID').text,) for meeting in
+                    result.find('meetings')]
     return status_condition, meetings
 
 
+# TODO: add recording methods
 if __name__ == '__main__':
     print(generate_url('getMeetings'))
     xml = """<modules>
@@ -76,5 +79,6 @@ if __name__ == '__main__':
     print(generate_url('join', fullName='Mahmood_Choopani', meetingID='abc123456', password='333444', redirect='FALSE'))
     print(is_meeting_running(meetingID='abc123456'))
     print(is_meeting_running(meetingID='abc12345'))
-    print(get_meetings())
+    x = 'abc123456'
+    print(get_meeting_info(meetingID=x))
     # print(join(fullName='Mahmood_Choopani',meetingID='abc123456',password='333444',redirect='FALSE'))
