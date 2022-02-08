@@ -3,6 +3,7 @@ from typing import Union
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from . import BBBApiConnection
 
 from .models import School, Class, TeacherRequest, StudentRequest, Student
 from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
@@ -291,3 +292,20 @@ class StudentView(APIView):
             return Response(data=[
                 {'school_id': school.school_id, 'name': school.name} for school in s
             ], status=200)
+
+
+class MeetingView(APIView):
+    # TODO: Test and debug
+    def get(self, request, class_id):
+        cls = get_object_or_404(Class, id=class_id)
+        info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
+        recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
+        return Response(data={
+            'name': cls.name,
+            'school': cls.school.name,
+            'teacher': cls.teacher_set.last() if cls.teacher_set.count() != 0 else 'unknown',
+            'is_running': info[1],
+            'is_recording': info[2],
+            'start_meeting_data': info[3],
+            'recordings': recordings[1],
+        }, status=200)
