@@ -1,41 +1,44 @@
 import { Wrapper } from "./StudentClasses.styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StudentClassesHeader from "./StudentClasses.Header";
 import useGet from "../../custom-hooks/useGet";
-// const items = ["درس۱", "درس۲", "درس۳", "درس۴", "درس۵", "درس۶"];
-// const classes = [
-//   { school_id: 1, name: "a" },
-//   { school_id: 2, name: "b" },
-//   { school_id: 3, name: "c" },
-//   { school_id: 4, name: "d" },
-//   { school_id: 5, name: "e" },
-//   { school_id: 6, name: "f" },
-// ];
 
 const StudentClasses = () => {
-  const [state, setState] = useState({});
-  const { schools } = useGet(
+  const [state, setState] = useState(undefined);
+  const schools = useGet(
     "http://localhost:8000/study/student/schools/",
     sessionStorage.getItem("token")
   );
-  console.log(schools);
-  const { classes } = useGet(
-    `http://localhost:8000/study/student/classes/${state.school_id}/`,
+  const classes = useGet(
+    `http://localhost:8000/study/student/classes/${
+      state ? state.school_id : ""
+    }/`,
     sessionStorage.getItem("token")
   );
+  useEffect(() => {
+    if (schools && schools.data.length !== 0) {
+      setState(schools.data[0]);
+    } else {
+      setState(null);
+    }
+  }, [schools]);
   return (
     <>
       <StudentClassesHeader
         state={state}
         setState={setState}
-        classes={classes}
+        schools={schools.data}
       />
       <Wrapper>
-        {schools &&
-          schools.map((e) => {
+        {classes.data.length !== 0 &&
+          classes.data.length &&
+          classes.data.map((e) => {
             return (
-              <div key={e} className="flex-item">
-                {e}
+              <div key={e.id} className="flex-item">
+                <div className="title">نام کلاس:</div>
+                <div className="school-name">{e.name}</div>
+                <div className="title">ارائه دهنده:</div>
+                <div className="school-teacher">{e.teacher}</div>
               </div>
             );
           })}

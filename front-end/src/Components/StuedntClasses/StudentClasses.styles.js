@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  /* height: 100%; */
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -11,22 +10,33 @@ export const Wrapper = styled.div`
   justify-content: space-evenly;
   .flex-item {
     direction: rtl;
-    text-align: center;
+    text-align: right;
+    padding-right: 10px;
+    padding-left: 10px;
     font-family: "vazir", sans-serif;
     font-size: 1.2rem;
     width: 300px;
-    height: 120px;
-    border-radius: 5px;
-    margin: 30px 10px;
-    padding-top: 40px;
+    height: 150px;
+    border-radius: 20px;
+    margin: 30px;
+    border: 2px black solid;
     cursor: pointer;
     background-color: white;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    &:hover {
-      transition: 0.4s;
-      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    .title {
+      font-size: 1rem;
+      color: gray;
+    }
+    .school-name {
+      padding-bottom: 5px;
+      padding-top: 8px;
+      color: black;
+      font-size: 1.5rem;
+      text-align: left;
+    }
+    .school-teacher {
+      color: black;
+      font-size: 1.2rem;
+      text-align: left;
     }
   }
 `;
