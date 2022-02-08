@@ -86,6 +86,14 @@ class Class(models.Model):
             "allowStartStopRecording": self.allowStartStopRecording,
         }
 
+    def get_settings_set2(self):
+        return {
+            **self.get_settings(),
+            # TODO: return password from self.password
+            "moderatorPW": '123456',
+            "attendeePW": '654321',
+        }
+
 
 class Teacher(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
