@@ -10,11 +10,12 @@ export const Wrapper = styled.div`
   background-color: rgba(255, 255, 255, 0.75);
   direction: rtl;
   font-family: "vazir", sans-serif;
-  padding-right: 10px;
   .flex-header {
+    background-color: #fff;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    border-radius: 10px;
   }
   .flex-item {
     font-size: 1.4rem;
@@ -55,6 +56,10 @@ export const Wrapper = styled.div`
   .state {
     margin-top: 70px;
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   .state-container,
   .enter {

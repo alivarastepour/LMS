@@ -9,6 +9,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 const Class = () => {
   const [open, setOpen] = useState(false);
   const temp = "دکتر ممدرضا خان قلی زاده";
+  const temp1 = "hsdeq0921";
   const status = true;
   const url = "https://www.github.com/users/alivarastepour/login";
   const copyToClipboard = () => {
@@ -27,6 +28,7 @@ const Class = () => {
         <div className="flex-header">
           <div className="flex-item">کلاس مدار های الکتریکی و الکترونیکی</div>
           <div className="flex-item">ارائه دهنده: {temp}</div>
+          <div className="flex-item">شناسه کلاس: {temp1}</div>
         </div>
         <div className="state">
           <div className="state-container">
