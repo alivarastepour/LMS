@@ -296,21 +296,27 @@ class StudentView(APIView):
 
 class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
+    get_mode = ''
 
     # TODO: Test and debug
     def get(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
-        info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
-        return Response(data={
-            'name': cls.name,
-            'teacher': cls.teacher_set.last() if cls.teacher_set.count() != 0 else 'unknown',
-            'is_running': info[1],
-            # TODO: get password from appropriate place
-            'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
-                                               password='654321') if info[1] else '',
-            'start_meeting_data': info[3],
-        }, status=200)
-
+        if self.get_mode == 'info':
+            # in this case we return class and meeting info
+            info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
+            return Response(data={
+                'name': cls.name,
+                'teacher': cls.teacher_set.last() if cls.teacher_set.count() != 0 else 'unknown',
+                'is_running': info[1],
+                # TODO: get password from appropriate place
+                'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
+                                                   password='654321') if info[1] else '',
+                'start_meeting_data': info[3],
+            }, status=200)
+        else:
+            # in this case we return playbacks of a meeting
+            recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
+            return Response(data=recordings[1], status=200)
 
     def post(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
