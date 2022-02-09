@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import useGet from "../../custom-hooks/useGet";
+
 import Spinner from "../Spinner/Spinner";
+
+import useGet from "../../custom-hooks/useGet";
 
 const ClassRecords = ({ classID }) => {
   const [loading, setLoading] = useState(true);
