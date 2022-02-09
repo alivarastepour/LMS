@@ -16,5 +16,22 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    .select-container {
+      @media only screen and (max-width: 650px) {
+        .x {
+          width: 300px;
+        }
+      }
+      @media only screen and (max-width: 500px) {
+        .x {
+          width: 200px;
+        }
+      }
+      @media only screen and (max-width: 355px) {
+        .x {
+          width: 170px;
+        }
+      }
+    }
   }
 `;

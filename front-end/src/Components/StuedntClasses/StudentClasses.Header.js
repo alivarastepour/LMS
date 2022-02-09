@@ -18,32 +18,35 @@ const StudentClassesHeader = ({ state, setState, schools }) => {
               >
                 یک مدرسه را انتخاب کنید
               </InputLabel>
-              <Select
-                value={state ? state : {}}
-                sx={{ width: 400 }}
-                labelId="select"
-                id="select"
-                label="یک مدرسه را انتخاب کنید"
-              >
-                {schools.length !== 0 &&
-                  schools.length &&
-                  schools.map((e) => (
-                    <MenuItem
-                      value={e}
-                      onChange={(e) => {
-                        setState(e.target.value);
-                      }}
-                      key={e.school_id}
-                      sx={{
-                        textAlign: "right",
-                        direction: "rtl",
-                        fontFamily: "vazir",
-                      }}
-                    >
-                      <div className="select-item">{e.name}</div>
-                    </MenuItem>
-                  ))}
-              </Select>
+              <div className="select-container">
+                <Select
+                  className="x"
+                  value={state ? state : {}}
+                  sx={{ width: 400 }}
+                  labelId="select"
+                  id="select"
+                  label="یک مدرسه را انتخاب کنید"
+                >
+                  {schools.length !== 0 &&
+                    schools.length &&
+                    schools.map((e) => (
+                      <MenuItem
+                        value={e}
+                        onChange={(e) => {
+                          setState(e.target.value);
+                        }}
+                        key={e.school_id}
+                        sx={{
+                          textAlign: "right",
+                          direction: "rtl",
+                          fontFamily: "vazir",
+                        }}
+                      >
+                        <div className="select-item">{e.name}</div>
+                      </MenuItem>
+                    ))}
+                </Select>
+              </div>
             </FormControl>
           </div>
         </div>
