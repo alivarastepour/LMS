@@ -23,6 +23,11 @@ export const Wrapper = styled.div`
   .flex-item {
     font-size: 1.4rem;
     padding-top: 10px;
+    @media only screen and (max-width: 945px) {
+      & {
+        font-size: 1.2rem;
+      }
+    }
   }
   .status {
     display: inline-flex;
@@ -34,6 +39,11 @@ export const Wrapper = styled.div`
     height: 50px;
     border-radius: 7px;
     color: white;
+    @media only screen and (max-width: 381px) {
+      & {
+        margin-right: 0;
+      }
+    }
   }
   .on {
     background-color: #17b327;
@@ -64,10 +74,6 @@ export const Wrapper = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-  }
-  .state-container,
-  .enter {
-    /* display: inline-block; */
   }
   .state-container {
     margin-left: 100px;
@@ -101,6 +107,16 @@ export const Wrapper = styled.div`
       @media only screen and (max-width: 920px) {
         & {
           font-size: 1rem;
+        }
+      }
+      @media only screen and (max-width: 470px) {
+        & {
+          font-size: 0.8rem;
+        }
+      }
+      @media only screen and (max-width: 945px) {
+        & {
+          font-size: 0.7rem;
         }
       }
     }
