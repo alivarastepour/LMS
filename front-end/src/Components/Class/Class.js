@@ -35,7 +35,7 @@ const Class = () => {
           status={data.is_running}
           url={data.join_link}
         />
-        <ClassRecords />
+        <ClassRecords classID={class_id} />
         <Snackbar
           open={open}
           onClose={() => setOpen(false)}
