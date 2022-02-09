@@ -95,6 +95,7 @@ export const Wrapper = styled.div`
     font-family: "vazir", sans-serif;
     text-align: center;
     border-collapse: collapse;
+    margin-top: 30px;
     tr {
       height: 60px;
     }
@@ -131,5 +132,8 @@ export const Wrapper = styled.div`
     &:hover {
       text-decoration: underline;
     }
+  }
+  .title {
+    font-size: 1.7rem;
   }
 `;
