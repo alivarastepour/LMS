@@ -2,7 +2,26 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   width: 100%;
-  /* height: 100%; */
+  .button-container {
+    @media only screen and (max-width: 910px) {
+      & {
+        margin-top: 10px;
+      }
+    }
+  }
+  .input-container {
+    @media only screen and (max-width: 760px) {
+      input {
+        width: 300px;
+      }
+    }
+    @media only screen and (max-width: 467px) {
+      input {
+        width: 200px;
+        font-size: 0.7rem;
+      }
+    }
+  }
   .flex-container {
     display: flex;
     flex-wrap: wrap;
@@ -67,6 +86,11 @@ export const Wrapper = styled.div`
       @media only screen and (max-width: 920px) {
         & {
           font-size: 1.3rem;
+        }
+      }
+      @media only screen and (max-width: 642px) {
+        & {
+          font-size: 1rem;
         }
       }
     }

@@ -1,9 +1,12 @@
-import { Avatar, Button, Dialog, DialogTitle } from "@mui/material";
 import { useState } from "react";
+
+import { Wrapper } from "./SchoolList.styles";
+
+import { Avatar, Button, Dialog, DialogTitle } from "@mui/material";
+
+import Alert from "../Alert/Alert";
 import Classes from "./Classes";
 import { findSchool } from "./classesHandler";
-import { Wrapper } from "./SchoolList.styles";
-import Alert from "../Alert/Alert";
 
 const SchoolList = () => {
   const [show, setShow] = useState(false);
@@ -15,7 +18,7 @@ const SchoolList = () => {
     <>
       <Wrapper>
         <div className="flex-container">
-          <div>
+          <div className="input-container">
             <input
               placeholder="جست‌وجوی مدرسه بر اساس شناسه"
               autoFocus={true}
@@ -25,7 +28,7 @@ const SchoolList = () => {
               onChange={(e) => setSearchValue(e.target.value)}
             />
           </div>
-          <div>
+          <div className="button-container">
             <Button
               sx={{ fontFamily: "vazir", fontSize: "1.2rem" }}
               variant="contained"
