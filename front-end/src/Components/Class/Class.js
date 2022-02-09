@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { Wrapper } from "./Class.styles";
 
@@ -9,19 +10,31 @@ import ClassInfo from "./ClassInfo";
 import ClassState from "./ClassState";
 import ClassRecords from "./ClassRecords";
 
+import useGet from "../../custom-hooks/useGet";
+
 const Class = () => {
+  const class_id = useParams().classID;
+
+  const { data } = useGet(
+    `http://localhost:8000/study/class/${class_id}/info/`,
+    sessionStorage.getItem("token")
+  );
+
   const [open, setOpen] = useState(false);
-  const temp = "دکتر ممدرضا خان قلی زاده";
-  const temp1 = "hsdeq0921";
-  const temp2 = "مدار های الکتریکی و الکترونیکی";
-  const status = true;
-  const url = "https://www.github.com/users/alivarastepour/login";
 
   return (
     <>
       <Wrapper>
-        <ClassInfo className={temp2} teacher={temp} id={temp1} />
-        <ClassState setOpen={setOpen} status={status} url={url} />
+        <ClassInfo
+          className={data && data.name}
+          teacher={data && data.teacher}
+          id={class_id}
+        />
+        <ClassState
+          setOpen={setOpen}
+          status={data.is_running}
+          url={data.join_link}
+        />
         <ClassRecords />
         <Snackbar
           open={open}
