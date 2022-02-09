@@ -1,6 +1,8 @@
+import datetime
 import hashlib
 import requests
 import xml.etree.ElementTree as ET
+from jalali_date import datetime2jalali
 
 SHARED_SECRET = 'XXXXXX'
 SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
@@ -53,7 +55,7 @@ def get_meeting_info(**kwargs):
     result = communicate(generate_url('getMeetingInfo', **kwargs))
     is_success = result.find('returncode').text == 'SUCCESS'
     return is_success, result.find('running').text == 'true' if is_success else False, result.find(
-        'recording').text == 'true' if is_success else False, result.find('createDate').text if is_success else 'Never'
+        'recording').text == 'true' if is_success else False, result.find('createDate').text.split()[3][:-3] if is_success else 'Never'
     # anything else that is useful
 
 
@@ -74,8 +76,10 @@ def get_recordings(**kwargs):
     if status_condition:
         # TODO: return url of recording
         recordings = [{'name': recording.find('name').text,
-                       'start_date': recording.find('startTime').text,
-                       'url': result.find('recordings')[0].find('playback')[0].find('url').text if
+                       'start_date': datetime2jalali(datetime.datetime.fromtimestamp(
+                           float(recording.find('startTime').text) / 1000 + (3 * 60 + 30) * 60)).strftime(
+                           '%y/%m/%d - %H:%M'),
+                       'url': recording.find('playback')[0].find('url').text if
                        recording.find('playback')[0].find('type').text == 'presentation' else
                        recording.find('playback')[-1].find('url').text,
                        'duration': recording.find('playback')[0].find('length').text if
