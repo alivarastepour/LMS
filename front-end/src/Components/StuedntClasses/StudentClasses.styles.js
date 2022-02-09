@@ -38,5 +38,11 @@ export const Wrapper = styled.div`
       font-size: 1.2rem;
       text-align: left;
     }
+    @media only screen and (max-width: 365px) {
+      .school-name,
+      .school-teacher {
+        font-size: 1rem;
+      }
+    }
   }
 `;

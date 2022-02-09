@@ -1,7 +1,10 @@
-import { Checkbox } from "@mui/material";
 import { useState } from "react";
-import Alert from "../Alert/Alert";
+
 import { Wrapper } from "./Classes.styles";
+
+import { Checkbox } from "@mui/material";
+
+import Alert from "../Alert/Alert";
 import { joinHandler } from "./classesHandler";
 
 const Classes = ({ classes, action }) => {
