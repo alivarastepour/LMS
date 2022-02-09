@@ -25,14 +25,15 @@ export const Wrapper = styled.div`
     padding-top: 10px;
   }
   .status {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
     margin-right: 10px;
     width: 120px;
     height: 50px;
     border-radius: 7px;
     color: white;
-    padding-right: 10px;
-    padding-top: 10px;
   }
   .on {
     background-color: #17b327;
@@ -66,7 +67,7 @@ export const Wrapper = styled.div`
   }
   .state-container,
   .enter {
-    display: inline-block;
+    /* display: inline-block; */
   }
   .state-container {
     margin-left: 100px;
@@ -106,6 +107,13 @@ export const Wrapper = styled.div`
     .hover:hover {
       transition: 0.2s;
       background-color: #f8f8f8;
+    }
+  }
+  .record-link {
+    color: black;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
     }
   }
 `;
