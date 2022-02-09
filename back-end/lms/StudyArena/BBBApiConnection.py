@@ -9,7 +9,7 @@ SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
 def dict_to_str(**kwargs):
     query = ''
     for param_name, param_value in kwargs.items():
-        query += f"{param_name}={param_value if type(param_value)!=bool else 'true' if param_name else 'false'}&"
+        query += f"{param_name}={param_value if type(param_value) != bool else 'true' if param_name else 'false'}&"
     return query[:-1]
 
 
@@ -73,10 +73,18 @@ def get_recordings(**kwargs):
     recordings = []
     if status_condition:
         # TODO: return url of recording
-        recordings = [(recording.find('name').text, recording.find('startTime').text, recording.find('endTime').text,
-                       'https://google.com')
+        recordings = [{'name': recording.find('name').text,
+                       'start_date': recording.find('startTime').text,
+                       'url': result.find('recordings')[0].find('playback')[0].find('url').text if
+                       recording.find('playback')[0].find('type').text == 'presentation' else
+                       recording.find('playback')[-1].find('url').text,
+                       'duration': recording.find('playback')[0].find('length').text if
+                       recording.find('playback')[0].find('type').text == 'presentation' else
+                       recording.find('playback')[-1].find('length').text
+                       }
                       for recording in result.find('recordings')]
     return status_condition, recordings
+
 
 # TODO: add recording methods
 if __name__ == '__main__':
