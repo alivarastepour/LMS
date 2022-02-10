@@ -16,8 +16,7 @@ class CustomUser(AbstractUser):
 
     @property
     def fullname(self):
-        # TODO: add space between...
-        return self.first_name + '' + self.last_name
+        return self.first_name + ' ' + self.last_name
 
     def set_photo_link(self, name):
         self.photo_link = IMAGE_URL + name
