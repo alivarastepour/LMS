@@ -67,6 +67,17 @@ export const Wrapper = styled.div`
       opacity: 1;
     }
   }
+  .date {
+    background-color: #213212;
+    &:hover {
+      transition: 0.4s;
+      opacity: 0.8;
+    }
+    &:not(:hover) {
+      transition: 0.4s;
+      opacity: 1;
+    }
+  }
   .state {
     margin-top: 70px;
     width: 100%;
@@ -74,13 +85,60 @@ export const Wrapper = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    @media only screen and (max-width: 1600px) {
+      & {
+        flex-direction: column;
+      }
+    }
   }
   .state-container {
     margin-left: 100px;
+    @media only screen and (max-width: 1790px) {
+      & {
+        margin-left: 20px;
+      }
+    }
+    @media only screen and (max-width: 1600px) {
+      & {
+        margin-left: 0;
+      }
+    }
+  }
+  .date-container {
+    margin-right: 100px;
+    @media only screen and (max-width: 1790px) {
+      & {
+        margin-right: 20px;
+      }
+    }
+    @media only screen and (max-width: 1600px) {
+      & {
+        margin-right: 0;
+        margin-top: 10px;
+      }
+    }
   }
   .link-container {
     display: inline-flex;
     align-items: center;
+    @media only screen and (max-width: 1600px) {
+      & {
+        margin-top: 10px;
+      }
+      .txt {
+        width: 400px;
+      }
+    }
+    @media only screen and (max-width: 625px) {
+      & {
+        display: block;
+      }
+    }
+    @media only screen and (max-width: 460px) {
+      .txt {
+        width: 280px;
+      }
+    }
   }
   .succes {
     font-family: "vazir", sans-serif;
@@ -135,5 +193,11 @@ export const Wrapper = styled.div`
   }
   .title {
     font-size: 1.7rem;
+  }
+  .no-rec {
+    font-size: 1.6rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
   }
 `;
