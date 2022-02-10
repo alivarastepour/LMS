@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import { Wrapper, Content } from "./sign-in.styles";
 import { submitHandler } from "./Sign-in.handlers";
+import { setParam } from "../../Global/global-functions";
 
 import { signInReducer } from "./Sign-in.reducer";
 
 import { authContext } from "../../App";
+import axios from "axios";
 
 const SignIn = () => {
   const { auth, setAuth } = useContext(authContext);
@@ -25,10 +27,22 @@ const SignIn = () => {
   const { username, password, validUsername, validPassword, validLogin } =
     state;
 
-  const nav = () =>
-    navigator(
-      `./accounts/manager/${sessionStorage.getItem("user")}/management`
-    );
+  const nav = () => {
+    const URL = "http://localhost:8000/auth/whoami/role/";
+    const TOKEN = sessionStorage.getItem("token");
+
+    axios
+      .get(URL, {
+        headers: { Authorization: `Token ${TOKEN}` },
+      })
+      .then((a) => {
+        navigator(
+          `./accounts/${sessionStorage.getItem("user")}/${setParam(
+            a.data.role
+          )}/info`
+        );
+      });
+  };
 
   return (
     <>

@@ -2,3 +2,4 @@ django
 djangorestframework
 django-cors-headers
 requests
+django-jalali-date

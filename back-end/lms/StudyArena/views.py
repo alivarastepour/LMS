@@ -3,19 +3,20 @@ from typing import Union
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from . import BBBApiConnection, utils
 
-from .models import School, Class, TeacherRequest, StudentRequest
-from .permissions import IsManager, IsProfileCompleted, IsTeacher
+from .models import School, Class, TeacherRequest, StudentRequest, Student
+from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
 import io
 
-IMAGES_LOCATION = '/var/www/html/'  # TODO: set relative path
+IMAGES_LOCATION = '/var/www/html'  # TODO: set relative path
 
 
 class SchoolView(APIView):
     serializer_class = SchoolSerializer
-    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager)
+    permission_classes = (IsAuthenticated, IsProfileCompleted)
 
     def post(self, request):
         school = SchoolSerializer(data=request.data)
@@ -24,15 +25,24 @@ class SchoolView(APIView):
             return Response(data={'message': f'{request.data["name"]} successfully created.'}, status=200)
         return Response(data={'message': 'some fields are missing.', 'errors': school.errors}, status=400)
 
-    def get(self, request):
-        try:
-            school = School.objects.get(manager__username=request.user.username)
-        except Exception as _:
-            return Response(data={
-                "has_requested": False
-            }, status=200)
-        res_dic = school.to_json()
-        return Response(data=res_dic)
+    def get(self, request, **kwargs):
+        school_username = kwargs.get('school_username', None)
+        if school_username is None:
+            # in this case we return a school that belong to request.user
+            try:
+                school = School.objects.get(manager__username=request.user.username)
+            except Exception as _:
+                return Response(data={
+                    "has_requested": False
+                }, status=200)
+            res_dic = school.to_json()
+            return Response(data=res_dic)
+        else:
+            # in this case we return all schools that their ids contains `school_username`
+            schools = School.objects.filter(school_id__icontains=school_username)
+            return Response(data=[
+                {**school.to_json_set2(request.user.student_set.all().last())} for school in schools
+            ], status=200)
 
     def file_handler(self, file, school_id, extension):
         # TODO: generate a random name to keep privacy
@@ -60,7 +70,7 @@ class SchoolView(APIView):
 
 
 class StudentRequests(APIView):
-    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager | IsTeacher)
+    permission_classes = (IsAuthenticated, IsProfileCompleted)
 
     def get_accepted(self, school):
         return StudentRequest.objects.filter(clazz__school=school).filter(status='accepted')
@@ -105,18 +115,30 @@ class StudentRequests(APIView):
                 )
         return Response(data={'requests': output}, status=200)
 
-    def post(self, request, student_id):
-        student_req = get_object_or_404(StudentRequest, id=student_id)
-        if request.data.get('operation', 'rejected') == 'accepted':
-            student_req.status = 'accepted'
-            student_req.save()
-            return Response(data={'message': f'Student {student_req.student.user.fullname} accepted for Class '
-                                             f'{student_req.clazz.name}'}, status=200)
+    def post(self, request, **kwargs):
+        student_id = kwargs.get('student_id', None)
+        if student_id is not None:
+            # in this case manager wants to accept or reject the requested student
+            student_req = get_object_or_404(StudentRequest, id=student_id)
+            if request.data.get('operation', 'rejected') == 'accepted':
+                student_req.status = 'accepted'
+                student_req.student.classes.add(student_req.clazz)
+                student_req.save()
+                return Response(data={'message': f'Student {student_req.student.user.fullname} accepted for Class '
+                                                 f'{student_req.clazz.name}'}, status=200)
+            else:
+                student_req.status = 'rejected'
+                student_req.save()
+                return Response(data={'message': f'Student {student_req.student.user.fullname} rejected for Class '
+                                                 f'{student_req.clazz.name}'}, status=200)
         else:
-            student_req.status = 'rejected'
-            student_req.save()
-            return Response(data={'message': f'Student {student_req.student.user.fullname} rejected for Class '
-                                             f'{student_req.clazz.name}'}, status=200)
+            # in this case student wants to request to join to some classes.
+            classes = request.data.get('classes', [])
+            for clazz in classes:
+                StudentRequest.objects.create(student=Student.objects.get(user=request.user), clazz_id=clazz)
+            return Response({
+                "message": "join request sent."
+            })
 
 
 class TeacherRequests(APIView):
@@ -163,18 +185,30 @@ class TeacherRequests(APIView):
                 )
         return Response(data={'requests': output}, status=200)
 
-    def post(self, request, teacher_id):
-        teacher_req = get_object_or_404(TeacherRequest, id=teacher_id)
-        if request.data.get('operation', 'rejected') == 'accepted':
-            teacher_req.status = 'accepted'
-            teacher_req.save()
-            return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} accepted for Class '
-                                             f'{teacher_req.clazz.name}'}, status=200)
+    def post(self, request, **kwargs):
+        teacher_id = kwargs.get('teacher_id', None)
+        if teacher_id is not None:
+            # in this case manager wants to accept or reject a teacher request
+            teacher_req = get_object_or_404(TeacherRequest, id=teacher_id)
+            if request.data.get('operation', 'rejected') == 'accepted':
+                teacher_req.status = 'accepted'
+                teacher_req.teacher.classes.add(teacher_req.clazz)
+                teacher_req.save()
+                return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} accepted for Class '
+                                                 f'{teacher_req.clazz.name}'}, status=200)
+            else:
+                teacher_req.status = 'rejected'
+                teacher_req.save()
+                return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} rejected for Class '
+                                                 f'{teacher_req.clazz.name}'}, status=200)
         else:
-            teacher_req.status = 'rejected'
-            teacher_req.save()
-            return Response(data={'message': f'Teacher {teacher_req.teacher.user.fullname} rejected for Class '
-                                             f'{teacher_req.clazz.name}'}, status=200)
+            # in this case teacher wants to send join request.
+            classes = request.data.get('classes', [])
+            for clazz in classes:
+                TeacherRequest.objects.create(teacher=Student.objects.get(user=request.user), clazz_id=clazz)
+            return Response({
+                "message": "join request sent."
+            })
 
 
 class ClassView(APIView):
@@ -232,3 +266,76 @@ class ClassView(APIView):
             return Response(data={
                 "message": "Something is wrong!",
             }, status=400)
+
+
+class StudentView(APIView):
+    permission_classes = (IsAuthenticated, IsManager | IsStudent)
+    mode = ''
+
+    def get(self, request, **kwargs):
+        student_id = request.user.id
+        if self.mode == 'classes':
+            school_id = kwargs.get('school_id', None)
+            if school_id is not None:
+                classes = School.objects.get(school_id=school_id).class_set.filter(student__user__id=student_id)
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in classes
+                ], status=200)
+            else:
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in Student.objects.get(user__id=student_id).classes.all()
+                ], status=200)
+        else:
+            s = set()
+            for clazz in Student.objects.get(user__id=student_id).classes.all():
+                s.add(clazz.school)
+            return Response(data=[
+                {'school_id': school.school_id, 'name': school.name} for school in s
+            ], status=200)
+
+
+class MeetingView(APIView):
+    permission_classes = (IsAuthenticated, IsProfileCompleted)
+    get_mode = ''
+
+    # TODO: Test and debug
+    def get(self, request, class_id):
+        cls = get_object_or_404(Class, id=class_id)
+        if self.get_mode == 'info':
+            # in this case we return class and meeting info
+            info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
+            return Response(data={
+                'name': cls.name,
+                'teacher': cls.teacher_set.last() if cls.teacher_set.count() != 0 else 'unknown',
+                'is_running': info[1],
+                'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
+                                                   password=cls.moderatorPW if
+                                                   request.user.role == 'M' or request.user.role == 'T'
+                                                   else cls.attendeePW) if info[1] else '',
+                'start_meeting_data': info[3],
+            }, status=200)
+        else:
+            # in this case we return playbacks of a meeting
+            recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
+            return Response(data=recordings[1], status=200)
+
+    def post(self, request, class_id):
+        cls = get_object_or_404(Class, id=class_id)
+        return Response(data={
+            'success': BBBApiConnection.create(**cls.get_settings_set2()),
+            'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
+                                               password=cls.moderatorPW),
+        }, status=200)
+
+    def put(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        try:
+            for file in request.FILES.getlist('slides'):
+                final_file_path = utils.file_handler(file,f'{cls.school.school_id}/{class_id}',file.name)
+                cls.slides = cls.slides + 'localhost' + final_file_path + '\n'
+        except Exception as _:
+            pass
+        cls.save()
+        return Response(data=cls.slides.rstrip().split('\n'),status=200)
+
+

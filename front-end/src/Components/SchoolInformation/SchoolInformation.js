@@ -5,20 +5,23 @@ import SchoolInformationHeader from "./SchoolInformation.Header";
 import TableView from "../TableView/TableView";
 import SchoolProfile from "../SchoolProfile/SchoolProfile";
 import CreateClass from "../ClassList/ClassList";
+import { useParams } from "react-router-dom";
 
 const SchoolInformation = () => {
-  const [state, setState] = useState("info");
+  const defaultPage = useParams().info;
+
+  const [state, setState] = useState(defaultPage);
 
   return (
     <>
       <Wrapper>
         <SchoolInformationHeader state={state} setState={setState} />
         <Content>
-          {state === "student" ? (
+          {state === "students" ? (
             <TableView content="student" />
           ) : state === "info" ? (
             <SchoolProfile />
-          ) : state === "teacher" ? (
+          ) : state === "teachers" ? (
             <TableView content="teacher" />
           ) : (
             <CreateClass />

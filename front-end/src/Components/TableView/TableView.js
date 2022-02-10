@@ -104,7 +104,7 @@ const TableView = ({ content }) => {
                 optionsMap={[{ name: "نام" }, { username: "کدملی" }]}
               />
             </td>
-            <td colSpan={content === "teacher" ? 3 : 2}>
+            <td colSpan={2}>
               <AutoComplete
                 setSearchTerm={setSearchTerm}
                 searchTerm={searchTerm}
@@ -116,7 +116,7 @@ const TableView = ({ content }) => {
             <td className="header">ردیف</td>
             <td className="header">نام</td>
             <td className="header">کدملی</td>
-            {content === "teacher" && <td className="header">کلاس</td>}
+            <td className="header">کلاس</td>
             <td className="header">وضعیت</td>
           </tr>
 
@@ -134,7 +134,7 @@ const TableView = ({ content }) => {
                     </div>
                   </td>
                   <td>{element.username}</td>
-                  {content === "teacher" && <td>{element.class_name}</td>}
+                  <td>{element.class_name}</td>
                   <td>{renderButton(element)}</td>
                 </tr>
               );

@@ -1,55 +1,22 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import List from "@mui/material/List";
+import { useParams } from "react-router-dom";
 
 import { Wrapper } from "./StudentManagement.styles";
+import StudentManagementHeader from "./StudentManagement.Header";
+import { Content } from "../SchoolInformation/SchoolInformation.styles";
+import StudentClasses from "../StuedntClasses/StudentClasses";
+import SchoolList from "../SchoolList/SchoolList";
 
 const StudentManagement = () => {
-  const listItemStyles = {
-    direction: "rtl",
-    textAlign: "right",
-  };
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
-  const nav = () => navigate(`./${Math.random()}`);
+  const defaultPage = useParams().info;
+  const [state, setState] = useState(defaultPage);
   return (
     <>
       <Wrapper>
-        <List
-          sx={{
-            width: "95%",
-            margin: "auto",
-            bgcolor: "white",
-            borderRadius: 5,
-          }}
-          subheader={<div className="list-title">لیست کلاس ها</div>}
-        >
-          <ListItemButton>
-            <ListItemText sx={listItemStyles}>
-              <div className="list-item">مدار های الکتریکی و الکترونیکی</div>
-            </ListItemText>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemText sx={listItemStyles}>
-              <div className="list-item">مدار های منطقی</div>
-            </ListItemText>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemText sx={listItemStyles}>
-              <div className="list-item" onClick={() => nav()}>
-                ساختمان داده
-              </div>
-            </ListItemText>
-          </ListItemButton>
-          <ListItemButton>
-            <ListItemText sx={listItemStyles}>
-              <div className="list-item">عرفان عملی در اسلام</div>
-            </ListItemText>
-          </ListItemButton>
-        </List>
+        <StudentManagementHeader state={state} setState={setState} />
+        <Content>
+          {state === "info" ? <StudentClasses /> : <SchoolList />}
+        </Content>
       </Wrapper>
     </>
   );

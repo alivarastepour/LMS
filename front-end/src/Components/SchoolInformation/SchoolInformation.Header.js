@@ -1,35 +1,50 @@
+import { useNavigate } from "react-router-dom";
 import { Wrapper } from "./SchoolInformation.Header.styles";
 
 const SchoolInformationHeader = ({ state, setState }) => {
+  const navigator = useNavigate();
+  const nav = (url) => navigator(url);
   return (
     <>
       <Wrapper>
         <button
-          onClick={() => setState("info")}
+          onClick={() => {
+            setState("info");
+            nav("./management/info");
+          }}
           className={`button ${state === "info" ? "active" : "inactive"}`}
         >
           اطلاعات مدرسه
         </button>
         <button
-          onClick={() => setState("teacher")}
+          onClick={() => {
+            setState("teachers");
+            nav("./management/teachers");
+          }}
           className={`button margin ${
-            state === "teacher" ? "active" : "inactive"
+            state === "teachers" ? "active" : "inactive"
           }`}
         >
           معلمان
         </button>
         <button
-          onClick={() => setState("student")}
+          onClick={() => {
+            setState("students");
+            nav("./management/students");
+          }}
           className={`button margin ${
-            state === "student" ? "active" : "inactive"
+            state === "students" ? "active" : "inactive"
           }`}
         >
           دانش‌آموزان
         </button>
         <button
-          onClick={() => setState("class")}
+          onClick={() => {
+            setState("classes");
+            nav("./management/classes");
+          }}
           className={`button margin ${
-            state === "class" ? "active" : "inactive"
+            state === "classes" ? "active" : "inactive"
           }`}
         >
           کلاس‌ها

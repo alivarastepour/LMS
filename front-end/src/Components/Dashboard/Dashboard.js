@@ -31,7 +31,7 @@ const Dashboard = () => {
 
   const defaultPage = useParams().management;
 
-  const [show, setShow] = useState(defaultPage !== "management");
+  const [show, setShow] = useState(defaultPage === "profile");
 
   const { auth } = useContext(authContext);
 

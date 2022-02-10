@@ -1,11 +1,14 @@
 import { Wrapper } from "./ClassList.styles";
+
 import SearchBox from "../SearchBox/SearchBox";
 import AutoComplete from "../AutoComplete/AutoComplete";
-import useGet from "../../custom-hooks/useGet";
-import { handleSearch, addClass, deleteClass } from "./classListHandlers";
+import ClassSettings from "../ClassSettings/ClassSettings";
+
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
-import ClassSettings from "../ClassSettings/ClassSettings";
+
+import { handleSearch, addClass, deleteClass } from "./classListHandlers";
+import useGet from "../../custom-hooks/useGet";
 
 import { useEffect, useState } from "react";
 

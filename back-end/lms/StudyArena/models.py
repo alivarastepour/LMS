@@ -34,6 +34,17 @@ class School(models.Model):
             'image': self.photo_link
         }
 
+    def to_json_set2(self, student):
+        return {
+            'id': self.id,
+            'school_id': self.school_id,
+            'name': self.name,
+            'address': self.address,
+            'image': self.photo_link,
+            'manager': self.manager.fullname,
+            'classes': [clazz.to_json() for clazz in self.class_set.all() if student not in clazz.student_set.all()]
+        }
+
     def set_photo_link(self, name):
         self.photo_link = IMAGE_URL + name
         self.save()
@@ -52,6 +63,7 @@ class Class(models.Model):
     webcamsOnlyForModerator = models.BooleanField(default=True)
     maxParticipants = models.IntegerField(default=0)
     allowStartStopRecording = models.BooleanField(default=True)
+    slides = models.TextField(default='localhost/whiteboard.pdf\n')
 
     def to_json(self):
         teacher = self.teacherrequest_set.filter(status__exact='pending')
@@ -73,6 +85,14 @@ class Class(models.Model):
             "webcamsOnlyForModerator": self.webcamsOnlyForModerator,
             "maxParticipants": self.maxParticipants,
             "allowStartStopRecording": self.allowStartStopRecording,
+        }
+
+    def get_settings_set2(self):
+        return {
+            **self.get_settings(),
+            # TODO: return password from self.password
+            "moderatorPW": '123456',
+            "attendeePW": '654321',
         }
 
 

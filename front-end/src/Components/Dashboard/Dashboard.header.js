@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { setParam } from "../../Global/global-functions";
 
 import { Wrapper } from "./Dashboad.header.styles";
 
@@ -34,7 +35,7 @@ const DashboardHeader = ({ show, setShow, dashboradTitle }) => {
         <div className="flex-item">
           <button
             onClick={() => {
-              nav("./management");
+              nav(`./${setParam(dashboradTitle.role)}/info`);
               setShow(false);
             }}
             className={`header-button ${show ? "hide" : "show"}`}
