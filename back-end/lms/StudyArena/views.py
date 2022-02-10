@@ -3,7 +3,7 @@ from typing import Union
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from . import BBBApiConnection
+from . import BBBApiConnection, utils
 
 from .models import School, Class, TeacherRequest, StudentRequest, Student
 from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
@@ -326,4 +326,16 @@ class MeetingView(APIView):
             'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
                                                password=cls.moderatorPW),
         }, status=200)
+
+    def put(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        try:
+            for file in request.FILES.getlist('slides'):
+                final_file_path = utils.file_handler(file,f'{cls.school.school_id}/{class_id}',file.name)
+                cls.slides = cls.slides + 'localhost' + final_file_path + '\n'
+        except Exception as _:
+            pass
+        cls.save()
+        return Response(data=cls.slides.rstrip().split('\n'),status=200)
+
 
