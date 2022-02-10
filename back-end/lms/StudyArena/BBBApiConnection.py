@@ -3,6 +3,7 @@ import hashlib
 import requests
 import xml.etree.ElementTree as ET
 from jalali_date import datetime2jalali
+from urllib.parse import quote as urlEncode
 
 SHARED_SECRET = 'XXXXXX'
 SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
@@ -11,7 +12,7 @@ SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
 def dict_to_str(**kwargs):
     query = ''
     for param_name, param_value in kwargs.items():
-        query += f"{param_name}={param_value if type(param_value) != bool else 'true' if param_name else 'false'}&"
+        query += f"{param_name}={urlEncode(str(param_value)) if type(param_value) != bool else 'true' if param_name else 'false'}&"
     return query[:-1]
 
 
