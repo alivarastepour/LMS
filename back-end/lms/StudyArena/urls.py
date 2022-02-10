@@ -9,6 +9,7 @@ urlpatterns = [
     path('class/<int:class_id>/info/', MeetingView.as_view(get_mode='info')),
     path('class/<int:class_id>/recordings/', MeetingView.as_view(get_mode='record')),
     path('class/<int:class_id>/create/', MeetingView.as_view()),
+    path('class/<int:class_id>/slide/', MeetingView.as_view()),
     path('student-list/', StudentRequests.as_view()),
     path('teacher-list/', TeacherRequests.as_view()),
     path('teacher-request/<int:teacher_id>/', TeacherRequests.as_view()),
