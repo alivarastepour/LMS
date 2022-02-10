@@ -11,7 +11,7 @@ const StudentClasses = () => {
 
   const schoolReqUrl = "http://localhost:8000/study/student/schools/";
   const classesReqUrl = `http://localhost:8000/study/student/classes/${
-    state ? state.school_id : ""
+    state ? state : ""
   }/`;
   const TOKEN = sessionStorage.getItem("token");
 
@@ -23,16 +23,17 @@ const StudentClasses = () => {
   };
 
   const schools = useGet(schoolReqUrl, TOKEN);
+  const indicator = !!schools.data.length;
 
   const classes = useGet(classesReqUrl, TOKEN);
 
   useEffect(() => {
-    if (schools && schools.data.length !== 0) {
-      setState(schools.data[0]);
+    if (schools && schools.data.length !== 0 && schools.data[0]) {
+      setState(schools.data[0].school_id);
     } else {
       setState(null);
     }
-  }, [schools]);
+  }, [indicator]);
 
   return (
     <>
@@ -42,18 +43,24 @@ const StudentClasses = () => {
         schools={schools.data}
       />
       <Wrapper>
-        {classes.data.length !== 0 &&
-          classes.data.length &&
-          classes.data.map((e) => {
-            return (
-              <div key={e.id} className="flex-item" onClick={() => nav(e.id)}>
-                <div className="title">نام کلاس:</div>
-                <div className="school-name">{e.name}</div>
-                <div className="title">ارائه دهنده:</div>
-                <div className="school-teacher">{e.teacher}</div>
-              </div>
-            );
-          })}
+        <table>
+          <tbody>
+            <tr>
+              <td className="header">نام کلاس</td>
+              <td className="header">ارائه دهنده</td>
+            </tr>
+            {classes.data.length !== 0 &&
+              classes.data.length &&
+              classes.data.map((a) => {
+                return (
+                  <tr className="hover" key={a.id} onClick={() => nav(a.id)}>
+                    <td>{a.name}</td>
+                    <td>{a.teacher}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
       </Wrapper>
     </>
   );
