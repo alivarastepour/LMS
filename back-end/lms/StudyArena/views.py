@@ -308,9 +308,10 @@ class MeetingView(APIView):
                 'name': cls.name,
                 'teacher': cls.teacher_set.last() if cls.teacher_set.count() != 0 else 'unknown',
                 'is_running': info[1],
-                # TODO: get password from appropriate place
                 'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
-                                                   password='654321') if info[1] else '',
+                                                   password=cls.moderatorPW if
+                                                   request.user.role == 'M' or request.user.role == 'T'
+                                                   else cls.attendeePW) if info[1] else '',
                 'start_meeting_data': info[3],
             }, status=200)
         else:
@@ -322,7 +323,7 @@ class MeetingView(APIView):
         cls = get_object_or_404(Class, id=class_id)
         return Response(data={
             'success': BBBApiConnection.create(**cls.get_settings_set2()),
-            # TODO: get password from appropriate place
             'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
-                                               password='123456'),
+                                               password=cls.moderatorPW),
         }, status=200)
+
