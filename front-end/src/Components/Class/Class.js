@@ -34,6 +34,7 @@ const Class = () => {
           setOpen={setOpen}
           status={data.is_running}
           url={data.join_link}
+          date={data.start_meeting_data}
         />
         <ClassRecords classID={class_id} />
         <Snackbar
