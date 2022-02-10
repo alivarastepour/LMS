@@ -26,15 +26,15 @@ const StudentClassesHeader = ({ state, setState, schools }) => {
                   labelId="select"
                   id="select"
                   label="یک مدرسه را انتخاب کنید"
+                  onChange={(e) => {
+                    setState(e.target.value);
+                  }}
                 >
                   {schools.length !== 0 &&
                     schools.length &&
                     schools.map((e) => (
                       <MenuItem
-                        value={e}
-                        onChange={(e) => {
-                          setState(e.target.value);
-                        }}
+                        value={e.school_id}
                         key={e.school_id}
                         sx={{
                           textAlign: "right",
