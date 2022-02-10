@@ -63,6 +63,7 @@ class Class(models.Model):
     webcamsOnlyForModerator = models.BooleanField(default=True)
     maxParticipants = models.IntegerField(default=0)
     allowStartStopRecording = models.BooleanField(default=True)
+    slides = models.TextField(default='localhost/whiteboard.pdf\n')
 
     def to_json(self):
         teacher = self.teacherrequest_set.filter(status__exact='pending')
