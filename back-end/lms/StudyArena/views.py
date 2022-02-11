@@ -217,7 +217,7 @@ class TeacherRequests(APIView):
 
 class ClassView(APIView):
     serializer_class = ClassSerializer
-    permission_classes = (IsAuthenticated, IsManager)
+    permission_classes = (IsAuthenticated, IsManager | IsTeacher)
 
     def get(self, request, *args, **kwargs):
         clazz_id = kwargs.get('class_id', None)
