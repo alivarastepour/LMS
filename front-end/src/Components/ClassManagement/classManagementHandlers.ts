@@ -16,7 +16,6 @@ export const createMeeting = (
       }
     )
     .then((a) => {
-      console.log(a.data.join_link);
       setStarted(a.data.success);
       setUrl(a.data.join_link);
     })
