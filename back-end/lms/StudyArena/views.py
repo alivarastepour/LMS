@@ -296,6 +296,32 @@ class StudentView(APIView):
             ], status=200)
 
 
+class TeacherView(APIView):
+    permission_classes = (IsAuthenticated, IsManager | IsTeacher)
+    mode = ''
+
+    def get(self, request, **kwargs):
+        teacher_id = request.user.id
+        if self.mode == 'classes':
+            school_id = kwargs.get('school_id', None)
+            if school_id is not None:
+                classes = School.objects.get(school_id=school_id).class_set.filter(teacher__user__id=teacher_id)
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in classes
+                ], status=200)
+            else:
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in Teacher.objects.get(user__id=teacher_id).classes.all()
+                ], status=200)
+        else:
+            s = set()
+            for clazz in Teacher.objects.get(user__id=teacher_id).classes.all():
+                s.add(clazz.school)
+            return Response(data=[
+                {'school_id': school.school_id, 'name': school.name} for school in s
+            ], status=200)
+
+
 class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
@@ -333,11 +359,9 @@ class MeetingView(APIView):
         cls = Class.objects.get(id=class_id)
         try:
             for file in request.FILES.getlist('slides'):
-                final_file_path = utils.file_handler(file,f'{cls.school.school_id}/{class_id}',file.name)
+                final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
                 cls.slides = cls.slides + 'localhost' + final_file_path + '\n'
         except Exception as _:
             pass
         cls.save()
-        return Response(data=cls.slides.rstrip().split('\n'),status=200)
-
-
+        return Response(data=cls.slides.rstrip().split('\n'), status=200)
