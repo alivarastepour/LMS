@@ -99,7 +99,7 @@ const ClassState = ({
                 id="files"
                 multiple
                 accept="  .doc, .docx, .ppt, .pptx, .pdf, .xls, .xlsx, .txt, .rtf, .odt, .ods, .odp, .odg, .odc, .odi, .jpg, .jpeg, .png"
-                onChange={fileUpload}
+                onChange={(e) => fileUpload(e, id)}
               />
             </div>
           </>
@@ -121,11 +121,3 @@ const ClassState = ({
 };
 
 export default ClassState;
-
-const c = {
-  slides: "1",
-  slides: "2",
-  slides: "3",
-  slides: "4",
-  slides: "5",
-};
