@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from . import BBBApiConnection, utils
 
-from .models import School, Class, TeacherRequest, StudentRequest, Student
+from .models import School, Class, TeacherRequest, StudentRequest, Student, Teacher
 from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
@@ -134,8 +134,9 @@ class StudentRequests(APIView):
         else:
             # in this case student wants to request to join to some classes.
             classes = request.data.get('classes', [])
+            student = Student.objects.get(user=request.user)
             for clazz in classes:
-                StudentRequest.objects.create(student=Student.objects.get(user=request.user), clazz_id=clazz)
+                StudentRequest.objects.create(student=student, clazz_id=clazz)
             return Response({
                 "message": "join request sent."
             })
@@ -204,8 +205,9 @@ class TeacherRequests(APIView):
         else:
             # in this case teacher wants to send join request.
             classes = request.data.get('classes', [])
+            teacher = Teacher.objects.get(user=request.user)
             for clazz in classes:
-                TeacherRequest.objects.create(teacher=Student.objects.get(user=request.user), clazz_id=clazz)
+                TeacherRequest.objects.create(teacher=teacher, clazz_id=clazz)
             return Response({
                 "message": "join request sent."
             })
@@ -298,7 +300,7 @@ class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
 
-    # TODO: Test and debug
+    # TODO: add permission to each method...
     def get(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
         if self.get_mode == 'info':
