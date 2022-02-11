@@ -93,15 +93,15 @@ export const Wrapper = styled.div`
     }
   }
   .state-container {
-    margin-left: 100px;
+    /* margin-left: 100px; */
     @media only screen and (max-width: 1790px) {
       & {
-        margin-left: 20px;
+        /* margin-left: 20px; */
       }
     }
     @media only screen and (max-width: 1600px) {
       & {
-        margin-left: 0;
+        /* margin-left: 0; */
       }
     }
   }
@@ -219,6 +219,29 @@ export const Wrapper = styled.div`
     }
   }
   .start {
+    cursor: pointer;
+  }
+  input[type="file"] {
+    display: none;
+  }
+  .file-upload {
+    background-color: #852399;
+    cursor: pointer;
+    @media only screen and (max-width: 1605px) {
+      & {
+        margin-top: 10px;
+      }
+    }
+    &:hover {
+      transition: 0.4s;
+      opacity: 0.8;
+    }
+    &:not(:hover) {
+      transition: 0.4s;
+      opacity: 1;
+    }
+  }
+  .label {
     cursor: pointer;
   }
 `;
