@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Wrapper } from "./ClassManagement.styles";
@@ -19,9 +19,14 @@ const ClassManagement = () => {
     `http://localhost:8000/study/class/${class_id}/info/`,
     sessionStorage.getItem("token")
   );
-
   const [open, setOpen] = useState(false);
-
+  const [url, setUrl] = useState();
+  const [started, setStarted] = useState(false);
+  useEffect(() => {
+    if (data) {
+      setUrl(data.url);
+    }
+  }, [data]);
   return (
     <>
       <Wrapper>
@@ -29,8 +34,10 @@ const ClassManagement = () => {
         <ClassState
           setOpen={setOpen}
           status={data.is_running}
-          url={data.join_link}
+          url={url}
           date={data.start_meeting_data}
+          setUrl={setUrl}
+          setStarted={setStarted}
         />
         <ClassRecords classID={class_id} />
         <Snackbar

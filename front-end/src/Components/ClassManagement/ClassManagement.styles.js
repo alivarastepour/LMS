@@ -203,5 +203,16 @@ export const Wrapper = styled.div`
   .settings {
     background-color: #2a86b0;
     cursor: pointer;
+    &:hover {
+      transition: 0.4s;
+      opacity: 0.8;
+    }
+    &:not(:hover) {
+      transition: 0.4s;
+      opacity: 1;
+    }
+  }
+  .start {
+    cursor: pointer;
   }
 `;
