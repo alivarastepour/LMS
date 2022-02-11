@@ -5,7 +5,7 @@ import { Dialog, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import ClassSettings from "../ClassSettings/ClassSettings";
 import { useParams } from "react-router-dom";
-import { createMeeting } from "./classManagementHandlers";
+import { createMeeting, fileUpload } from "./classManagementHandlers";
 
 const ClassState = ({
   url,
@@ -41,13 +41,13 @@ const ClassState = ({
     <>
       <div className="state">
         <div className="state-container">
-          <div style={{ display: "inline-block" }}>وضعیت کلاس:</div>
+          {/* <div style={{ display: "inline-block" }}>وضعیت کلاس:</div> */}
           {classStatus()}
         </div>
         {url ? (
           <>
             <div className="link-container">
-              <div className="enter">لینک ورود به کلاس</div>
+              {/* <div className="enter">لینک ورود به کلاس</div> */}
               <div>
                 <TextField
                   className="txt"
@@ -86,9 +86,23 @@ const ClassState = ({
           ""
         )}
         {!url && (
-          <div className="status settings" onClick={() => so(true)}>
-            تنظیمات کلاس
-          </div>
+          <>
+            <div className="status settings" onClick={() => so(true)}>
+              تنظیمات کلاس
+            </div>
+            <div className="status file-upload">
+              <label htmlFor="files" className="label">
+                آپلود فایل(ها)
+              </label>
+              <input
+                type="file"
+                id="files"
+                multiple
+                accept="  .doc, .docx, .ppt, .pptx, .pdf, .xls, .xlsx, .txt, .rtf, .odt, .ods, .odp, .odg, .odc, .odi, .jpg, .jpeg, .png"
+                onChange={fileUpload}
+              />
+            </div>
+          </>
         )}
       </div>
       <Dialog
@@ -107,3 +121,11 @@ const ClassState = ({
 };
 
 export default ClassState;
+
+const c = {
+  slides: "1",
+  slides: "2",
+  slides: "3",
+  slides: "4",
+  slides: "5",
+};
