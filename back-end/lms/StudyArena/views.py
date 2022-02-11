@@ -336,7 +336,7 @@ class MeetingView(APIView):
             info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
             return Response(data={
                 'name': cls.name,
-                'teacher': cls.teacher_set.last() if cls.teacher_set.count() != 0 else 'unknown',
+                'teacher': cls.teacher_set.last().user.fullname if cls.teacher_set.count() != 0 else 'unknown',
                 'is_running': info[1],
                 'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
                                                    password=cls.moderatorPW if
