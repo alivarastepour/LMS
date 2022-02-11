@@ -8,7 +8,7 @@ import Alert from "../Alert/Alert";
 import Classes from "./Classes";
 import { findSchool } from "./classesHandler";
 
-const SchoolList = () => {
+const SchoolList = ({ content }) => {
   const [show, setShow] = useState(false);
   const [classes, setClasses] = useState(null);
   const [searchValue, setSearchValue] = useState("");
@@ -83,7 +83,7 @@ const SchoolList = () => {
           <DialogTitle sx={{ textAlign: "right", fontFamily: "vazir" }}>
             لیست کلاس‌ها
           </DialogTitle>
-          <Classes classes={classes} action={setShow} />
+          <Classes classes={classes} action={setShow} content={content} />
         </Dialog>
       </Wrapper>
     </>

@@ -15,7 +15,11 @@ const StudentManagement = () => {
       <Wrapper>
         <StudentManagementHeader state={state} setState={setState} />
         <Content>
-          {state === "info" ? <StudentClasses /> : <SchoolList />}
+          {state === "info" ? (
+            <StudentClasses />
+          ) : (
+            <SchoolList content="student" />
+          )}
         </Content>
       </Wrapper>
     </>
