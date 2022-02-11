@@ -34,7 +34,7 @@ class School(models.Model):
             'image': self.photo_link
         }
 
-    def to_json_set2(self, student):
+    def to_json_set2(self, student_or_teacher, role):
         return {
             'id': self.id,
             'school_id': self.school_id,
@@ -42,7 +42,10 @@ class School(models.Model):
             'address': self.address,
             'image': self.photo_link,
             'manager': self.manager.fullname,
-            'classes': [clazz.to_json() for clazz in self.class_set.all() if student not in clazz.student_set.all()]
+            'classes': [clazz.to_json() for clazz in self.class_set.all()
+                        if student_or_teacher not in clazz.student_set.all()] if role == 'S'
+            else [clazz.to_json() for clazz in self.class_set.all()
+                  if student_or_teacher not in clazz.teacher_set.all()]
         }
 
     def set_photo_link(self, name):
