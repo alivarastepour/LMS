@@ -69,7 +69,7 @@ class Class(models.Model):
     slides = models.TextField(default='localhost/whiteboard.pdf\n')
 
     def to_json(self):
-        teacher = self.teacherrequest_set.filter(status__exact='pending')
+        teacher = self.teacherrequest_set.filter(status__exact='accepted')
         return {
             "id": self.id,
             "name": self.name,
