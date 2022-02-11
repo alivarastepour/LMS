@@ -2,7 +2,7 @@ import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
 import { TextField, InputAdornment, IconButton, Tooltip } from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
-const ClassState = ({ url, setOpen, status, start_meeting_data }) => {
+const ClassState = ({ url, setOpen, status, date }) => {
   const classStatus = () => {
     if (status) {
       return <div className="status on">در حال برگزاری</div>;
@@ -59,7 +59,7 @@ const ClassState = ({ url, setOpen, status, start_meeting_data }) => {
             </div>
             <div className="date-container">
               <div style={{ display: "inline-block" }}>ساعت شروع :</div>
-              <div className="status date">{start_meeting_data}</div>
+              <div className="status date">{date}</div>
             </div>
           </>
         ) : (
