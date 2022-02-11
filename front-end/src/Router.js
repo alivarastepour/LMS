@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
 import Class from "./Components/Class/Class";
+import ClassManagement from "./Components/ClassManagement/ClassManagement";
 
 const MainPage = lazy(() => import("./Components/MainPage/MainPage"));
 const Dashboard = lazy(() => import("./Components/Dashboard/Dashboard"));
@@ -80,7 +81,7 @@ const Router = () => {
     },
     {
       path: "/:studentID/classes-management/:classID",
-      element: <div>salam</div>,
+      element: <Background component={<ClassManagement />} />,
     },
   ]);
 };
