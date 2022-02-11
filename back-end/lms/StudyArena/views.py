@@ -143,7 +143,7 @@ class StudentRequests(APIView):
 
 
 class TeacherRequests(APIView):
-    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager)
+    permission_classes = (IsAuthenticated, IsProfileCompleted)
 
     def get_accepted(self, school):
         return TeacherRequest.objects.filter(clazz__school=school).filter(status='accepted')
