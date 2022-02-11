@@ -56,12 +56,19 @@ const Router = () => {
             {
               path: "/accounts/:id/:studentManagement/:info",
               element: <Background component={<StudentManagement />} />,
-              children: [
-                {
-                  path: "/accounts/:id/:studentManagement/:info/classes/:classID",
-                  element: <div>finally</div>,
-                },
-              ],
+            },
+          ],
+        },
+        {
+          path: "accounts/:id/teacherManagement",
+          children: [
+            {
+              path: "accounts/:id/teacherManagement/:schoolClasses",
+              element: <div>school classes</div>,
+            },
+            {
+              path: "accounts/:id/teacherManagement/:info",
+              element: <div>info</div>,
             },
           ],
         },
@@ -70,6 +77,10 @@ const Router = () => {
     {
       path: "/:studentID/classes/:classID",
       element: <Background component={<Class />} />,
+    },
+    {
+      path: "/:studentID/classes-management/:classID",
+      element: <div>salam</div>,
     },
   ]);
 };
