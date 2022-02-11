@@ -5,8 +5,16 @@ import { Dialog, DialogTitle } from "@mui/material";
 import { useState } from "react";
 import ClassSettings from "../ClassSettings/ClassSettings";
 import { useParams } from "react-router-dom";
+import { createMeeting } from "./classManagementHandlers";
 
-const ClassState = ({ url, setOpen, status, start_meeting_data }) => {
+const ClassState = ({
+  url,
+  setOpen,
+  status,
+  start_meeting_data,
+  setUrl,
+  setStarted,
+}) => {
   const [os, so] = useState(false);
   const id = useParams().classID;
 
@@ -14,7 +22,16 @@ const ClassState = ({ url, setOpen, status, start_meeting_data }) => {
     if (status) {
       return <div className="status on">در حال برگزاری</div>;
     } else {
-      return <div className="status on start">شروع کلاس</div>;
+      return (
+        <div
+          className="status on start"
+          onClick={() => {
+            createMeeting(id, setUrl, setStarted);
+          }}
+        >
+          شروع کلاس
+        </div>
+      );
     }
   };
   const copyToClipboard = () => {
@@ -49,9 +66,11 @@ const ClassState = ({ url, setOpen, status, start_meeting_data }) => {
                           </IconButton>
                         </Tooltip>
                         <Tooltip title="open class">
-                          <IconButton disabled={false} onClick={() => {}}>
-                            <OpenInNewIcon />
-                          </IconButton>
+                          <a href={url} rel="noreferrer" target="_blank">
+                            <IconButton disabled={false}>
+                              <OpenInNewIcon />
+                            </IconButton>
+                          </a>
                         </Tooltip>
                       </InputAdornment>
                     ),
@@ -62,17 +81,15 @@ const ClassState = ({ url, setOpen, status, start_meeting_data }) => {
                 />
               </div>
             </div>
-            <div className="date-container">
-              <div style={{ display: "inline-block" }}>ساعت شروع :</div>
-              <div className="status date">{start_meeting_data}</div>
-            </div>
           </>
         ) : (
           ""
         )}
-        <div className="status settings" onClick={() => so(true)}>
-          تنظیمات کلاس
-        </div>
+        {!url && (
+          <div className="status settings" onClick={() => so(true)}>
+            تنظیمات کلاس
+          </div>
+        )}
       </div>
       <Dialog
         open={os}

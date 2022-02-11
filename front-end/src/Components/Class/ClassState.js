@@ -42,9 +42,11 @@ const ClassState = ({ url, setOpen, status, start_meeting_data }) => {
                           </IconButton>
                         </Tooltip>
                         <Tooltip title="open class">
-                          <IconButton disabled={false} onClick={() => {}}>
-                            <OpenInNewIcon />
-                          </IconButton>
+                          <a href={url} rel="noreferrer" target="_blank">
+                            <IconButton disabled={false}>
+                              <OpenInNewIcon />
+                            </IconButton>
+                          </a>
                         </Tooltip>
                       </InputAdornment>
                     ),
