@@ -93,9 +93,8 @@ class Class(models.Model):
     def get_settings_set2(self):
         return {
             **self.get_settings(),
-            # TODO: return password from self.password
-            "moderatorPW": '123456',
-            "attendeePW": '654321',
+            "moderatorPW": self.moderatorPW,
+            "attendeePW": self.attendeePW,
         }
 
 
