@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const joinHandler = (users: number[]) => {
-  const URL = `http://localhost:8000/study/student-request/`;
+export const joinHandler = (users: number[], content: string) => {
+  const URL = `http://localhost:8000/study/${content}-request/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .post(

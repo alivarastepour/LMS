@@ -7,7 +7,7 @@ import { Checkbox } from "@mui/material";
 import Alert from "../Alert/Alert";
 import { joinHandler } from "./classesHandler";
 
-const Classes = ({ classes, action }) => {
+const Classes = ({ classes, action, content }) => {
   const [selected, setSelected] = useState([]);
 
   const addClass = (event, id) => {
@@ -52,7 +52,7 @@ const Classes = ({ classes, action }) => {
       <button
         className="button acc"
         onClick={() => {
-          joinHandler(selected);
+          joinHandler(selected, content);
           action(false);
         }}
       >
