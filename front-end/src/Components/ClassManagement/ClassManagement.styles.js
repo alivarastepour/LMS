@@ -84,6 +84,7 @@ export const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: center;
     @media only screen and (max-width: 1600px) {
       & {
@@ -202,6 +203,11 @@ export const Wrapper = styled.div`
   }
   .settings {
     background-color: #2a86b0;
+    @media only screen and (max-width: 1605px) {
+      & {
+        margin-top: 10px;
+      }
+    }
     cursor: pointer;
     &:hover {
       transition: 0.4s;
