@@ -47,7 +47,6 @@ const TeacherClasses = () => {
           <tbody>
             <tr>
               <td className="header">نام کلاس</td>
-              <td className="header">ارائه دهنده</td>
             </tr>
             {classes.data.length !== 0 &&
               classes.data.length &&
@@ -55,7 +54,6 @@ const TeacherClasses = () => {
                 return (
                   <tr className="hover" key={a.id} onClick={() => nav(a.id)}>
                     <td>{a.name}</td>
-                    <td>{a.teacher}</td>
                   </tr>
                 );
               })}
