@@ -62,14 +62,16 @@ const Files = () => {
                       handleSelect(e, a.url, setSelected, setRemove, remove)
                     }
                   />
-                  <Checkbox
-                    color="error"
-                    checkedIcon={<RemoveIcon />}
-                    checked={remove ? remove.includes(a.url) : false}
-                    onChange={(e) =>
-                      handleRemove(e, a.url, setSelected, setRemove, selected)
-                    }
-                  />
+                  {a.url !== "localhost/whiteboard.pdf" && (
+                    <Checkbox
+                      color="error"
+                      checkedIcon={<RemoveIcon />}
+                      checked={remove ? remove.includes(a.url) : false}
+                      onChange={(e) =>
+                        handleRemove(e, a.url, setSelected, setRemove, selected)
+                      }
+                    />
+                  )}
                 </ListItemButton>
               );
             })}
