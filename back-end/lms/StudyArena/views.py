@@ -368,3 +368,17 @@ class MeetingView(APIView):
             pass
         cls.save()
         return Response(data=cls.slides.rstrip().split('\n'), status=200)
+
+    def delete(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        try:
+            url = request.data.get("url")
+            if url in cls.slides:
+                if url != "localhost/whiteboard.pdf":
+                    utils.file_remover(url)
+                cls.slides.replace(url + "\n", "")
+            else:
+                return Response(data={"result": "Not Found!"}, status=404)
+        except Exception as _:
+            return Response(data={"result": "error"}, status=500)
+        return Response(data={"result": "ok"}, status=200)
