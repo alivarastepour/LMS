@@ -360,9 +360,10 @@ class MeetingView(APIView):
     def put(self, request, class_id):
         cls = Class.objects.get(id=class_id)
         try:
-            for file in request.FILES.getlist('slides'):
-                final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
-                cls.slides = cls.slides + 'localhost' + final_file_path + '\n'
+            for key in request.FILES.keys():
+                for file in request.FILES.getlist(key):
+                    final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
+                    cls.slides = cls.slides + 'localhost' + final_file_path + '\n'
         except Exception as _:
             pass
         cls.save()
