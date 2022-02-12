@@ -382,9 +382,13 @@ class MeetingView(APIView):
                 if url in cls.slides:
                     if url != "localhost/whiteboard.pdf":
                         utils.file_remover(url)
-                    cls.slides.replace(url + "\n", "")
+                    cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
+                    cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
                 else:
+                    cls.save()
                     return Response(data={"result": "Not Found!"}, status=404)
         except Exception as _:
+            cls.save()
             return Response(data={"result": "error"}, status=500)
+        cls.save()
         return Response(data={"result": "ok"}, status=200)
