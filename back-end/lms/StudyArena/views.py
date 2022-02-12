@@ -376,8 +376,10 @@ class MeetingView(APIView):
 
     def delete(self, request, class_id):
         cls = Class.objects.get(id=class_id)
+        urls = request.data.get("delete")
+        selected = request.data.get("select")
+        cls.selected_slides = ('\n'.join(selected)) + '\n'
         try:
-            urls = request.data.get("urls")
             for url in urls:
                 if url in cls.slides:
                     if url != "localhost/whiteboard.pdf":
