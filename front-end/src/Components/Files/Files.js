@@ -1,46 +1,81 @@
-import { Checkbox, List, ListItem, ListItemButton } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
 import { Wrapper } from "./Files.styles";
 
-const temp = [
-  "https://localhost:8000/2",
-  "https://localhost:8000/3",
-  "https://localhost:8000/4",
-  "https://localhost:8000/1",
-  "https://localhost:8000/5",
-  "https://localhost:8000/6",
-];
+import { Checkbox, List, ListItem, ListItemButton } from "@mui/material";
+import DoneIcon from "@mui/icons-material/Done";
+import RemoveIcon from "@mui/icons-material/Remove";
 
-const Files = ({ files }) => {
-  const a = files.length === 0 ? temp : files;
+import useGet from "../../custom-hooks/useGet";
+import { handleSelect, handleRemove, fileHandler } from "./filesHandler";
+const Files = () => {
+  const id = useParams().classID;
+  const URL = `http://localhost:8000/study/class/${id}/slide/`;
+  const TOKEN = sessionStorage.getItem("token");
+
+  const { data } = useGet(URL, TOKEN);
+
+  const [selected, setSelected] = useState([]);
+  const [remove, setRemove] = useState([]);
+
+  useEffect(() => {
+    setSelected((prev) => {
+      if (data && data.length) {
+        return data.filter((value) => value.selected).map((value) => value.url);
+      }
+    });
+  }, [data]);
+
   return (
     <>
       <Wrapper>
         <List>
-          {a.map((a, i) => {
-            return (
-              <ListItemButton key={i}>
-                <ListItem
-                  sx={{
-                    fontFamily: "sans-serif",
-                    fontSize: "1.2rem",
-                  }}
-                >
-                  <div className="cont">
-                    <a href={a} target="_blank" rel="noreferrer" className="a">
-                      {a.length > 40 ? a.slice(0, 39) + "..." : a}
-                    </a>
-                  </div>
-                </ListItem>
-                <Checkbox />
-              </ListItemButton>
-            );
-          })}
+          {data &&
+            data.length &&
+            data.length !== 0 &&
+            data.map((a) => {
+              return (
+                <ListItemButton key={a.url}>
+                  <ListItem
+                    sx={{
+                      fontFamily: "sans-serif",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    <div className="cont">
+                      <a
+                        href={a.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="a"
+                      >
+                        {a.url.length > 40 ? a.url.slice(0, 39) + "..." : a.url}
+                      </a>
+                    </div>
+                  </ListItem>
+                  <Checkbox
+                    color="primary"
+                    checkedIcon={<DoneIcon />}
+                    checked={selected ? selected.includes(a.url) : false}
+                    onChange={(e) =>
+                      handleSelect(e, a.url, setSelected, setRemove, remove)
+                    }
+                  />
+                  <Checkbox
+                    color="error"
+                    checkedIcon={<RemoveIcon />}
+                    checked={remove ? remove.includes(a.url) : false}
+                    onChange={(e) =>
+                      handleRemove(e, a.url, setSelected, setRemove, selected)
+                    }
+                  />
+                </ListItemButton>
+              );
+            })}
         </List>
         <button
-          onClick={() => {
-            // updateClassSettings(value);
-            // setOpenSettings(false);
-          }}
+          onClick={() => fileHandler(selected, remove, id)}
           className="button acc"
         >
           ذخیره
