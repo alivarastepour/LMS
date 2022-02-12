@@ -17,7 +17,6 @@ const ClassState = ({
   setStarted,
 }) => {
   const [openSettings, setOpenSettings] = useState(false);
-  const [files, setFiles] = useState([]);
   const [openFiles, setOpenFiles] = useState(false);
   const id = useParams().classID;
 
@@ -105,7 +104,7 @@ const ClassState = ({
                 id="files"
                 multiple
                 accept="  .doc, .docx, .ppt, .pptx, .pdf, .xls, .xlsx, .txt, .rtf, .odt, .ods, .odp, .odg, .odc, .odi, .jpg, .jpeg, .png"
-                onChange={(e) => fileUpload(e, id, setFiles)}
+                onChange={(e) => fileUpload(e, id)}
               />
             </div>
             <div
@@ -137,7 +136,7 @@ const ClassState = ({
         <DialogTitle sx={{ textAlign: "right", fontFamily: "vazir" }}>
           لیست فایل ها
         </DialogTitle>
-        <Files files={files} />
+        <Files />
       </Dialog>
     </>
   );
