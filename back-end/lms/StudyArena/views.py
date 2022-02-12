@@ -378,12 +378,11 @@ class MeetingView(APIView):
         cls = Class.objects.get(id=class_id)
         urls = request.data.get("delete")
         selected = request.data.get("select")
-        cls.selected_slides = ('\n'.join(selected)) + '\n'
+        cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
         try:
             for url in urls:
                 if url in cls.slides:
-                    if url != "localhost/whiteboard.pdf":
-                        utils.file_remover(url)
+                    utils.file_remover(url)
                     cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
                     cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
                 else:
