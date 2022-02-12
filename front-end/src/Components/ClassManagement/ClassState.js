@@ -6,6 +6,7 @@ import { useState } from "react";
 import ClassSettings from "../ClassSettings/ClassSettings";
 import { useParams } from "react-router-dom";
 import { createMeeting, fileUpload } from "./classManagementHandlers";
+import Files from "../Files/Files";
 
 const ClassState = ({
   url,
@@ -136,6 +137,7 @@ const ClassState = ({
         <DialogTitle sx={{ textAlign: "right", fontFamily: "vazir" }}>
           لیست فایل ها
         </DialogTitle>
+        <Files files={files} />
       </Dialog>
     </>
   );
