@@ -67,6 +67,7 @@ class Class(models.Model):
     maxParticipants = models.IntegerField(default=0)
     allowStartStopRecording = models.BooleanField(default=True)
     slides = models.TextField(default='localhost/whiteboard.pdf\n')
+    selected_slides = models.TextField(default='localhost/whiteboard.pdf\n')
 
     def to_json(self):
         teacher = self.teacherrequest_set.filter(status__exact='accepted')
