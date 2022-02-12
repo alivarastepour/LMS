@@ -344,10 +344,13 @@ class MeetingView(APIView):
                                                    else cls.attendeePW) if info[1] else '',
                 'start_meeting_data': info[3],
             }, status=200)
-        else:
+        elif self.get_mode == 'record':
             # in this case we return playbacks of a meeting
             recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
             return Response(data=recordings[1], status=200)
+        elif self.get_mode == 'slide':
+            return Response(
+                data=cls.get_slides(), status=200)
 
     def post(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
@@ -363,11 +366,13 @@ class MeetingView(APIView):
             for key in request.FILES.keys():
                 for file in request.FILES.getlist(key):
                     final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
-                    cls.slides = cls.slides + 'localhost' + final_file_path + '\n'
+                    to_add = 'localhost' + final_file_path + '\n'
+                    cls.slides = cls.slides + to_add
+                    cls.selected_slides = cls.selected_slides + to_add
         except Exception as _:
             pass
         cls.save()
-        return Response(data=cls.slides.rstrip().split('\n'), status=200)
+        return Response(data=cls.get_slides(), status=200)
 
     def delete(self, request, class_id):
         cls = Class.objects.get(id=class_id)
