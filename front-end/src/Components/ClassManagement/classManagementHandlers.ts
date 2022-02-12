@@ -27,7 +27,8 @@ export const createMeeting = (
 
 export const fileUpload = (
   event: ChangeEvent<HTMLInputElement>,
-  id: string
+  id: string,
+  setFiles: Function
 ) => {
   const URL = `http://localhost:8000/study/class/${id}/slide/`;
   const TOKEN = sessionStorage.getItem("token");
@@ -47,11 +48,14 @@ export const fileUpload = (
         fileList[index].name
       );
     }
-    axios.put(URL, formData, {
-      headers: {
-        "content-type": "multipart/form-data",
-        Authorization: `Token ${TOKEN}`,
-      },
-    });
+    axios
+      .put(URL, formData, {
+        headers: {
+          "content-type": "multipart/form-data",
+          Authorization: `Token ${TOKEN}`,
+        },
+      })
+      .then((a) => setFiles(a.data))
+      .catch((e) => console.log(e));
   }
 };

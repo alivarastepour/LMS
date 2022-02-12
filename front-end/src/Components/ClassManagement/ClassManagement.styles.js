@@ -45,28 +45,7 @@ export const Wrapper = styled.div`
       }
     }
   }
-  .on {
-    background-color: #17b327;
-    &:hover {
-      transition: 0.4s;
-      opacity: 0.8;
-    }
-    &:not(:hover) {
-      transition: 0.4s;
-      opacity: 1;
-    }
-  }
-  .off {
-    background-color: #ff5c5c;
-    &:hover {
-      transition: 0.4s;
-      opacity: 0.8;
-    }
-    &:not(:hover) {
-      transition: 0.4s;
-      opacity: 1;
-    }
-  }
+
   .date {
     background-color: #213212;
     &:hover {
@@ -201,8 +180,11 @@ export const Wrapper = styled.div`
     justify-content: center;
     margin-top: 50px;
   }
-  .settings {
-    background-color: #2a86b0;
+  .settings,
+  .file-upload,
+  .view-files,
+  .on,
+  .off {
     @media only screen and (max-width: 1605px) {
       & {
         margin-top: 10px;
@@ -217,31 +199,31 @@ export const Wrapper = styled.div`
       transition: 0.4s;
       opacity: 1;
     }
+  }
+  .settings {
+    background-color: #2a86b0;
+  }
+
+  .file-upload {
+    background-color: #852399;
+  }
+
+  .view-files {
+    background-color: #f76e19;
+  }
+  .on {
+    background-color: #17b327;
+  }
+  .off {
+    background-color: #ff5c5c;
+  }
+  .label {
+    cursor: pointer;
   }
   .start {
     cursor: pointer;
   }
   input[type="file"] {
     display: none;
-  }
-  .file-upload {
-    background-color: #852399;
-    cursor: pointer;
-    @media only screen and (max-width: 1605px) {
-      & {
-        margin-top: 10px;
-      }
-    }
-    &:hover {
-      transition: 0.4s;
-      opacity: 0.8;
-    }
-    &:not(:hover) {
-      transition: 0.4s;
-      opacity: 1;
-    }
-  }
-  .label {
-    cursor: pointer;
   }
 `;
