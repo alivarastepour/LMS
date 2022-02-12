@@ -52,7 +52,7 @@ export const deleteFile = (remove: string[], id: string) => {
   axios
     .delete(URL, {
       headers: { Authorization: `Token ${TOKEN}` },
-      data: { url: remove },
+      data: { urls: remove },
     })
     .then((a) => console.log(a));
 };
