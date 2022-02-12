@@ -27,8 +27,7 @@ export const createMeeting = (
 
 export const fileUpload = (
   event: ChangeEvent<HTMLInputElement>,
-  id: string,
-  setFiles: Function
+  id: string
 ) => {
   const URL = `http://localhost:8000/study/class/${id}/slide/`;
   const TOKEN = sessionStorage.getItem("token");
@@ -55,7 +54,6 @@ export const fileUpload = (
           Authorization: `Token ${TOKEN}`,
         },
       })
-      .then((a) => setFiles(a.data))
       .catch((e) => console.log(e));
   }
 };
