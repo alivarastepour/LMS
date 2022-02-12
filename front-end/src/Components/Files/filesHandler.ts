@@ -46,22 +46,18 @@ export const handleRemove = (
     });
   }
 };
-export const deleteFile = (remove: string[], id: string) => {
-  const URL = `http://localhost:8000/study/class/${id}/slide/`;
-  const TOKEN = sessionStorage.getItem("token");
-  axios
-    .delete(URL, {
-      headers: { Authorization: `Token ${TOKEN}` },
-      data: { urls: remove },
-    })
-    .then((a) => console.log(a));
-};
-export const selectFile = (selected: string[], id: string) => {};
+
 export const fileHandler = (
   selected: string[],
   remove: string[],
   id: string
 ) => {
-  deleteFile(remove, id);
-  selectFile(selected, id);
+  const URL = `http://localhost:8000/study/class/${id}/slide/`;
+  const TOKEN = sessionStorage.getItem("token");
+  axios
+    .delete(URL, {
+      headers: { Authorization: `Token ${TOKEN}` },
+      data: { delete: remove, select: selected },
+    })
+    .catch((e) => console.log(e));
 };
