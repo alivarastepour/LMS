@@ -15,7 +15,9 @@ const ClassState = ({
   setUrl,
   setStarted,
 }) => {
-  const [os, so] = useState(false);
+  const [openSettings, setOpenSettings] = useState(false);
+  const [files, setFiles] = useState([]);
+  const [openFiles, setOpenFiles] = useState(false);
   const id = useParams().classID;
 
   const classStatus = () => {
@@ -87,7 +89,10 @@ const ClassState = ({
         )}
         {!url && (
           <>
-            <div className="status settings" onClick={() => so(true)}>
+            <div
+              className="status settings"
+              onClick={() => setOpenSettings(true)}
+            >
               تنظیمات کلاس
             </div>
             <div className="status file-upload">
@@ -99,22 +104,38 @@ const ClassState = ({
                 id="files"
                 multiple
                 accept="  .doc, .docx, .ppt, .pptx, .pdf, .xls, .xlsx, .txt, .rtf, .odt, .ods, .odp, .odg, .odc, .odi, .jpg, .jpeg, .png"
-                onChange={(e) => fileUpload(e, id)}
+                onChange={(e) => fileUpload(e, id, setFiles)}
               />
+            </div>
+            <div
+              className="status view-files"
+              onClick={() => setOpenFiles(true)}
+            >
+              مشاهده فایل‌ها
             </div>
           </>
         )}
       </div>
       <Dialog
-        open={os}
+        open={openSettings}
         onClose={() => {
-          so(false);
+          setOpenSettings(false);
         }}
       >
         <DialogTitle sx={{ textAlign: "right", fontFamily: "vazir" }}>
           تنظیمات
         </DialogTitle>
-        <ClassSettings class_id={id} setOpenSettings={so} />
+        <ClassSettings class_id={id} setOpenSettings={setOpenSettings} />
+      </Dialog>
+      <Dialog
+        open={openFiles}
+        onClose={() => {
+          setOpenFiles(false);
+        }}
+      >
+        <DialogTitle sx={{ textAlign: "right", fontFamily: "vazir" }}>
+          لیست فایل ها
+        </DialogTitle>
       </Dialog>
     </>
   );

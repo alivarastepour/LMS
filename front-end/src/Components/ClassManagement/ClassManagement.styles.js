@@ -244,4 +244,21 @@ export const Wrapper = styled.div`
   .label {
     cursor: pointer;
   }
+  .view-files {
+    background-color: #f76e19;
+    cursor: pointer;
+    @media only screen and (max-width: 1605px) {
+      & {
+        margin-top: 10px;
+      }
+    }
+    &:hover {
+      transition: 0.4s;
+      opacity: 0.8;
+    }
+    &:not(:hover) {
+      transition: 0.4s;
+      opacity: 1;
+    }
+  }
 `;
