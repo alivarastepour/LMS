@@ -69,6 +69,10 @@ class Class(models.Model):
     slides = models.TextField(default='localhost/whiteboard.pdf\n')
     selected_slides = models.TextField(default='localhost/whiteboard.pdf\n')
 
+    def get_slides(self):
+        return [{"selected": True if slide in self.selected_slides else False, "url": slide} for slide in
+                self.slides.rstrip().split('\n')]
+
     def to_json(self):
         teacher = self.teacherrequest_set.filter(status__exact='accepted')
         return {
