@@ -27,7 +27,6 @@ def generate_url(method, **kwargs):
 
 def communicate(url, **kwargs):
     result = requests.post(url, **kwargs)
-    print(result.text)
     return ET.fromstring(result.text)
 
 
