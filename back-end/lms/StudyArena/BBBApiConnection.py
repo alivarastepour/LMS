@@ -27,7 +27,6 @@ def generate_url(method, **kwargs):
 
 def communicate(url, **kwargs):
     result = requests.post(url, **kwargs)
-    print(result.text)
     return ET.fromstring(result.text)
 
 
@@ -88,6 +87,7 @@ def get_recordings(**kwargs):
                        recording.find('playback')[-1].find('length').text
                        }
                       for recording in result.find('recordings')]
+        recordings.sort(key=lambda k: k['start_date'], reverse=True)
     return status_condition, recordings
 
 
@@ -99,7 +99,7 @@ if __name__ == '__main__':
       <document url="https://www.example.com/x.pdf" filename="x.pdf"/>
       <document url="https://www.example.com/default.pptx" filename="default.pptx"/>
    </module>
-</modules>"""
+    </modules>"""
     y = generate_url('create', name='Test+Meeting', meetingID='abc12345', attendeePW='111222', moderatorPW='333444')
     print(generate_url('join', fullName='mahmood', meetingID='abc12345', password='333444'))
     print(create(name='Test+Meeting', meetingID='abc123456', attendeePW='111222', moderatorPW='333444'))

@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from . import BBBApiConnection, utils
 
-from .models import School, Class, TeacherRequest, StudentRequest, Student
+from .models import School, Class, TeacherRequest, StudentRequest, Student, Teacher
 from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
@@ -41,7 +41,9 @@ class SchoolView(APIView):
             # in this case we return all schools that their ids contains `school_username`
             schools = School.objects.filter(school_id__icontains=school_username)
             return Response(data=[
-                {**school.to_json_set2(request.user.student_set.all().last())} for school in schools
+                {**school.to_json_set2(request.user.student_set.all().last() if request.user.role == 'S'
+                                       else request.user.teacher_set.all().last(), request.user.role)}
+                for school in schools
             ], status=200)
 
     def file_handler(self, file, school_id, extension):
@@ -134,15 +136,16 @@ class StudentRequests(APIView):
         else:
             # in this case student wants to request to join to some classes.
             classes = request.data.get('classes', [])
+            student = Student.objects.get(user=request.user)
             for clazz in classes:
-                StudentRequest.objects.create(student=Student.objects.get(user=request.user), clazz_id=clazz)
+                StudentRequest.objects.create(student=student, clazz_id=clazz)
             return Response({
                 "message": "join request sent."
             })
 
 
 class TeacherRequests(APIView):
-    permission_classes = (IsAuthenticated, IsProfileCompleted, IsManager)
+    permission_classes = (IsAuthenticated, IsProfileCompleted)
 
     def get_accepted(self, school):
         return TeacherRequest.objects.filter(clazz__school=school).filter(status='accepted')
@@ -204,8 +207,9 @@ class TeacherRequests(APIView):
         else:
             # in this case teacher wants to send join request.
             classes = request.data.get('classes', [])
+            teacher = Teacher.objects.get(user=request.user)
             for clazz in classes:
-                TeacherRequest.objects.create(teacher=Student.objects.get(user=request.user), clazz_id=clazz)
+                TeacherRequest.objects.create(teacher=teacher, clazz_id=clazz)
             return Response({
                 "message": "join request sent."
             })
@@ -213,7 +217,7 @@ class TeacherRequests(APIView):
 
 class ClassView(APIView):
     serializer_class = ClassSerializer
-    permission_classes = (IsAuthenticated, IsManager)
+    permission_classes = (IsAuthenticated, IsManager | IsTeacher)
 
     def get(self, request, *args, **kwargs):
         clazz_id = kwargs.get('class_id', None)
@@ -294,11 +298,37 @@ class StudentView(APIView):
             ], status=200)
 
 
+class TeacherView(APIView):
+    permission_classes = (IsAuthenticated, IsManager | IsTeacher)
+    mode = ''
+
+    def get(self, request, **kwargs):
+        teacher_id = request.user.id
+        if self.mode == 'classes':
+            school_id = kwargs.get('school_id', None)
+            if school_id is not None:
+                classes = School.objects.get(school_id=school_id).class_set.filter(teacher__user__id=teacher_id)
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in classes
+                ], status=200)
+            else:
+                return Response(data=[
+                    {**clazz.to_json()} for clazz in Teacher.objects.get(user__id=teacher_id).classes.all()
+                ], status=200)
+        else:
+            s = set()
+            for clazz in Teacher.objects.get(user__id=teacher_id).classes.all():
+                s.add(clazz.school)
+            return Response(data=[
+                {'school_id': school.school_id, 'name': school.name} for school in s
+            ], status=200)
+
+
 class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
 
-    # TODO: Test and debug
+    # TODO: add permission to each method...
     def get(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
         if self.get_mode == 'info':
@@ -306,7 +336,7 @@ class MeetingView(APIView):
             info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
             return Response(data={
                 'name': cls.name,
-                'teacher': cls.teacher_set.last() if cls.teacher_set.count() != 0 else 'unknown',
+                'teacher': cls.teacher_set.last().user.fullname if cls.teacher_set.count() != 0 else 'unknown',
                 'is_running': info[1],
                 'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
                                                    password=cls.moderatorPW if
@@ -314,10 +344,13 @@ class MeetingView(APIView):
                                                    else cls.attendeePW) if info[1] else '',
                 'start_meeting_data': info[3],
             }, status=200)
-        else:
+        elif self.get_mode == 'record':
             # in this case we return playbacks of a meeting
             recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
             return Response(data=recordings[1], status=200)
+        elif self.get_mode == 'slide':
+            return Response(
+                data=cls.get_slides(), status=200)
 
     def post(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
@@ -330,12 +363,33 @@ class MeetingView(APIView):
     def put(self, request, class_id):
         cls = Class.objects.get(id=class_id)
         try:
-            for file in request.FILES.getlist('slides'):
-                final_file_path = utils.file_handler(file,f'{cls.school.school_id}/{class_id}',file.name)
-                cls.slides = cls.slides + 'localhost' + final_file_path + '\n'
+            for key in request.FILES.keys():
+                for file in request.FILES.getlist(key):
+                    final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
+                    to_add = 'localhost' + final_file_path + '\n'
+                    cls.slides = cls.slides + to_add
+                    cls.selected_slides = cls.selected_slides + to_add
         except Exception as _:
             pass
         cls.save()
-        return Response(data=cls.slides.rstrip().split('\n'),status=200)
+        return Response(data=cls.get_slides(), status=200)
 
-
+    def delete(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        urls = request.data.get("delete")
+        selected = request.data.get("select")
+        cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
+        try:
+            for url in urls:
+                if url in cls.slides:
+                    utils.file_remover(url)
+                    cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
+                    cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
+                else:
+                    cls.save()
+                    return Response(data={"result": "Not Found!"}, status=404)
+        except Exception as _:
+            cls.save()
+            return Response(data={"result": "error"}, status=500)
+        cls.save()
+        return Response(data={"result": "ok"}, status=200)

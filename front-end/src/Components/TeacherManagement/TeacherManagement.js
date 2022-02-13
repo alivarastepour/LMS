@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { Wrapper } from "./StudentManagement.styles";
-import StudentManagementHeader from "./StudentManagement.Header";
+import { Wrapper } from "./TeacherManagement.styles";
 import { Content } from "../SchoolInformation/SchoolInformation.styles";
-import StudentClasses from "../StuedntClasses/StudentClasses";
+import TeacherManagementHeader from "./TeacherManagement.Header";
+import TeacherClasses from "../TeacherClasses/TeacherClasses";
 import SchoolList from "../SchoolList/SchoolList";
 
-const StudentManagement = () => {
+const TeacherManagement = () => {
   const defaultPage = useParams().info;
   const [state, setState] = useState(defaultPage);
   return (
     <>
       <Wrapper>
-        <StudentManagementHeader state={state} setState={setState} />
+        <TeacherManagementHeader state={state} setState={setState} />
         <Content>
           {state === "info" ? (
-            <StudentClasses />
+            <TeacherClasses />
           ) : (
-            <SchoolList content="student" />
+            <SchoolList content="teacher" />
           )}
         </Content>
       </Wrapper>
     </>
   );
 };
-export default StudentManagement;
+export default TeacherManagement;

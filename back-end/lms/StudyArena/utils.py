@@ -2,7 +2,7 @@ import io
 import os
 
 ROOT_PATH = '/var/www/html'
-
+URL = "localhost"
 
 def directory_creator(path: str):
     try:
@@ -26,7 +26,12 @@ def file_handler(file, sub_path, file_name):
         for b in file.readlines():
             o.write(b)
             o.flush()
-    return full_path.replace(ROOT_PATH,'')
+    return full_path.replace(ROOT_PATH, '')
+
+
+def file_remover(link):
+    os.remove(ROOT_PATH + link.replace(URL,""))
+
 
 if __name__ == '__main__':
-    x = file_handler(io.open('../manage.py'), 'x/y/z', 'x.py')
+    file_remover(ROOT_PATH + "localhost/sdlkf/1004/default.pptx".replace("localhost", ""))

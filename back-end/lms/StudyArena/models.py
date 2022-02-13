@@ -34,7 +34,7 @@ class School(models.Model):
             'image': self.photo_link
         }
 
-    def to_json_set2(self, student):
+    def to_json_set2(self, student_or_teacher, role):
         return {
             'id': self.id,
             'school_id': self.school_id,
@@ -42,7 +42,10 @@ class School(models.Model):
             'address': self.address,
             'image': self.photo_link,
             'manager': self.manager.fullname,
-            'classes': [clazz.to_json() for clazz in self.class_set.all() if student not in clazz.student_set.all()]
+            'classes': [clazz.to_json() for clazz in self.class_set.all()
+                        if student_or_teacher not in clazz.student_set.all()] if role == 'S'
+            else [clazz.to_json() for clazz in self.class_set.all()
+                  if student_or_teacher not in clazz.teacher_set.all()]
         }
 
     def set_photo_link(self, name):
@@ -64,9 +67,14 @@ class Class(models.Model):
     maxParticipants = models.IntegerField(default=0)
     allowStartStopRecording = models.BooleanField(default=True)
     slides = models.TextField(default='localhost/whiteboard.pdf\n')
+    selected_slides = models.TextField(default='localhost/whiteboard.pdf\n')
+
+    def get_slides(self):
+        return [{"selected": True if slide in self.selected_slides else False, "url": slide} for slide in
+                self.slides.rstrip().split('\n')]
 
     def to_json(self):
-        teacher = self.teacherrequest_set.filter(status__exact='pending')
+        teacher = self.teacherrequest_set.filter(status__exact='accepted')
         return {
             "id": self.id,
             "name": self.name,
@@ -90,9 +98,8 @@ class Class(models.Model):
     def get_settings_set2(self):
         return {
             **self.get_settings(),
-            # TODO: return password from self.password
-            "moderatorPW": '123456',
-            "attendeePW": '654321',
+            "moderatorPW": self.moderatorPW,
+            "attendeePW": self.attendeePW,
         }
 
 
