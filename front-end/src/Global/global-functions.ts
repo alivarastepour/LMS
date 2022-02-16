@@ -37,6 +37,6 @@ export const setParam = (param: string): string => {
     case "teacher":
       return "teachermanagement";
     default:
-      return "";
+      return "admin";
   }
 };
