@@ -28,5 +28,6 @@ urlpatterns = [
 
 
     path('admin/schools/', AdminView.as_view(mode='schools')),
-    path('admin/meetings/', AdminView.as_view(mode='meetings'))
+    path('admin/meetings/', AdminView.as_view(mode='meetings')),
+    path('admin/<str:school_id>/', AdminView.as_view(mode='schools'))
 ]
