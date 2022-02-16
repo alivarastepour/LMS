@@ -414,3 +414,22 @@ class AdminView(APIView):
                     'hasUserJoined': meeting[3],
                 } for meeting in meetings
             ], status=200)
+
+    def post(self, request):
+        if self.mode == 'schools':
+            operation = request.data['operation']
+            school_id = request.data['school_id']
+            school = School.objects.get(school_id=school_id)
+            if operation == 'accepted':
+                school.suspended = False
+                school.accepted = True
+                school.denied = False
+            elif operation == 'rejected':
+                school.suspended = False
+                school.accepted = False
+                school.denied = True
+            elif operation == 'suspended':
+                school.accepted = False
+                school.denied = False
+                school.suspended = True
+            school.save()
