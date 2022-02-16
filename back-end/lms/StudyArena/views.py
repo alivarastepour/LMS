@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from . import BBBApiConnection, utils
 
 from .models import School, Class, TeacherRequest, StudentRequest, Student, Teacher
-from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
+from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent, IsAdmin
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
 import io
@@ -393,3 +393,24 @@ class MeetingView(APIView):
             return Response(data={"result": "error"}, status=500)
         cls.save()
         return Response(data={"result": "ok"}, status=200)
+
+
+class AdminView(APIView):
+    permission_classes = (IsAdmin,)
+    mode = ''
+
+    def get(self, request):
+        if self.mode == 'schools':
+            return Response(data=[
+                school.to_json() for school in School.objects.all().reverse()
+            ], status=200)
+        elif self.mode == 'meetings':
+            status, meetings = BBBApiConnection.get_meetings()
+            return Response(data=[
+                {
+                    'meetingName': meeting[0],
+                    'meetingID': meeting[1],
+                    'participantCount': meeting[2],
+                    'hasUserJoined': meeting[3],
+                } for meeting in meetings
+            ], status=200)

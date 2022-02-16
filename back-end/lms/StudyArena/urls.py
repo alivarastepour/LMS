@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import SchoolView, StudentRequests, TeacherRequests, ClassView, StudentView, TeacherView, MeetingView
+from .views import SchoolView, StudentRequests, TeacherRequests, ClassView, StudentView, TeacherView, MeetingView, \
+    AdminView
 
 urlpatterns = [
     path('school/', SchoolView.as_view()),
@@ -24,4 +25,8 @@ urlpatterns = [
     path('teacher/classes/<str:school_id>/', TeacherView.as_view(mode='classes'),),
     path('teacher/classes/', TeacherView.as_view(mode='classes'), ),
     path('teacher/schools/', TeacherView.as_view(mode='schools'), ),
+
+
+    path('admin/schools/', AdminView.as_view(mode='schools')),
+    path('admin/meetings/', AdminView.as_view(mode='meetings'))
 ]
