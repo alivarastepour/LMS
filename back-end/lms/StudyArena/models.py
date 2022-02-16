@@ -14,10 +14,13 @@ class School(models.Model):
     manager = models.OneToOneField(CustomUser, on_delete=models.DO_NOTHING)
     accepted = models.BooleanField(default=False)
     denied = models.BooleanField(default=False)
+    suspended = models.BooleanField(default=False)
     photo_link = models.URLField(default=IMAGE_URL + 'default.jpg')
 
     @property
     def status(self):
+        if self.suspended:
+            return 'suspended'
         if not self.accepted and not self.denied:
             return 'pending'
         if self.accepted:
