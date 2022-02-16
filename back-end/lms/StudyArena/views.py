@@ -415,10 +415,10 @@ class AdminView(APIView):
                 } for meeting in meetings
             ], status=200)
 
-    def post(self, request):
+    def post(self, request, **kwargs):
         if self.mode == 'schools':
             operation = request.data['operation']
-            school_id = request.data['school_id']
+            school_id = kwargs['school_id']
             school = School.objects.get(school_id=school_id)
             if operation == 'accepted':
                 school.suspended = False
