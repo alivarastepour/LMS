@@ -404,3 +404,13 @@ class AdminView(APIView):
             return Response(data=[
                 school.to_json() for school in School.objects.all().reverse()
             ], status=200)
+        elif self.mode == 'meetings':
+            status, meetings = BBBApiConnection.get_meetings()
+            return Response(data=[
+                {
+                    'meetingName': meeting[0],
+                    'meetingID': meeting[1],
+                    'participantCount': meeting[2],
+                    'hasUserJoined': meeting[3],
+                } for meeting in meetings
+            ], status=200)
