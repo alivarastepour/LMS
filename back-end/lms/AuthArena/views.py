@@ -95,7 +95,8 @@ class Profile(APIView):
         if filter_option == 'role':
             return Response({
                 'id': user.id,
-                'role': 'manager' if user.role == 'M' else ('student' if user.role == 'S' else 'teacher'),
+                'role': 'manager' if user.role == 'M' else (
+                    'student' if user.role == 'S' else 'teacher' if user.role == 'T' else 'admin'),
             }, status=200)
         return Response({
             # TODO: add picture address
