@@ -402,7 +402,7 @@ class AdminView(APIView):
     def get(self, request):
         if self.mode == 'schools':
             return Response(data=[
-                school.to_json() for school in School.objects.all().reverse()
+                school.to_json_set3() for school in School.objects.all().reverse()
             ], status=200)
         elif self.mode == 'meetings':
             status, meetings = BBBApiConnection.get_meetings()
