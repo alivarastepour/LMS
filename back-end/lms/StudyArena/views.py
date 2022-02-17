@@ -1,5 +1,6 @@
 from typing import Union
 
+from django.db.models import Q
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -399,11 +400,20 @@ class AdminView(APIView):
     permission_classes = (IsAdmin,)
     mode = ''
 
-    def get(self, request):
+    def get(self, request, **kwargs):
         if self.mode == 'schools':
-            return Response(data=[
-                school.to_json_set3() for school in School.objects.all().reverse()
-            ], status=200)
+            filter_option = kwargs.get('filter_option', None)
+            # query_set = [school for school in
+            #              (School.objects.all() if filter_option is None else School.objects.all()) if
+            #              school.status == filter_option]
+            # query_set.reverse()
+            query_set = []
+            for school in School.objects.all():
+                if filter_option is not None and not school.status == filter_option:
+                    continue
+                query_set.append(school.to_json_set3())
+            query_set.reverse()
+            return Response(data=query_set, status=200)
         elif self.mode == 'meetings':
             status, meetings = BBBApiConnection.get_meetings()
             return Response(data=[
