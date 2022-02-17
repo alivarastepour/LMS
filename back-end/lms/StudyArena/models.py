@@ -56,6 +56,7 @@ class School(models.Model):
             'id': self.id,
             'school_id': self.school_id,
             'name': self.name,
+            'status': self.status,
             'manager': self.manager.fullname,
         }
     def set_photo_link(self, name):
