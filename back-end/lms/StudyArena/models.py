@@ -51,6 +51,13 @@ class School(models.Model):
                   if student_or_teacher not in clazz.teacher_set.all()]
         }
 
+    def to_json_set3(self):
+        return {
+            'id': self.id,
+            'school_id': self.school_id,
+            'name': self.name,
+            'manager': self.manager.fullname,
+        }
     def set_photo_link(self, name):
         self.photo_link = IMAGE_URL + name
         self.save()
