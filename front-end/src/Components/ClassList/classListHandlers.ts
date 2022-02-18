@@ -14,7 +14,7 @@ export const handleSearch = (
     return;
   }
   let newObj;
-  if (searchTerm === "نام کلاس") {
+  if (searchTerm === "name") {
     newObj = obj.filter((a) => {
       return a.name.includes(value);
     });

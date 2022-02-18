@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { Avatar } from "@mui/material";
 
-import AutoComplete from "../AutoComplete/AutoComplete";
 import SearchBox from "../SearchBox/SearchBox";
 
 import { Table } from "./TableView.styles";
 
 import useGet from "../../custom-hooks/useGet";
 import { handleSearch, userHandler } from "./TableView.handlers";
+import Select from "../Select/Select";
+import { FILTER } from "./Constant";
 
 const TableView = ({ content }) => {
   const URL = `http://localhost:8000/study/${content}-list/`;
@@ -19,7 +20,7 @@ const TableView = ({ content }) => {
 
   const [staticInformation, setStaticInformation] = useState(data.requests);
 
-  const [searchTerm, setSearchTerm] = useState("نام");
+  const [searchTerm, setSearchTerm] = useState("name");
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -105,10 +106,13 @@ const TableView = ({ content }) => {
               />
             </td>
             <td colSpan={2}>
-              <AutoComplete
-                setSearchTerm={setSearchTerm}
-                searchTerm={searchTerm}
-                options={["کدملی", "نام"]}
+              <Select
+                title="فیلتر"
+                selectWidth={300}
+                size="small"
+                value={searchTerm}
+                setValue={setSearchTerm}
+                data={FILTER}
               />
             </td>
           </tr>

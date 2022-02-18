@@ -1,7 +1,6 @@
 import { Wrapper } from "./ClassList.styles";
 
 import SearchBox from "../SearchBox/SearchBox";
-import AutoComplete from "../AutoComplete/AutoComplete";
 import ClassSettings from "../ClassSettings/ClassSettings";
 
 import Dialog from "@mui/material/Dialog";
@@ -11,6 +10,8 @@ import { handleSearch, addClass, deleteClass } from "./classListHandlers";
 import useGet from "../../custom-hooks/useGet";
 
 import { useEffect, useState } from "react";
+import Select from "../Select/Select";
+import { FILTER } from "./Constants";
 
 const CreateClass = () => {
   const URL = "http://localhost:8000/study/class";
@@ -24,7 +25,7 @@ const CreateClass = () => {
 
   const [searchValue, setSearchValue] = useState("");
 
-  const [searchTerm, setSearchTerm] = useState("نام کلاس");
+  const [searchTerm, setSearchTerm] = useState("name");
 
   const [className, setClassName] = useState("");
 
@@ -56,10 +57,13 @@ const CreateClass = () => {
                 />
               </td>
               <td colSpan={1}>
-                <AutoComplete
-                  options={["ارائه دهنده", "نام کلاس"]}
-                  setSearchTerm={setSearchTerm}
-                  searchTerm={searchTerm}
+                <Select
+                  title=""
+                  selectWidth={300}
+                  value={searchTerm}
+                  setValue={setSearchTerm}
+                  data={FILTER}
+                  size="small"
                 />
               </td>
               <td colSpan={1}>
