@@ -1,5 +1,17 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  .flex-header {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    direction: rtl;
+  }
+`;
+
 export const Table = styled.table`
   width: 100%;
   direction: rtl;
