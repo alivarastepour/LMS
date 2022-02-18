@@ -4,6 +4,11 @@ export const STATUS = [
   { id: 3, pc: "تعلیق شده", ec: "suspended" },
   { id: 4, pc: "در انتظار تایید", ec: "pending" },
 ];
+export const FILTER = [
+  { id: 1, pc: "نام مدیر", ec: "manager" },
+  { id: 2, pc: "نام مدرسه", ec: "name" },
+  { id: 3, pc: "شناسه مدرسه", ec: "school_id" },
+];
 export const status = (state) => {
   const acc = (
     <>
