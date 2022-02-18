@@ -4,6 +4,19 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
 
+  .flex-header {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    direction: rtl;
+  }
+  .flex-item {
+    margin-top: 5px;
+  }
+
   .table {
     width: 100%;
     direction: rtl;
@@ -41,7 +54,7 @@ export const Wrapper = styled.div`
     outline: none;
     border: none;
     width: 300px;
-    height: 50px;
+    height: 41px;
     border-radius: 12px;
     padding-right: 10px;
     padding-left: 10px;
@@ -54,6 +67,9 @@ export const Wrapper = styled.div`
 
     &::placeholder {
       font-size: 0.9rem;
+    }
+    &:hover {
+      outline: 1px black solid;
     }
 
     @media only screen and (max-width: 460px) {
