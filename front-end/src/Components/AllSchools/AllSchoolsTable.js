@@ -1,4 +1,4 @@
-import { status } from "./Status";
+import { status } from "./constant";
 const AllSchoolsTable = ({ information }) => {
   return (
     <>

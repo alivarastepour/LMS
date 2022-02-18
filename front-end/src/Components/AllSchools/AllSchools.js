@@ -9,7 +9,7 @@ import { searchHandler } from "./AllSchoolsHandlers";
 import useGet from "../../custom-hooks/useGet";
 
 const AllSchools = () => {
-  const [searchTerm, setSearchTerm] = useState("شناسه مدرسه");
+  const [searchTerm, setSearchTerm] = useState("school_id");
   const [searchValue, setSearchValue] = useState("");
   const [information, setInformation] = useState([]);
   const [staticInformation, setStaticInformation] = useState([]);

@@ -20,11 +20,11 @@ export const searchHandler = (
 
   let newData;
 
-  if (searchTerm === "نام مدرسه") {
+  if (searchTerm === "name") {
     newData = data.filter((a: Tschhol) => a.name.includes(value));
-  } else if (searchTerm === "شناسه مدرسه") {
+  } else if (searchTerm === "school_id") {
     newData = data.filter((a: Tschhol) => a.school_id.includes(value));
-  } else if (searchTerm === "نام مدیر") {
+  } else if (searchTerm === "manager") {
     newData = data.filter((a: Tschhol) => a.manager.includes(value));
   }
   setInformation(newData);

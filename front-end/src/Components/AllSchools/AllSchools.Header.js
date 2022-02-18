@@ -1,7 +1,6 @@
-import { STATUS } from "./Status";
-import { MenuItem, Select, InputLabel } from "@mui/material";
-import AutoComplete from "../AutoComplete/AutoComplete";
+import { FILTER, STATUS } from "./constant";
 import SearchBox from "../SearchBox/SearchBox";
+import Select from "../Select/Select";
 const AllSchoolsHeader = (props) => {
   return (
     <>
@@ -18,49 +17,24 @@ const AllSchoolsHeader = (props) => {
           />
         </div>
         <div>
-          <AutoComplete
-            setSearchTerm={props.setSearchTerm}
-            searchTerm={props.searchTerm}
-            options={["نام مدیر", "شناسه مدرسه", "نام مدرسه"]}
+          <Select
+            title="فیلتر"
+            selectWidth={300}
+            size="small"
+            value={props.searchTerm}
+            setValue={props.setSearchTerm}
+            data={FILTER}
           />
         </div>
         <div>
-          <InputLabel
-            sx={{
-              fontFamily: "vazir",
-              fontSize: "0.8rem",
-              direction: "ltr",
-              textAlign: "left",
-            }}
-            id="select"
-          >
-            وضعیت مدرسه
-          </InputLabel>
           <Select
-            sx={{ width: "300px", fontFamily: "vazir" }}
-            size={"small"}
-            label="وضعیت مدرسه"
-            labelId="select"
-            id="select"
+            title="وضعیت مدرسه"
+            selectWidth={300}
+            size="small"
             value={props.schoolFilter}
-            onChange={(e) => props.setSchoolFilter(e.target.value)}
-          >
-            {STATUS.map((a) => {
-              return (
-                <MenuItem
-                  sx={{
-                    fontFamily: "vazir",
-                    textAlign: "right",
-                    direction: "rtl",
-                  }}
-                  key={a.id}
-                  value={a.ec}
-                >
-                  {a.pc}
-                </MenuItem>
-              );
-            })}
-          </Select>
+            setValue={props.setSchoolFilter}
+            data={STATUS}
+          />
         </div>
       </div>
     </>
