@@ -13,18 +13,7 @@ const AdminManagementHeader = ({ state, setState }) => {
           }}
           className={`button ${state === "req-sc" ? "active" : "inactive"}`}
         >
-          درخواست های ثبت مدرسه
-        </button>
-        <button
-          onClick={() => {
-            nav("./admin/schools");
-            setState("acc-sc");
-          }}
-          className={`button margin ${
-            state === "acc-sc" ? "active" : "inactive"
-          }`}
-        >
-          مدارس ثبت شده
+          مدارس
         </button>
       </Wrapper>
     </>

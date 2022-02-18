@@ -1,10 +1,8 @@
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
-import AcceptedSchools from "./Components/AcceptedSchools/AcceptedSchools";
-import AdminManagement from "./Components/AdminManagement/AdminManagement";
 import Class from "./Components/Class/Class";
 import ClassManagement from "./Components/ClassManagement/ClassManagement";
-import SchoolRequest from "./Components/SchoolRequest/SchoolRequest";
+import SchoolRequest from "./Components/AllSchools/AllSchools";
 
 const MainPage = lazy(() => import("./Components/MainPage/MainPage"));
 const Dashboard = lazy(() => import("./Components/Dashboard/Dashboard"));
@@ -83,10 +81,10 @@ const Router = () => {
               path: "accounts/:id/admin/:info",
               element: <Background component={<SchoolRequest />} />,
             },
-            {
-              path: "accounts/:id/admin/:schools",
-              element: <Background component={<AcceptedSchools />} />,
-            },
+            // {
+            //   path: "accounts/:id/admin/:schools",
+            //   element: <Background component={<AcceptedSchools />} />,
+            // },
           ],
         },
       ],
