@@ -10,11 +10,14 @@ const AutoComplete = ({ setSearchTerm, searchTerm, options }) => {
           className="autocomplete"
           size="small"
           options={options}
-          renderInput={(p) => <TextField {...p} label="فیلتر" />}
+          renderInput={(p) => (
+            <TextField sx={{ fontFamily: "vazir" }} {...p} label="فیلتر" />
+          )}
           sx={{
             width: 300,
             boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-            background: "#F8F8F8",
+            textAlign: "right",
+            direction: "rtl",
           }}
           onChange={(e, v) => {
             setSearchTerm(v);
