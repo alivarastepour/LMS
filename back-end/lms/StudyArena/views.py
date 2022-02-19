@@ -434,10 +434,12 @@ class AdminView(APIView):
                 school.suspended = False
                 school.accepted = True
                 school.denied = False
+                school.manager = school.linked_manager
             elif operation == 'rejected':
                 school.suspended = False
                 school.accepted = False
                 school.denied = True
+                school.manager = None
             elif operation == 'suspended':
                 school.accepted = False
                 school.denied = False
