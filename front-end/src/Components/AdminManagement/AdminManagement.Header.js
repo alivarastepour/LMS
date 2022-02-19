@@ -15,6 +15,15 @@ const AdminManagementHeader = ({ state, setState }) => {
         >
           مدارس
         </button>
+        <button
+          onClick={() => {
+            nav("./admin/info");
+            setState("ac-se");
+          }}
+          className={`button ${state === "ac-se" ? "active" : "inactive"}`}
+        >
+          جلسات فعال
+        </button>
       </Wrapper>
     </>
   );
