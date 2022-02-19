@@ -443,3 +443,4 @@ class AdminView(APIView):
                 school.denied = False
                 school.suspended = True
             school.save()
+            return Response(status=201)
