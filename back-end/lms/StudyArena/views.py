@@ -355,6 +355,8 @@ class MeetingView(APIView):
 
     def post(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
+        if cls.school.status == 'suspended':
+            return Response(status=403)
         return Response(data={
             'success': BBBApiConnection.create(**cls.get_settings_set2()),
             'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
@@ -434,10 +436,12 @@ class AdminView(APIView):
                 school.suspended = False
                 school.accepted = True
                 school.denied = False
+                school.manager = school.linked_manager
             elif operation == 'rejected':
                 school.suspended = False
                 school.accepted = False
                 school.denied = True
+                school.manager = None
             elif operation == 'suspended':
                 school.accepted = False
                 school.denied = False
