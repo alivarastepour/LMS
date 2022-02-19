@@ -59,7 +59,7 @@ class School(models.Model):
             'school_id': self.school_id,
             'name': self.name,
             'status': self.status,
-            'manager': self.manager.fullname,
+            'manager': self.linked_manager.fullname if self.linked_manager is not None else "",
         }
 
     def set_photo_link(self, name):
