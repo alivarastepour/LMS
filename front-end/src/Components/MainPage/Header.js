@@ -31,7 +31,7 @@ const MainHeader = () => {
                 <div>
                   <LogoutIcon />
                 </div>
-                <div>خروج</div>
+                <div className="exit">خروج</div>
               </div>
             ) : (
               <></>

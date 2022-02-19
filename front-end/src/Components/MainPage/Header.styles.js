@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
     justify-content: space-between;
     padding-left: 10px;
     direction: ltr;
+
     .img-text-container {
       display: flex;
       flex-direction: row;
@@ -29,6 +30,13 @@ export const Wrapper = styled.div`
       font-family: "vazir", sans-serif;
       direction: rtl;
       margin-left: 10px;
+
+      @media only screen and (max-width: 400px) {
+        & {
+          margin-left: 0;
+          font-size: 0.75rem;
+        }
+      }
     }
     .logout-container {
       margin-top: 5px;
@@ -44,6 +52,11 @@ export const Wrapper = styled.div`
       &:not(:hover) {
         transition: 0.4s;
         opacity: 1;
+      }
+      @media only screen and (max-width: 400px) {
+        .exit {
+          font-size: 0.75rem;
+        }
       }
     }
   }
