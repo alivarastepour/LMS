@@ -44,10 +44,4 @@ export const Wrapper = styled.div`
       margin-top: 40px;
     }
   }
-
-  @media only screen and (max-width: 1747px) {
-    & {
-      margin-top: 40px;
-    }
-  }
 `;
