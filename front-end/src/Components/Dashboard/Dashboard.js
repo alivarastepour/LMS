@@ -14,6 +14,7 @@ import AccessibilityIdentifier from "./AccessibilityIdentifier";
 
 import { authContext } from "../../App";
 import useGet from "../../custom-hooks/useGet";
+import MainHeader from "../MainPage/Header";
 
 const Profile = lazy(() => import("../Profile/Profile"));
 const DashboardHeader = lazy(() => import("./Dashboard.header"));
@@ -43,6 +44,7 @@ const Dashboard = () => {
 
   return (
     <>
+      <MainHeader />
       <Wrapper>
         <Suspense fallback={<Spinner color={{ c: "white" }} />}>
           <DashboardHeader

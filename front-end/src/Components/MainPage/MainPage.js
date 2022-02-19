@@ -3,11 +3,13 @@ import Typewriter from "typewriter-effect";
 
 import { Wrapper, Content, Heading } from "./MainPage.styles";
 import Header from "../Header/Header";
+
 import SignIn from "../Sign-in/Sign-in";
 import SignUp from "../Sign-up/Sign-up";
 import Footer from "../Footer/Footer";
 
 import { authContext } from "../../App";
+import MainHeader from "./Header";
 
 const MainPage = () => {
   const { auth, setAuth } = useContext(authContext);
@@ -20,6 +22,7 @@ const MainPage = () => {
 
   return (
     <>
+      <MainHeader />
       <Wrapper>
         <Content>
           <Header login={state} setLogin={setState} />
