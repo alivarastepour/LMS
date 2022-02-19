@@ -46,7 +46,7 @@ class School(models.Model):
             'name': self.name,
             'address': self.address,
             'image': self.photo_link,
-            'manager': self.manager.fullname,
+            'manager': self.manager.fullname if self.manager is not None else "",
             'classes': [clazz.to_json() for clazz in self.class_set.all()
                         if student_or_teacher not in clazz.student_set.all()] if role == 'S'
             else [clazz.to_json() for clazz in self.class_set.all()

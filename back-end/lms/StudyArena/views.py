@@ -1,5 +1,6 @@
 from typing import Union
 
+from django.db import IntegrityError
 from django.db.models import Q
 from rest_framework.generics import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
@@ -446,5 +447,8 @@ class AdminView(APIView):
                 school.accepted = False
                 school.denied = False
                 school.suspended = True
-            school.save()
+            try:
+                school.save()
+            except IntegrityError as _:
+                return Response(status=400)
             return Response(status=201)
