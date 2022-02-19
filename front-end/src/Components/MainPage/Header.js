@@ -7,7 +7,7 @@ const f = "سیستم مدیریت آموزش ";
 const s = "(LMS) ";
 const t = "آتی گستر";
 const MainHeader = () => {
-  const { auth } = useContext(authContext);
+  const { auth, setAuth } = useContext(authContext);
   return (
     <>
       <Wrapper>
@@ -20,7 +20,14 @@ const MainHeader = () => {
           </div>
           <div>
             {auth ? (
-              <div className="logout-container">
+              <div
+                className="logout-container"
+                onClick={() => {
+                  sessionStorage.removeItem("token");
+                  sessionStorage.removeItem("user");
+                  setAuth(false);
+                }}
+              >
                 <div>
                   <LogoutIcon />
                 </div>
