@@ -10,8 +10,10 @@ const AccessibilityIdentifier = ({ role }) => {
     return <TeacherManagement />;
   } else if (role === "student") {
     return <StudentManagement />;
-  } else {
+  } else if (role === "admin") {
     return <AdminManagement />;
+  } else {
+    return <></>;
   }
 };
 export default AccessibilityIdentifier;
