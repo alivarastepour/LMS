@@ -11,11 +11,12 @@ class School(models.Model):
     # TODO: change manager relation to : one to many
     #  OR
     #  delete denied School after save new school
-    manager = models.OneToOneField(CustomUser, on_delete=models.DO_NOTHING)
+    manager = models.OneToOneField(CustomUser, on_delete=models.DO_NOTHING,null=True)
     accepted = models.BooleanField(default=False)
     denied = models.BooleanField(default=False)
     suspended = models.BooleanField(default=False)
     photo_link = models.URLField(default=IMAGE_URL + 'default.jpg')
+    linked_manager = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING,null=True)
 
     @property
     def status(self):
