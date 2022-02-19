@@ -2,13 +2,13 @@ export const schoolReducer = (state, action) => {
   let newState;
   switch (action.type) {
     case "SET-SCHOOL-ID":
-      newState = { ...state, schoolId: action.payload };
+      newState = { ...state, school_id: action.payload };
       break;
     case "SET-SCHOOL-NAME":
-      newState = { ...state, schoolName: action.payload };
+      newState = { ...state, name: action.payload };
       break;
     case "SET-SCHOOL-ADDRESS":
-      newState = { ...state, schoolAdrress: action.payload };
+      newState = { ...state, address: action.payload };
       break;
     default:
       break;

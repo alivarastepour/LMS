@@ -7,9 +7,9 @@ import { createSchoolHandler } from "./createSchool.handlers.ts";
 
 const CreateSchool = () => {
   const initialState = {
-    schoolId: "",
-    schoolName: "",
-    schoolAddress: "",
+    school_id: "",
+    name: "",
+    address: "",
   };
 
   const [school, dispatch] = useReducer(schoolReducer, initialState);

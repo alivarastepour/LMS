@@ -7,13 +7,15 @@ type Tschool = {
   schoolAddress: string;
 };
 
-export const createSchoolHandler = async (
+export const createSchoolHandler = (
   event: React.FormEvent<HTMLFormElement>,
   data: Tschool
 ) => {
-  const URL = "http://localhost:8000/study/school";
+  console.log(data);
+
+  const URL = "http://localhost:8000/study/school/";
   const TOKEN = sessionStorage.getItem("token");
-  await axios
+  axios
     .post(URL, data, {
       headers: { Authorization: `Token ${TOKEN}` },
     })

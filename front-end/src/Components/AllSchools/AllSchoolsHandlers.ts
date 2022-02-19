@@ -1,3 +1,4 @@
+import axios from "axios";
 import { ChangeEvent } from "react";
 type Tschhol = {
   id: number;
@@ -28,4 +29,17 @@ export const searchHandler = (
     newData = data.filter((a: Tschhol) => a.manager.includes(value));
   }
   setInformation(newData);
+};
+
+export const schoolAction = (action: string, id: string) => {
+  const URL = `http://localhost:8000/study/admin/school/${id}/`;
+  const TOKEN = sessionStorage.getItem("token");
+  const DATA = { operation: action };
+  axios
+    .post(URL, DATA, {
+      headers: {
+        Authorization: `Token ${TOKEN}`,
+      },
+    })
+    .catch((e) => console.log(e));
 };
