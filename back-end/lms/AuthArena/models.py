@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -24,5 +25,8 @@ class CustomUser(AbstractUser):
 
     def is_completed(self):
         return self.first_name != '' and self.first_name is not None \
-            and self.last_name != '' and self.last_name is not None \
-            and self.address != '' and self.address is not None
+               and self.last_name != '' and self.last_name is not None \
+               and self.address != '' and self.address is not None
+
+
+admin.site.register(CustomUser)

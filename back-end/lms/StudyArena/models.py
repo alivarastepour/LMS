@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 from AuthArena.models import CustomUser
 
@@ -66,6 +67,9 @@ class School(models.Model):
         self.photo_link = IMAGE_URL + name
         self.save()
 
+    def __str__(self):
+        return self.name + " : " + self.school_id
+
 
 class Class(models.Model):
     name = models.CharField(max_length=50)
@@ -116,10 +120,16 @@ class Class(models.Model):
             "attendeePW": self.attendeePW,
         }
 
+    def __str__(self):
+        return self.school.name + "->" + self.name
+
 
 class Teacher(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
     classes = models.ManyToManyField(Class)
+
+    def __str__(self):
+        return self.user.fullname
 
 
 class Manager(models.Model):
@@ -130,14 +140,32 @@ class Student(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
     classes = models.ManyToManyField(Class)
 
+    def __str__(self):
+        return self.user.fullname
+
 
 class StudentRequest(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     clazz = models.ForeignKey(Class, on_delete=models.CASCADE)
     status = models.CharField(max_length=8, default='pending')
 
+    def __str__(self):
+        return self.student.user.fullname + "->" + " (" + self.clazz.__str__() + ") " + ": " + self.status
+
 
 class TeacherRequest(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     clazz = models.ForeignKey(Class, on_delete=models.CASCADE)
     status = models.CharField(max_length=8, default='pending')
+
+    def __str__(self):
+        return self.teacher.user.fullname + "->" + " (" + self.clazz.__str__() + ") " + ": " + self.status
+
+
+admin.site.register(School)
+admin.site.register(Class)
+admin.site.register(Teacher)
+admin.site.register(Manager)
+admin.site.register(Student)
+admin.site.register(StudentRequest)
+admin.site.register(TeacherRequest)
