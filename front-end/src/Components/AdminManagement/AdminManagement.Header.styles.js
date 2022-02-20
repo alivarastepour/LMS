@@ -55,4 +55,9 @@ export const Wrapper = styled.div`
       }
     }
   }
+  a {
+    cursor: default;
+    color: #8b9ce8;
+    text-decoration: none;
+  }
 `;

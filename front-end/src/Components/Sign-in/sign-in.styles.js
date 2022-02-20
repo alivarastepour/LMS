@@ -41,9 +41,14 @@ export const Content = styled.div`
     margin-top: 80px;
     direction: rtl;
     font-size: 1.4rem;
-
+    @media only screen and (max-width: 460px) {
+      & {
+        padding-right: 20px;
+      }
+    }
     @media only screen and (max-width: 420px) {
       & {
+        padding-right: 0;
         margin-top: 50px;
       }
     }
@@ -51,6 +56,18 @@ export const Content = styled.div`
 
   .input {
     margin-top: 20px;
+    @media only screen and (max-width: 460px) {
+      & {
+        width: 250px;
+        margin: auto;
+      }
+    }
+    @media only screen and (max-width: 420px) {
+      & {
+        width: 200px;
+        margin: auto;
+      }
+    }
   }
 
   .submit {
@@ -65,10 +82,15 @@ export const Content = styled.div`
     border-radius: 10px;
     font-size: 1rem;
     text-align: center;
-
+    @media only screen and (max-width: 460px) {
+      & {
+        width: 250px;
+      }
+    }
     @media only screen and (max-width: 420px) {
       & {
         width: 200px;
+        margin-top: 30px;
       }
     }
   }

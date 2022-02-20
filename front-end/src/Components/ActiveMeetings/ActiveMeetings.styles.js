@@ -77,4 +77,10 @@ export const Wrapper = styled.div`
       background-color: white;
     }
   }
+  .no-meet {
+    font-family: "vazir", sans-serif;
+    font-size: 1.2rem;
+    direction: rtl;
+    text-align: center;
+  }
 `;

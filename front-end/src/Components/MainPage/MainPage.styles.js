@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   flex-direction: row;
   padding-left: 100px;
   padding-right: 100px;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
 
   @media only screen and (max-width: 1748px) {
     & {
