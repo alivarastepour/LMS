@@ -24,6 +24,11 @@ const AdminManagementHeader = ({ state, setState }) => {
         >
           جلسات فعال
         </button>
+        <button className="button inactive">
+          <a href="http://localhost:8000/admin" rel="noreferrer" target="blank">
+            پنل ادمین
+          </a>
+        </button>
       </Wrapper>
     </>
   );
