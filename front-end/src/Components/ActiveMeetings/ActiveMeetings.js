@@ -1,4 +1,5 @@
 import useGet from "../../custom-hooks/useGet";
+import Alert from "../Alert/Alert";
 import { Wrapper } from "./ActiveMeetings.styles";
 const fakeData = [
   { meetingID: "sgdsa", meetingName: "gsrsg", participantCount: 21 },
@@ -43,7 +44,7 @@ const ActiveMeetings = () => {
             </tbody>
           </table>
         ) : (
-          <div className="no-meet">هیچ جلسه در حال برگزاری نمی‌باشد.</div>
+          <Alert />
         )}
       </Wrapper>
     </>
