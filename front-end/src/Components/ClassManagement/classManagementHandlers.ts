@@ -4,7 +4,8 @@ import { ChangeEvent } from "react";
 export const createMeeting = (
   id: string,
   setUrl: Function,
-  setStarted: Function
+  setError: Function,
+  setOpenSnackBar: Function
 ) => {
   const URL = `http://localhost:8000/study/class/${id}/create/`;
   const TOKEN = sessionStorage.getItem("token");
@@ -17,11 +18,12 @@ export const createMeeting = (
       }
     )
     .then((a) => {
-      setStarted(a.data.success);
       setUrl(a.data.join_link);
+      console.log(a);
     })
-    .catch((e) => {
-      setStarted(false);
+    .catch(function (error) {
+      setError(error.response.data.message);
+      setOpenSnackBar(true);
     });
 };
 

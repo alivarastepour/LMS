@@ -226,4 +226,7 @@ export const Wrapper = styled.div`
   input[type="file"] {
     display: none;
   }
+  .error {
+    font-family: "vazir";
+  }
 `;
