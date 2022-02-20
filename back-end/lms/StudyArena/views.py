@@ -357,7 +357,9 @@ class MeetingView(APIView):
     def post(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
         if cls.school.status == 'suspended':
-            return Response(status=403)
+            return Response(data={
+                'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
+            },status=403)
         return Response(data={
             'success': BBBApiConnection.create(**cls.get_settings_set2()),
             'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
