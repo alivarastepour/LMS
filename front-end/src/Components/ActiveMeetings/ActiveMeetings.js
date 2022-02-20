@@ -13,24 +13,20 @@ const ActiveMeetings = () => {
     "http://localhost:8000/study/admin/meetings/",
     sessionStorage.getItem("token")
   );
-  console.log(data);
   return (
     <>
       <Wrapper>
-        <table>
-          <tbody>
-            <tr>
-              <td className="header">ردیف</td>
-              <td className="header">شناسه جلسه</td>
-              <td className="header">نام جلسه</td>
-              <td className="header">تعداد شرکت کنندگان</td>
-              <td className="header"></td>
-            </tr>
-            {
-              //               data &&
-              //   data.length &&
-              //   data.length !== 0 &&
-              fakeData.map((a, b) => {
+        {data && data.length && data.length !== 0 ? (
+          <table>
+            <tbody>
+              <tr>
+                <td className="header">ردیف</td>
+                <td className="header">شناسه جلسه</td>
+                <td className="header">نام جلسه</td>
+                <td className="header">تعداد شرکت کنندگان</td>
+                <td className="header"></td>
+              </tr>
+              {data.map((a, b) => {
                 return (
                   <tr className="hover">
                     <td>{b}</td>
@@ -43,10 +39,12 @@ const ActiveMeetings = () => {
                     </td>
                   </tr>
                 );
-              })
-            }
-          </tbody>
-        </table>
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <div className="no-meet">هیچ جلسه در حال برگزاری نمی‌باشد.</div>
+        )}
       </Wrapper>
     </>
   );
