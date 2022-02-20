@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 from AuthArena.models import CustomUser
 
@@ -141,3 +142,12 @@ class TeacherRequest(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     clazz = models.ForeignKey(Class, on_delete=models.CASCADE)
     status = models.CharField(max_length=8, default='pending')
+
+
+admin.site.register(School)
+admin.site.register(Class)
+admin.site.register(Teacher)
+admin.site.register(Manager)
+admin.site.register(Student)
+admin.site.register(StudentRequest)
+admin.site.register(TeacherRequest)
