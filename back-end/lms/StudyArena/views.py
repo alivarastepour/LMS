@@ -456,14 +456,14 @@ class AdminView(APIView):
             return Response(status=201)
         if self.mode == 'meeting':
             # in this case admin wants to enter the meeting that sent its id
-            cls = Class.objects.get(id=kwargs.get('class_id'))
+            cls = Class.objects.get(meetingID=kwargs.get('meetingID'))
             result = BBBApiConnection.join(excludeFromDashboard='true', fullName='ADMIN', password=cls.meetingID)
             return Response(data={
                 'join_link': result,
             }, status=200)
 
     def delete(self, request, **kwargs):
-        cls = Class.objects.get(id=kwargs.get('class_id'))
+        cls = Class.objects.get(meetingID=kwargs.get('meetingID'))
         result = BBBApiConnection.end(meetingID=cls.meetingID, password=cls.moderatorPW)
         if result:
             return Response(data={
