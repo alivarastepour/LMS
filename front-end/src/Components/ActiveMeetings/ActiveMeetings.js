@@ -1,15 +1,10 @@
 import useGet from "../../custom-hooks/useGet";
 import Alert from "../Alert/Alert";
 import { Wrapper } from "./ActiveMeetings.styles";
-const fakeData = [
-  { meetingID: "sgdsa", meetingName: "gsrsg", participantCount: 21 },
-  { meetingID: "sfsda", meetingName: "بشب", participantCount: 312 },
-  { meetingID: "sghsda", meetingName: "بشسشسب", participantCount: 4 },
-  { meetingID: "stra", meetingName: "لشسیق", participantCount: 6 },
-  { meetingID: "vfsdsa", meetingName: "فاقاق", participantCount: 64 },
-  { meetingID: "svfda", meetingName: "یبس", participantCount: 0 },
-];
+import { joinAsAdmin, forceEnd } from "./ActiveMeetings.handlers";
+import { useState } from "react";
 const ActiveMeetings = () => {
+  const [url, setUrl] = useState("");
   const { data } = useGet(
     "http://localhost:8000/study/admin/meetings/",
     sessionStorage.getItem("token")
@@ -29,14 +24,39 @@ const ActiveMeetings = () => {
               </tr>
               {data.map((a, b) => {
                 return (
-                  <tr className="hover">
+                  <tr className="hover" key={b}>
                     <td>{b}</td>
                     <td>{a.meetingID}</td>
                     <td>{a.meetingName}</td>
                     <td>{a.participantCount}</td>
                     <td>
-                      <button className="button enter">ورود</button>
-                      <button className="button end">خاتمه</button>
+                      {!url ? (
+                        <button
+                          className="button enter"
+                          onClick={() => {
+                            joinAsAdmin(a.meetingID, setUrl);
+                          }}
+                        >
+                          دریافت لینک
+                        </button>
+                      ) : (
+                        <button className="button enter">
+                          <a
+                            className="a"
+                            href={url}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            ورود
+                          </a>
+                        </button>
+                      )}
+                      <button
+                        className="button end"
+                        onClick={() => forceEnd(a.meetingID)}
+                      >
+                        خاتمه
+                      </button>
                     </td>
                   </tr>
                 );
