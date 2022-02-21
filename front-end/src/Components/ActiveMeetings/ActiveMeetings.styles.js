@@ -16,10 +16,14 @@ export const Wrapper = styled.div`
       border-bottom: 1px #f0f0f0 solid;
       padding-top: 10px;
       font-size: 1.2rem;
-
+      @media only screen and (max-width: 1145px) {
+        & {
+          font-size: 0.9rem;
+        }
+      }
       @media only screen and (max-width: 920px) {
         & {
-          font-size: 1rem;
+          font-size: 0.7rem;
         }
       }
     }
@@ -31,10 +35,14 @@ export const Wrapper = styled.div`
 
     .header {
       font-size: 1.5rem;
-
+      @media only screen and (max-width: 1145px) {
+        & {
+          font-size: 1.2rem;
+        }
+      }
       @media only screen and (max-width: 920px) {
         & {
-          font-size: 1.3rem;
+          font-size: 1.1rem;
         }
       }
     }
