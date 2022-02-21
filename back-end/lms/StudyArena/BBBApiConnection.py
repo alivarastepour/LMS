@@ -93,6 +93,12 @@ def get_recordings(**kwargs):
     return status_condition, recordings
 
 
+def end(**kwargs):
+    result = communicate(generate_url('end', **kwargs))
+    status_condition = result.find('returncode').text == 'SUCCESS'
+    return status_condition
+
+
 # TODO: add recording methods
 if __name__ == '__main__':
     print(generate_url('getMeetings'))
