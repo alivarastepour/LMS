@@ -16,12 +16,15 @@ export const joinAsAdmin = (id: string, setUrl: Function) => {
     .then((a) => setUrl(a.data.join_link));
 };
 
-export const forceEnd = (id: string) => {
+export const forceEnd = (id: string, setEnded: Function) => {
   const URL = `http://localhost:8000/study/admin/meetings/${id}/end/`;
   const TOKEN = sessionStorage.getItem("token");
-  axios.delete(URL, {
-    headers: {
-      Authorization: `Token ${TOKEN}`,
-    },
-  });
+  axios
+    .delete(URL, {
+      headers: {
+        Authorization: `Token ${TOKEN}`,
+      },
+    })
+    .then((a) => setEnded(true))
+    .catch(() => setEnded(false));
 };

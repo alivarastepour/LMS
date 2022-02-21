@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   .flex-header {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: flex-end;
     padding-top: 20px;

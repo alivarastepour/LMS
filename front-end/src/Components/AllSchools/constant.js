@@ -1,10 +1,10 @@
 import { schoolAction } from "./AllSchoolsHandlers";
 
 export const STATUS = [
-  { id: 1, pc: "رد شده", ec: "rejected" },
-  { id: 2, pc: "پذیرفته شده", ec: "accepted" },
-  { id: 3, pc: "تعلیق شده", ec: "suspended" },
   { id: 4, pc: "در انتظار تایید", ec: "pending" },
+  { id: 3, pc: "تعلیق شده", ec: "suspended" },
+  { id: 2, pc: "پذیرفته شده", ec: "accepted" },
+  { id: 1, pc: "رد شده", ec: "rejected" },
 ];
 
 export const FILTER = [
