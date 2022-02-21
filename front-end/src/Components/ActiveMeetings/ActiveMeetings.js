@@ -3,8 +3,10 @@ import Alert from "../Alert/Alert";
 import { Wrapper } from "./ActiveMeetings.styles";
 import { joinAsAdmin, forceEnd } from "./ActiveMeetings.handlers";
 import { useState } from "react";
+import { Snackbar, Alert as A } from "@mui/material";
 const ActiveMeetings = () => {
   const [url, setUrl] = useState("");
+  const [ended, setEnded] = useState(false);
   const { data } = useGet(
     "http://localhost:8000/study/admin/meetings/",
     sessionStorage.getItem("token")
@@ -53,7 +55,7 @@ const ActiveMeetings = () => {
                       )}
                       <button
                         className="button end"
-                        onClick={() => forceEnd(a.meetingID)}
+                        onClick={() => forceEnd(a.meetingID, setEnded)}
                       >
                         خاتمه
                       </button>
@@ -66,6 +68,16 @@ const ActiveMeetings = () => {
         ) : (
           <Alert />
         )}
+        <Snackbar
+          sx={{ marginBottom: 10, marginLeft: 10 }}
+          open={ended}
+          onClose={() => setEnded(false)}
+          autoHideDuration={3000}
+        >
+          <A severity="success">
+            <div className="ended">جلسه توسط شما به اتمام رسید</div>
+          </A>
+        </Snackbar>
       </Wrapper>
     </>
   );

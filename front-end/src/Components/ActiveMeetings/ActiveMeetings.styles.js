@@ -108,4 +108,7 @@ export const Wrapper = styled.div`
       color: #17a1b3;
     }
   }
+  .ended {
+    font-family: "vazir";
+  }
 `;
