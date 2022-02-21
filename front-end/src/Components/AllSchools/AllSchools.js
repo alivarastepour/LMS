@@ -13,7 +13,7 @@ const AllSchools = () => {
   const [searchValue, setSearchValue] = useState("");
   const [information, setInformation] = useState([]);
   const [staticInformation, setStaticInformation] = useState([]);
-  const [schoolFilter, setSchoolFilter] = useState("accepted");
+  const [schoolFilter, setSchoolFilter] = useState("pending");
 
   const { data } = useGet(
     `http://localhost:8000/study/admin/schools/${schoolFilter}`,
