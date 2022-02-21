@@ -53,6 +53,7 @@ export const Wrapper = styled.div`
   }
   .enter {
     color: #17a1b3;
+    width: 100px;
     &:hover {
       transition: 0.4s;
       color: white;
@@ -82,5 +83,21 @@ export const Wrapper = styled.div`
     font-size: 1.2rem;
     direction: rtl;
     text-align: center;
+  }
+  a {
+    color: #17a1b3;
+    text-decoration: none;
+    display: block;
+    width: 80px;
+    height: 30px;
+    margin: auto;
+    &:hover {
+      transition: 0.4s;
+      color: white;
+    }
+    &:not(:hover) {
+      transition: 0.4s;
+      color: #17a1b3;
+    }
   }
 `;
