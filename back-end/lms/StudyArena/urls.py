@@ -33,4 +33,5 @@ urlpatterns = [
     path('admin/school/<str:school_id>/', AdminView.as_view(mode='schools')),
     path('admin/meetings/', AdminView.as_view(mode='meetings')),
     path('admin/meetings/<int:class_id>/join/', AdminView.as_view(mode='meeting')),
+    path('admin/meetings/<int:class_id>/end/', AdminView.as_view()),
 ]
