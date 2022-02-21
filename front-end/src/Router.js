@@ -104,7 +104,7 @@ const Router = () => {
       element: <Background component={<ClassManagement />} />,
     },
     {
-      path: "*",
+      path: "404",
       element: <NotFound />,
     },
   ]);
