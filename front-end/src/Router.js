@@ -12,7 +12,7 @@ const ClassManagement = lazy(() =>
   import("./Components/ClassManagement/ClassManagement")
 );
 const ActiveMeetings = lazy(() =>
-  import("/Components/ActiveMeetings/ActiveMeetings")
+  import("./Components/ActiveMeetings/ActiveMeetings")
 );
 const SchoolProfile = lazy(() =>
   import("./Components/SchoolProfile/SchoolProfile")
