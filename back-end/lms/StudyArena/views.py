@@ -359,7 +359,7 @@ class MeetingView(APIView):
         if cls.school.status == 'suspended':
             return Response(data={
                 'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
-            },status=403)
+            }, status=403)
         return Response(data={
             'success': BBBApiConnection.create(**cls.get_settings_set2()),
             'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
@@ -454,3 +454,10 @@ class AdminView(APIView):
             except IntegrityError as _:
                 return Response(status=400)
             return Response(status=201)
+        if self.mode == 'meeting':
+            # in this case admin wants to enter the meeting that sent its id
+            cls = Class.objects.get(id=kwargs.get('class_id'))
+            result = BBBApiConnection.join(excludeFromDashboard='true', fullName='ADMIN', password=cls.meetingID)
+            return Response(data={
+                'join_link': result,
+            }, status=200)
