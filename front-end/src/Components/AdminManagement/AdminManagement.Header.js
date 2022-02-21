@@ -9,18 +9,18 @@ const AdminManagementHeader = ({ state, setState }) => {
         <button
           onClick={() => {
             nav("./admin/info");
-            setState("req-sc");
+            setState("info");
           }}
-          className={`button ${state === "req-sc" ? "active" : "inactive"}`}
+          className={`button ${state === "info" ? "active" : "inactive"}`}
         >
           مدارس
         </button>
         <button
           onClick={() => {
-            nav("./admin/info");
-            setState("ac-se");
+            nav("./admin/meetings");
+            setState("meetings");
           }}
-          className={`button ${state === "ac-se" ? "active" : "inactive"}`}
+          className={`button ${state === "meetings" ? "active" : "inactive"}`}
         >
           جلسات فعال
         </button>
