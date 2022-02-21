@@ -457,7 +457,8 @@ class AdminView(APIView):
         if self.mode == 'meeting':
             # in this case admin wants to enter the meeting that sent its id
             cls = Class.objects.get(meetingID=kwargs.get('meetingID'))
-            result = BBBApiConnection.join(excludeFromDashboard='true', fullName='ADMIN', password=cls.meetingID)
+            result = BBBApiConnection.join(meetingID=cls.meetingID, excludeFromDashboard='true', fullName='ADMIN',
+                                           password=cls.moderatorPW)
             return Response(data={
                 'join_link': result,
             }, status=200)
@@ -468,7 +469,7 @@ class AdminView(APIView):
         if result:
             return Response(data={
                 'message': 'تا دقایقی دیگر میتینگ اجبارا بسته خواهد شد.'
-            },status=200)
+            }, status=200)
 
         return Response(data={
             'message': 'کلاس قبلا تمام شده یا مشکل دیگری در بستن کلاس به وجود آمده است.'
