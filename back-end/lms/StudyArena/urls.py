@@ -2,6 +2,7 @@ from django.urls import path
 from .views import SchoolView, StudentRequests, TeacherRequests, ClassView, StudentView, TeacherView, MeetingView, \
     AdminView
 
+
 urlpatterns = [
     path('school/', SchoolView.as_view()),
     path('school/<str:school_username>/', SchoolView.as_view()),
@@ -29,6 +30,7 @@ urlpatterns = [
 
     path('admin/schools/', AdminView.as_view(mode='schools')),
     path('admin/schools/<str:filter_option>/', AdminView.as_view(mode='schools')),
+    path('admin/school/<str:school_id>/', AdminView.as_view(mode='schools')),
     path('admin/meetings/', AdminView.as_view(mode='meetings')),
-    path('admin/school/<str:school_id>/', AdminView.as_view(mode='schools'))
+    path('admin/meetings/<int:class_id>/join/', AdminView.as_view(mode='meeting')),
 ]
