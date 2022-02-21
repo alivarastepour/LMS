@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
+import NotFound from "./Components/NotFound/NotFound";
 
 const Class = lazy(() => import("./Components/Class/Class"));
 const AllSchools = lazy(() => import("./Components/AllSchools/AllSchools"));
@@ -101,6 +102,10 @@ const Router = () => {
     {
       path: "/:studentID/classes-management/:classID",
       element: <Background component={<ClassManagement />} />,
+    },
+    {
+      path: "*",
+      element: <NotFound />,
     },
   ]);
 };
