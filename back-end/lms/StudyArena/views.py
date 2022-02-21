@@ -461,3 +461,15 @@ class AdminView(APIView):
             return Response(data={
                 'join_link': result,
             }, status=200)
+
+    def delete(self, request, **kwargs):
+        cls = Class.objects.get(id=kwargs.get('class_id'))
+        result = BBBApiConnection.end(meetingID=cls.meetingID, password=cls.moderatorPW)
+        if result:
+            return Response(data={
+                'message': 'تا دقایقی دیگر میتینگ اجبارا بسته خواهد شد.'
+            },status=200)
+
+        return Response(data={
+            'message': 'کلاس قبلا تمام شده یا مشکل دیگری در بستن کلاس به وجود آمده است.'
+        }, status=200)
