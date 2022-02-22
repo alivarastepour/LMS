@@ -139,3 +139,12 @@ class Profile(APIView):
             'message': 'something is wrong!',
             'errors': user_serializer.errors
         }, status=400)
+
+
+class Logout(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        token = get_object_or_404(Token, user=request.user)
+        token.delete()
+        return Response()
