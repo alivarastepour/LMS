@@ -221,6 +221,8 @@ class ClassView(APIView):
     serializer_class = ClassSerializer
     permission_classes = (IsAuthenticated, IsManager | IsTeacher)
 
+    mode = ''
+
     def get(self, request, *args, **kwargs):
         clazz_id = kwargs.get('class_id', None)
         if clazz_id is None:
@@ -233,9 +235,16 @@ class ClassView(APIView):
                 clazz.to_json() for clazz in classes]}, status=200)
         else:
             clazz = get_object_or_404(Class, id=clazz_id)
-            return Response(data={
-                **clazz.get_settings()
-            }, status=200)
+            if self.mode == 'default':
+                return Response(data={
+                    **clazz.get_settings()
+                }, status=200)
+            elif self.mode == 'name':
+                return Response(data={
+                    'class': clazz.name,
+                    'school': clazz.school.name,
+                    'running': BBBApiConnection.is_meeting_running(meetingID=clazz.meetingID)[1]
+                }, status=200)
 
     def post(self, request):
         class_serializer = ClassSerializer(data=request.data, partial=True)
