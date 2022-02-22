@@ -5,7 +5,7 @@ import four_oh_four from "../../Assets/404.png";
 import { useNavigate } from "react-router-dom";
 const NotFound = () => {
   const navigator = useNavigate();
-  const nav = () => navigator("./");
+  const nav = () => navigator("/");
   return (
     <>
       <Wrapper>
