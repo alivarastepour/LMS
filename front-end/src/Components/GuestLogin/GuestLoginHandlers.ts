@@ -8,6 +8,13 @@ export const guestJoin = (
   setSuccess: Function,
   setOpen: Function
 ) => {
+  if (name.trim() === "") {
+    setSuccess(false);
+    setOpen(true);
+    setLink("");
+    setMessage("لطفا نام خود را وارد کنید");
+    return;
+  }
   const URL = `http://localhost:8000/study/class/${id}/join/`;
   const DATA = { fullName: name };
   axios

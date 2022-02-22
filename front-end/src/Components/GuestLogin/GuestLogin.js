@@ -50,7 +50,6 @@ const GuestLogin = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  console.log(clazz.running);
   return (
     <>
       <MainHeader />
