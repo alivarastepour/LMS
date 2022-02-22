@@ -329,6 +329,7 @@ class TeacherView(APIView):
 class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
+    post_mode = ''
 
     # TODO: add permission to each method...
     def get(self, request, class_id):
