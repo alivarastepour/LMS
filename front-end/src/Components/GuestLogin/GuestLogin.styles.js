@@ -103,6 +103,13 @@ export const Wrapper = styled.div`
       color: white;
     }
   }
+  .link-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
 `;
 
 export const Content = styled.div`

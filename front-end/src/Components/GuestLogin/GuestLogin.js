@@ -5,18 +5,23 @@ import { guestJoin } from "./GuestLoginHandlers";
 import { Wrapper, Content } from "./GuestLogin.styles";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Alert, Snackbar, Tooltip } from "@mui/material";
+import { Alert, IconButton, Snackbar, Tooltip } from "@mui/material";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const GuestLogin = () => {
   const classID = useParams().id;
-  const navigator = useNavigate();
-  const nav = () => navigator("/404");
+  const navigatorr = useNavigate();
+  const nav = () => navigatorr("/404");
   const [name, setName] = useState("");
   const [clazz, setClazz] = useState({});
   const [link, setLink] = useState("");
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(true);
   const [open, setOpen] = useState(false);
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(link);
+  };
   const fetchData = useCallback(() => {
     axios
       .get(`http://localhost:8000/study/class/${classID}/name/`)
@@ -86,6 +91,34 @@ const GuestLogin = () => {
             </button>
           </div>
         </div>
+        {link && (
+          <div className="link-container">
+            <div>
+              <Tooltip title="open">
+                <a href={link} target="_blank" rel="noreferrer">
+                  <IconButton>
+                    <OpenInNewIcon />
+                  </IconButton>
+                </a>
+              </Tooltip>
+            </div>
+            <div>
+              <Tooltip title="copy">
+                <IconButton
+                  onClick={() => {
+                    setMessage("لینک کلاس به کلیپ‌بورد الصاق شد");
+                    setSuccess(true);
+                    setOpen(true);
+
+                    copyToClipboard();
+                  }}
+                >
+                  <ContentCopyIcon />
+                </IconButton>
+              </Tooltip>
+            </div>
+          </div>
+        )}
       </Wrapper>
       )
       <Footer />
