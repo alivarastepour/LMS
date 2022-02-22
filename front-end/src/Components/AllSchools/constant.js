@@ -22,13 +22,17 @@ export const status = (state, id) => {
     <>
       <button
         className="button sus"
-        onClick={() => schoolAction(STATUS_SUSPENDED, id)}
+        onClick={() => {
+          schoolAction(STATUS_SUSPENDED, id);
+        }}
       >
         تعلیق
       </button>
       <button
         className="button rem"
-        onClick={() => schoolAction(STATUS_REJECTED, id)}
+        onClick={() => {
+          schoolAction(STATUS_REJECTED, id);
+        }}
       >
         حذف
       </button>
@@ -39,13 +43,17 @@ export const status = (state, id) => {
     <>
       <button
         className="button acc"
-        onClick={() => schoolAction(STATUS_ACCEPTED, id)}
+        onClick={() => {
+          schoolAction(STATUS_ACCEPTED, id);
+        }}
       >
         باز تایید
       </button>
       <button
         className="button rem"
-        onClick={() => schoolAction(STATUS_REJECTED, id)}
+        onClick={() => {
+          schoolAction(STATUS_REJECTED, id);
+        }}
       >
         حذف
       </button>
@@ -55,13 +63,17 @@ export const status = (state, id) => {
     <>
       <button
         className="button acc"
-        onClick={() => schoolAction(STATUS_ACCEPTED, id)}
+        onClick={() => {
+          schoolAction(STATUS_ACCEPTED, id);
+        }}
       >
         پذیرفتن
       </button>
       <button
         className="button rem"
-        onClick={() => schoolAction(STATUS_REJECTED, id)}
+        onClick={() => {
+          schoolAction(STATUS_REJECTED, id);
+        }}
       >
         حذف
       </button>

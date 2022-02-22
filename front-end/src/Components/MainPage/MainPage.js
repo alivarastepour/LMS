@@ -17,6 +17,8 @@ const MainPage = () => {
   const [state, setState] = useState(true);
 
   useEffect(() => {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
     setAuth(false);
   }, []);
 

@@ -1,5 +1,5 @@
 import { Wrapper } from "./Header.styles";
-import logo from "../../Assets/photo_2022-01-21_13-58-45.jpg";
+import logo from "../../Assets/logo.jpg";
 import { authContext } from "../../App";
 import { useContext } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";

@@ -15,13 +15,12 @@ const SchoolInformation = lazy(() =>
 );
 
 const SchoolManagement = () => {
-  const URL = "http://localhost:8000/study/school";
+  const URL = "http://localhost:8000/study/school/";
   const TOKEN = sessionStorage.getItem("token");
 
   const [showCreateSchool, setShowCreateSchool] = useState(false);
 
   const { data } = useGet(URL, TOKEN);
-
   return (
     <>
       <Suspense fallback={<Spinner color={{ c: "white" }} />}>
