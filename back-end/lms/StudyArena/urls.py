@@ -6,8 +6,8 @@ urlpatterns = [
     path('school/', SchoolView.as_view()),
     path('school/<str:school_username>/', SchoolView.as_view()),
     path('class/', ClassView.as_view(mode='default')),
-    path('class/<int:class_id>/', ClassView.as_view(mode='default')),
-    path('class/<int:class_id>/name/', ClassView.as_view(mode='name')),
+    path('class/<int:class_id>/', ClassView.as_view()),
+    path('class/<int:class_id>/name/', ClassView.as_view()),
 
     path('class/<int:class_id>/info/', MeetingView.as_view(get_mode='info')),
     path('class/<int:class_id>/recordings/', MeetingView.as_view(get_mode='record')),
