@@ -354,17 +354,25 @@ class MeetingView(APIView):
             return Response(
                 data=cls.get_slides(), status=200)
 
-    def post(self, request, class_id):
+    def post(self, request, class_id, **kwargs):
         cls = get_object_or_404(Class, id=class_id)
-        if cls.school.status == 'suspended':
+        if self.post_mode == 'logged_in':
+            if cls.school.status == 'suspended':
+                return Response(data={
+                    'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
+                }, status=403)
             return Response(data={
-                'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
-            }, status=403)
-        return Response(data={
-            'success': BBBApiConnection.create(**cls.get_settings_set2()),
-            'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
-                                               password=cls.moderatorPW),
-        }, status=200)
+                'success': BBBApiConnection.create(**cls.get_settings_set2()),
+                'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
+                                                   password=cls.moderatorPW),
+            }, status=200)
+        elif self.post_mode == 'guest':
+            fullName = kwargs.get('fullName')
+            return Response(data={
+                'join_link': BBBApiConnection.join(fullName=fullName, meetingID=cls.meetingID,
+                                                   password=cls.attendeePW),
+            },status=200)
+
 
     def put(self, request, class_id):
         cls = Class.objects.get(id=class_id)
