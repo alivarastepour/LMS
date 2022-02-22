@@ -357,7 +357,7 @@ class MeetingView(APIView):
 
     def post(self, request, class_id, **kwargs):
         cls = get_object_or_404(Class, id=class_id)
-        if self.post_mode == 'logged_in':
+        if self.post_mode == 'create':
             if cls.school.status == 'suspended':
                 return Response(data={
                     'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
