@@ -3,7 +3,7 @@ from typing import Union
 from django.db import IntegrityError
 from django.db.models import Q
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from . import BBBApiConnection, utils
 
@@ -338,7 +338,6 @@ class TeacherView(APIView):
 class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
-    post_mode = ''
 
     # TODO: add permission to each method...
     def get(self, request, class_id):
@@ -366,67 +365,51 @@ class MeetingView(APIView):
 
     def post(self, request, class_id, **kwargs):
         cls = get_object_or_404(Class, id=class_id)
-        if self.post_mode == 'create':
-            if cls.school.status == 'suspended':
-                return Response(data={
-                    'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
-                }, status=403)
+        if cls.school.status == 'suspended':
             return Response(data={
-                'success': BBBApiConnection.create(**cls.get_settings_set2()),
-                'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
-                                                   password=cls.moderatorPW),
-            }, status=200)
-        elif self.post_mode == 'guest':
-            success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
-            fullName = kwargs.get('fullName')
-            if not success:
-                return Response(data={
-                    'message': 'ارتباط برقرار نشد. لطفا دوباره امتحان کنید.'
-                }, status=500)
+                'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
+            }, status=403)
+        return Response(data={
+            'success': BBBApiConnection.create(**cls.get_settings_set2()),
+            'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
+                                               password=cls.moderatorPW),
+        }, status=200)
+
+
+def put(self, request, class_id):
+    cls = Class.objects.get(id=class_id)
+    try:
+        for key in request.FILES.keys():
+            for file in request.FILES.getlist(key):
+                final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
+                to_add = 'localhost' + final_file_path + '\n'
+                cls.slides = cls.slides + to_add
+                cls.selected_slides = cls.selected_slides + to_add
+    except Exception as _:
+        pass
+    cls.save()
+    return Response(data=cls.get_slides(), status=200)
+
+
+def delete(self, request, class_id):
+    cls = Class.objects.get(id=class_id)
+    urls = request.data.get("delete")
+    selected = request.data.get("select")
+    cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
+    try:
+        for url in urls:
+            if url in cls.slides:
+                utils.file_remover(url)
+                cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
+                cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
             else:
-                if not is_running:
-                    return Response(data={
-                        'message': 'جلسه در حال اجرا نمی‌باشد.'
-                    }, status=400)
-            return Response(data={
-                'message': 'دریافت لینک با موفقیت انجام شد.',
-                'join_link': BBBApiConnection.join(fullName=fullName, meetingID=cls.meetingID,
-                                                   password=cls.attendeePW),
-            }, status=200)
-
-    def put(self, request, class_id):
-        cls = Class.objects.get(id=class_id)
-        try:
-            for key in request.FILES.keys():
-                for file in request.FILES.getlist(key):
-                    final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
-                    to_add = 'localhost' + final_file_path + '\n'
-                    cls.slides = cls.slides + to_add
-                    cls.selected_slides = cls.selected_slides + to_add
-        except Exception as _:
-            pass
+                cls.save()
+                return Response(data={"result": "Not Found!"}, status=404)
+    except Exception as _:
         cls.save()
-        return Response(data=cls.get_slides(), status=200)
-
-    def delete(self, request, class_id):
-        cls = Class.objects.get(id=class_id)
-        urls = request.data.get("delete")
-        selected = request.data.get("select")
-        cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
-        try:
-            for url in urls:
-                if url in cls.slides:
-                    utils.file_remover(url)
-                    cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
-                    cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
-                else:
-                    cls.save()
-                    return Response(data={"result": "Not Found!"}, status=404)
-        except Exception as _:
-            cls.save()
-            return Response(data={"result": "error"}, status=500)
-        cls.save()
-        return Response(data={"result": "ok"}, status=200)
+        return Response(data={"result": "error"}, status=500)
+    cls.save()
+    return Response(data={"result": "ok"}, status=200)
 
 
 class AdminView(APIView):
@@ -501,4 +484,27 @@ class AdminView(APIView):
 
         return Response(data={
             'message': 'کلاس قبلا تمام شده یا مشکل دیگری در بستن کلاس به وجود آمده است.'
+        }, status=200)
+
+
+class GuestView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request, class_id, **kwargs):
+        cls = get_object_or_404(Class, id=class_id)
+        success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
+        fullName = kwargs.get('fullName')
+        if not success:
+            return Response(data={
+                'message': 'ارتباط برقرار نشد. لطفا دوباره امتحان کنید.'
+            }, status=500)
+        else:
+            if not is_running:
+                return Response(data={
+                    'message': 'جلسه در حال اجرا نمی‌باشد.'
+                }, status=400)
+        return Response(data={
+            'message': 'دریافت لینک با موفقیت انجام شد.',
+            'join_link': BBBApiConnection.join(fullName=fullName, meetingID=cls.meetingID,
+                                               password=cls.attendeePW),
         }, status=200)
