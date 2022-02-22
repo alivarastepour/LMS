@@ -368,12 +368,22 @@ class MeetingView(APIView):
                                                    password=cls.moderatorPW),
             }, status=200)
         elif self.post_mode == 'guest':
+            success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
             fullName = kwargs.get('fullName')
+            if not success:
+                return Response(data={
+                    'message': 'ارتباط برقرار نشد. لطفا دوباره امتحان کنید.'
+                }, status=500)
+            else:
+                if not is_running:
+                    return Response(data={
+                        'message': 'جلسه در حال اجرا نمی‌باشد.'
+                    }, status=400)
             return Response(data={
+                'message': 'دریافت لینک با موفقیت انجام شد.',
                 'join_link': BBBApiConnection.join(fullName=fullName, meetingID=cls.meetingID,
                                                    password=cls.attendeePW),
-            },status=200)
-
+            }, status=200)
 
     def put(self, request, class_id):
         cls = Class.objects.get(id=class_id)
