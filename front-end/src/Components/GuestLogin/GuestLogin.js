@@ -2,18 +2,21 @@ import { useNavigate, useParams } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import MainHeader from "../MainPage/Header";
 import { guestJoin } from "./GuestLoginHandlers";
-import { Wrapper } from "./GuestLogin.styles";
+import { Wrapper, Content } from "./GuestLogin.styles";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { Tooltip } from "@mui/material";
+import { Alert, Snackbar, Tooltip } from "@mui/material";
 
 const GuestLogin = () => {
-  const namex = "کلاس اول";
   const classID = useParams().id;
   const navigator = useNavigate();
   const nav = () => navigator("/404");
   const [name, setName] = useState("");
   const [clazz, setClazz] = useState({});
+  const [link, setLink] = useState("");
+  const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(true);
+  const [open, setOpen] = useState(false);
   const fetchData = useCallback(() => {
     axios
       .get(`http://localhost:8000/study/class/${classID}/name/`)
@@ -23,11 +26,26 @@ const GuestLogin = () => {
           nav();
         }
       });
-  }, [classID, nav]);
-
+  }, [classID]);
+  const withInput = (Component) => {
+    if (!clazz.running) {
+      return (
+        <Tooltip
+          title={
+            <div style={{ fontFamily: "vazir" }}>کلاس هنوز آغاز نشده است</div>
+          }
+        >
+          {Component}
+        </Tooltip>
+      );
+    } else {
+      return Component;
+    }
+  };
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+  console.log(clazz.running);
   return (
     <>
       <MainHeader />
@@ -37,13 +55,7 @@ const GuestLogin = () => {
         </h1>
         <div className="flex-container">
           <div>
-            <Tooltip
-              title={
-                <div style={{ fontFamily: "vazir" }}>
-                  کلاس هنوز آغاز نشده است
-                </div>
-              }
-            >
+            {withInput(
               <input
                 type="text"
                 placeholder="نام خود را وارد کنید"
@@ -53,12 +65,21 @@ const GuestLogin = () => {
                 onChange={(e) => setName(e.target.value)}
                 disabled={!clazz.running}
               />
-            </Tooltip>
+            )}
           </div>
           <div>
             <button
               className="button"
-              onClick={() => guestJoin(classID, name)}
+              onClick={() =>
+                guestJoin(
+                  classID,
+                  name,
+                  setLink,
+                  setMessage,
+                  setSuccess,
+                  setOpen
+                )
+              }
               disabled={!clazz.running}
             >
               <b>دریافت لینک ورود</b>
@@ -68,6 +89,17 @@ const GuestLogin = () => {
       </Wrapper>
       )
       <Footer />
+      <Content>
+        <Snackbar
+          open={open}
+          onClose={() => setOpen(false)}
+          autoHideDuration={3000}
+        >
+          <Alert severity={success ? "success" : "error"}>
+            <div className="message">{message}</div>
+          </Alert>
+        </Snackbar>
+      </Content>
     </>
   );
 };
