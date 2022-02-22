@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
+import GuestLogin from "./Components/GuestLogin/GuestLogin";
 import NotFound from "./Components/NotFound/NotFound";
 
 const Class = lazy(() => import("./Components/Class/Class"));
@@ -25,6 +26,7 @@ const StudentManagement = lazy(() =>
 const Router = () => {
   return useRoutes([
     { path: "/", element: <Background component={<MainPage />} /> },
+    { path: "/guest/:id", element: <Background component={<GuestLogin />} /> },
     {
       path: "/accounts/:id",
       element: <Background component={<Dashboard />} />,
@@ -93,8 +95,13 @@ const Router = () => {
             },
           ],
         },
+        {
+          path: "./accounts/:id/*",
+          element: <NotFound />,
+        },
       ],
     },
+
     {
       path: "/:studentID/classes/:classID",
       element: <Background component={<Class />} />,
@@ -102,6 +109,10 @@ const Router = () => {
     {
       path: "/:studentID/classes-management/:classID",
       element: <Background component={<ClassManagement />} />,
+    },
+    {
+      path: "/*",
+      element: <NotFound />,
     },
     {
       path: "404",
