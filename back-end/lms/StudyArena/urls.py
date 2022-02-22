@@ -5,7 +5,7 @@ from .views import SchoolView, StudentRequests, TeacherRequests, ClassView, Stud
 urlpatterns = [
     path('school/', SchoolView.as_view()),
     path('school/<str:school_username>/', SchoolView.as_view()),
-    path('class/', ClassView.as_view(mode='default')),
+    path('class/', ClassView.as_view()),
     path('class/<int:class_id>/', ClassView.as_view()),
     path('class/<int:class_id>/name/', GuestView.as_view()),
 
