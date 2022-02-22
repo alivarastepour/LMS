@@ -16,6 +16,11 @@ export const Wrapper = styled.div`
       width: 95%;
     }
   }
+  @media only screen and (max-width: 430px) {
+    & {
+      border-radius: 10px;
+    }
+  }
   .flex-container {
     display: flex;
     flex-direction: row;
@@ -52,7 +57,7 @@ export const Wrapper = styled.div`
     @media only screen and (max-width: 430px) {
       & {
         border-radius: 5px;
-        width: 300px;
+        width: 280px;
       }
     }
   }
@@ -97,5 +102,12 @@ export const Wrapper = styled.div`
       background-color: transparent;
       color: white;
     }
+  }
+`;
+
+export const Content = styled.div`
+  .message {
+    font-family: "vazir";
+    direction: rtl;
   }
 `;
