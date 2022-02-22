@@ -8,10 +8,13 @@ urlpatterns = [
     path('school/<str:school_username>/', SchoolView.as_view()),
     path('class/', ClassView.as_view()),
     path('class/<int:class_id>/', ClassView.as_view()),
+
     path('class/<int:class_id>/info/', MeetingView.as_view(get_mode='info')),
     path('class/<int:class_id>/recordings/', MeetingView.as_view(get_mode='record')),
-    path('class/<int:class_id>/create/', MeetingView.as_view()),
+    path('class/<int:class_id>/create/', MeetingView.as_view(post_mode='create')),
+    path('class/<int:class_id>/join/', MeetingView.as_view(post_mode='guest')),
     path('class/<int:class_id>/slide/', MeetingView.as_view(get_mode='slide')),
+
     path('student-list/', StudentRequests.as_view()),
     path('teacher-list/', TeacherRequests.as_view()),
     path('teacher-request/<int:teacher_id>/', TeacherRequests.as_view()),
