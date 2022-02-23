@@ -493,7 +493,7 @@ class GuestView(APIView):
     def post(self, request, class_id, **kwargs):
         cls = get_object_or_404(Class, id=class_id)
         success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
-        fullName = kwargs.get('fullName')
+        fullName = request.data.get('fullName')
         if not success:
             return Response(data={
                 'message': 'ارتباط برقرار نشد. لطفا دوباره امتحان کنید.'
