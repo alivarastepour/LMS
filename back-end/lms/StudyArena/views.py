@@ -103,9 +103,6 @@ class StudentRequests(APIView):
             return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
         for class_requests in query_sets:
-            # all_classes = query_set.objects.all()
-            # for cls in all_classes:
-            #     class_requests = cls.studentrequest_set.all()
             for req in class_requests:
                 output.append(
                     {
@@ -248,7 +245,6 @@ class ClassView(APIView):
             return Response(data={
                 **clazz.to_json(),
                 "message": "Class Successfully created."}, status=200)
-        # TODO: avoid duplicate naming...
         return Response(data={
             "message": "Something is wrong!",
         }, status=400)
@@ -330,7 +326,6 @@ class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
 
-    # TODO: add permission to each method...
     def get(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
         if self.get_mode == 'info':
@@ -375,41 +370,39 @@ class MeetingView(APIView):
         except ConnectionError as _:
             return Response(status=500)
 
-
-def put(self, request, class_id):
-    cls = Class.objects.get(id=class_id)
-    try:
-        for key in request.FILES.keys():
-            for file in request.FILES.getlist(key):
-                final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
-                to_add = 'localhost' + final_file_path + '\n'
-                cls.slides = cls.slides + to_add
-                cls.selected_slides = cls.selected_slides + to_add
-    except Exception as _:
-        pass
-    cls.save()
-    return Response(data=cls.get_slides(), status=200)
-
-
-def delete(self, request, class_id):
-    cls = Class.objects.get(id=class_id)
-    urls = request.data.get("delete")
-    selected = request.data.get("select")
-    cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
-    try:
-        for url in urls:
-            if url in cls.slides:
-                utils.file_remover(url)
-                cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
-                cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
-            else:
-                cls.save()
-                return Response(data={"result": "Not Found!"}, status=404)
-    except Exception as _:
+    def put(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        try:
+            for key in request.FILES.keys():
+                for file in request.FILES.getlist(key):
+                    final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
+                    to_add = 'localhost' + final_file_path + '\n'
+                    cls.slides = cls.slides + to_add
+                    cls.selected_slides = cls.selected_slides + to_add
+        except Exception as _:
+            pass
         cls.save()
-        return Response(data={"result": "error"}, status=500)
-    cls.save()
-    return Response(data={"result": "ok"}, status=200)
+        return Response(data=cls.get_slides(), status=200)
+
+    def delete(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        urls = request.data.get("delete")
+        selected = request.data.get("select")
+        cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
+        try:
+            for url in urls:
+                if url in cls.slides:
+                    utils.file_remover(url)
+                    cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
+                    cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
+                else:
+                    cls.save()
+                    return Response(data={"result": "Not Found!"}, status=404)
+        except Exception as _:
+            cls.save()
+            return Response(data={"result": "error"}, status=500)
+        cls.save()
+        return Response(data={"result": "ok"}, status=200)
 
 
 class AdminView(APIView):
