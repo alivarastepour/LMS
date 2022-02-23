@@ -3,6 +3,7 @@ import logo from "../../Assets/logo.jpg";
 import { authContext } from "../../App";
 import { useContext } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { logoutHandler } from "./MainPageHandlers";
 const f = "سیستم مدیریت آموزش ";
 const s = "(LMS) ";
 const t = "آتی گستر";
@@ -23,6 +24,7 @@ const MainHeader = () => {
               <div
                 className="logout-container"
                 onClick={() => {
+                  logoutHandler();
                   sessionStorage.removeItem("token");
                   sessionStorage.removeItem("user");
                   setAuth(false);
