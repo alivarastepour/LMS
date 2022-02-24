@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+
 import { Wrapper } from "./SchoolInformation.Header.styles";
 
 const SchoolInformationHeader = ({ state, setState }) => {

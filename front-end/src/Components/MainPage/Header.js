@@ -1,12 +1,18 @@
-import { Wrapper } from "./Header.styles";
-import logo from "../../Assets/logo.jpg";
-import { authContext } from "../../App";
 import { useContext } from "react";
+
+import { Wrapper } from "./Header.styles";
+
 import LogoutIcon from "@mui/icons-material/Logout";
+
+import { authContext } from "../../App";
 import { logoutHandler } from "./MainPageHandlers";
+
+import logo from "../../Assets/logo.jpg";
+
 const f = "سیستم مدیریت آموزش ";
 const s = "(LMS) ";
 const t = "آتی گستر";
+
 const MainHeader = () => {
   const { auth, setAuth } = useContext(authContext);
   return (

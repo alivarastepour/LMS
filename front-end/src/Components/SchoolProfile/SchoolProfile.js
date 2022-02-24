@@ -1,11 +1,14 @@
-import { Wrapper } from "./SchoolProfile.styles";
-import Field from "../Field/Field";
-import photo from "../../Assets/profile-placeholder.jpg";
 import { useEffect, useReducer, useState } from "react";
+
+import { Wrapper } from "./SchoolProfile.styles";
+
+import Field from "../Field/Field";
+
+import photo from "../../Assets/profile-placeholder.jpg";
+
 import { schoolProfileReducer } from "./schoolProfile.reducer";
 
 import useGet from "../../custom-hooks/useGet";
-
 import { profileImageEditHandler } from "../../Global/global-functions";
 import { schoolProfileEditHandler } from "./schoolProfile-edit.handler";
 

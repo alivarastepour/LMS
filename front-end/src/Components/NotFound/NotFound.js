@@ -1,11 +1,16 @@
+import { useNavigate } from "react-router-dom";
+
 import { IconButton } from "@mui/material";
 import HomeIcon from "@mui/icons-material/Home";
+
 import { Wrapper } from "./NotFound.styles";
+
 import four_oh_four from "../../Assets/404.png";
-import { useNavigate } from "react-router-dom";
+
 const NotFound = () => {
   const navigator = useNavigate();
   const nav = () => navigator("/");
+
   return (
     <>
       <Wrapper>

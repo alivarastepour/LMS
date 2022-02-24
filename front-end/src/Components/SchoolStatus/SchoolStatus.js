@@ -1,5 +1,7 @@
 import { Wrapper } from "./SchoolStatus.styles";
+
 import Spinner from "../Spinner/Spinner";
+
 const SchoolStatus = ({ status, setShowCreateSchool }) => {
   return (
     <>
