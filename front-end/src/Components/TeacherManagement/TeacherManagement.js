@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { Wrapper } from "./TeacherManagement.styles";
 import { Content } from "../SchoolInformation/SchoolInformation.styles";
+
 import TeacherManagementHeader from "./TeacherManagement.Header";
 import TeacherClasses from "../TeacherClasses/TeacherClasses";
 import SchoolList from "../SchoolList/SchoolList";

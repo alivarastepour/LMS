@@ -11,7 +11,7 @@ import { authContext } from "../../App";
 import axios from "axios";
 
 const SignIn = () => {
-  const { auth, setAuth } = useContext(authContext);
+  const { setAuth } = useContext(authContext);
 
   const navigator = useNavigate();
 

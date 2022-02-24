@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  /* width: 900px; */
   height: 100%;
   .table1 {
-    /* width: 100%; */
     direction: rtl;
     font-family: "vazir", sans-serif;
     text-align: center;
