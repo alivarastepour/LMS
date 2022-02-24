@@ -38,16 +38,4 @@ export const Wrapper = styled.div`
       transform: translateX(25%);
     }
   }
-
-  @media only screen and (max-width: 1747px) {
-    & {
-      margin-top: 40px;
-    }
-  }
-
-  @media only screen and (max-width: 1747px) {
-    & {
-      margin-top: 40px;
-    }
-  }
 `;

@@ -26,9 +26,15 @@ export const Content = styled.div`
     margin-top: 25px;
     direction: rtl;
     font-size: 1.4rem;
-
+    @media only screen and (max-width: 460px) {
+      & {
+        margin-top: 10px;
+        padding-right: 20px;
+      }
+    }
     @media only screen and (max-width: 420px) {
       & {
+        padding-right: 0;
         margin-top: 5px;
       }
     }
@@ -36,6 +42,18 @@ export const Content = styled.div`
 
   .input {
     margin-top: 5px;
+    @media only screen and (max-width: 460px) {
+      & {
+        width: 250px;
+        margin: auto;
+      }
+    }
+    @media only screen and (max-width: 420px) {
+      & {
+        width: 200px;
+        margin: auto;
+      }
+    }
   }
 
   .submit {
@@ -50,9 +68,15 @@ export const Content = styled.div`
     border-radius: 10px;
     font-size: 1rem;
     text-align: center;
-
+    @media only screen and (max-width: 460px) {
+      & {
+        margin-top: 0;
+        width: 250px;
+      }
+    }
     @media only screen and (max-width: 420px) {
       & {
+        margin-top: 10px;
         width: 200px;
       }
     }
@@ -97,7 +121,11 @@ export const Content = styled.div`
     font-size: 1rem;
     text-align: center;
     background-color: #fff;
-
+    @media only screen and (max-width: 460px) {
+      & {
+        width: 250px;
+      }
+    }
     @media only screen and (max-width: 420px) {
       & {
         width: 200px;

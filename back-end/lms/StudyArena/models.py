@@ -1,3 +1,4 @@
+from django.contrib import admin
 from django.db import models
 from AuthArena.models import CustomUser
 
@@ -11,13 +12,18 @@ class School(models.Model):
     # TODO: change manager relation to : one to many
     #  OR
     #  delete denied School after save new school
-    manager = models.OneToOneField(CustomUser, on_delete=models.DO_NOTHING)
+    manager = models.OneToOneField(CustomUser, on_delete=models.DO_NOTHING, null=True)
     accepted = models.BooleanField(default=False)
     denied = models.BooleanField(default=False)
+    suspended = models.BooleanField(default=False)
     photo_link = models.URLField(default=IMAGE_URL + 'default.jpg')
+    linked_manager = models.ForeignKey(CustomUser, related_name='linked_manager', on_delete=models.DO_NOTHING,
+                                       null=True)
 
     @property
     def status(self):
+        if self.suspended:
+            return 'suspended'
         if not self.accepted and not self.denied:
             return 'pending'
         if self.accepted:
@@ -41,16 +47,28 @@ class School(models.Model):
             'name': self.name,
             'address': self.address,
             'image': self.photo_link,
-            'manager': self.manager.fullname,
+            'manager': self.manager.fullname if self.manager is not None else "",
             'classes': [clazz.to_json() for clazz in self.class_set.all()
                         if student_or_teacher not in clazz.student_set.all()] if role == 'S'
             else [clazz.to_json() for clazz in self.class_set.all()
                   if student_or_teacher not in clazz.teacher_set.all()]
         }
 
+    def to_json_set3(self):
+        return {
+            'id': self.id,
+            'school_id': self.school_id,
+            'name': self.name,
+            'status': self.status,
+            'manager': self.linked_manager.fullname if self.linked_manager is not None else "",
+        }
+
     def set_photo_link(self, name):
         self.photo_link = IMAGE_URL + name
         self.save()
+
+    def __str__(self):
+        return self.name + " : " + self.school_id
 
 
 class Class(models.Model):
@@ -102,10 +120,16 @@ class Class(models.Model):
             "attendeePW": self.attendeePW,
         }
 
+    def __str__(self):
+        return self.school.name + "->" + self.name
+
 
 class Teacher(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
     classes = models.ManyToManyField(Class)
+
+    def __str__(self):
+        return self.user.fullname
 
 
 class Manager(models.Model):
@@ -116,14 +140,32 @@ class Student(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING)
     classes = models.ManyToManyField(Class)
 
+    def __str__(self):
+        return self.user.fullname
+
 
 class StudentRequest(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     clazz = models.ForeignKey(Class, on_delete=models.CASCADE)
     status = models.CharField(max_length=8, default='pending')
 
+    def __str__(self):
+        return self.student.user.fullname + "->" + " (" + self.clazz.__str__() + ") " + ": " + self.status
+
 
 class TeacherRequest(models.Model):
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
     clazz = models.ForeignKey(Class, on_delete=models.CASCADE)
     status = models.CharField(max_length=8, default='pending')
+
+    def __str__(self):
+        return self.teacher.user.fullname + "->" + " (" + self.clazz.__str__() + ") " + ": " + self.status
+
+
+admin.site.register(School)
+admin.site.register(Class)
+admin.site.register(Teacher)
+admin.site.register(Manager)
+admin.site.register(Student)
+admin.site.register(StudentRequest)
+admin.site.register(TeacherRequest)

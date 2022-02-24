@@ -26,7 +26,6 @@ const SearchBox = ({
           sx={{
             width: 380,
             boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
-            background: "#F8F8F8",
           }}
           label="جستجو"
           placeholder={placeHolder}

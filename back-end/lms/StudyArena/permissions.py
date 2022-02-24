@@ -28,3 +28,10 @@ class IsProfileCompleted(BasePermission):
 
     def has_permission(self, request, view):
         return CustomUser.objects.get(username=request.user.username).is_completed()
+
+
+class IsAdmin(BasePermission):
+    message = "YOU ARE NOT ADMIN X("
+
+    def has_permission(self, request, view):
+        return request.user.is_superuser

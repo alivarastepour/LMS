@@ -1,5 +1,12 @@
 import ContentCopyTwoToneIcon from "@mui/icons-material/ContentCopyTwoTone";
-import { TextField, InputAdornment, IconButton, Tooltip } from "@mui/material";
+import {
+  TextField,
+  InputAdornment,
+  IconButton,
+  Tooltip,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import { Dialog, DialogTitle } from "@mui/material";
 import { useState } from "react";
@@ -8,16 +15,11 @@ import { useParams } from "react-router-dom";
 import { createMeeting, fileUpload } from "./classManagementHandlers";
 import Files from "../Files/Files";
 
-const ClassState = ({
-  url,
-  setOpen,
-  status,
-  start_meeting_data,
-  setUrl,
-  setStarted,
-}) => {
+const ClassState = ({ url, setOpen, status, start_meeting_data, setUrl }) => {
   const [openSettings, setOpenSettings] = useState(false);
   const [openFiles, setOpenFiles] = useState(false);
+  const [error, setError] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const id = useParams().classID;
 
   const classStatus = () => {
@@ -28,7 +30,7 @@ const ClassState = ({
         <div
           className="status on start"
           onClick={() => {
-            createMeeting(id, setUrl, setStarted);
+            createMeeting(id, setUrl, setError, setOpenSnackbar);
           }}
         >
           شروع کلاس
@@ -42,14 +44,10 @@ const ClassState = ({
   return (
     <>
       <div className="state">
-        <div className="state-container">
-          {/* <div style={{ display: "inline-block" }}>وضعیت کلاس:</div> */}
-          {classStatus()}
-        </div>
+        <div className="state-container">{classStatus()}</div>
         {url ? (
           <>
             <div className="link-container">
-              {/* <div className="enter">لینک ورود به کلاس</div> */}
               <div>
                 <TextField
                   className="txt"
@@ -85,7 +83,7 @@ const ClassState = ({
             </div>
           </>
         ) : (
-          ""
+          <></>
         )}
         {!url && (
           <>
@@ -138,6 +136,15 @@ const ClassState = ({
         </DialogTitle>
         <Files />
       </Dialog>
+      <Snackbar
+        open={openSnackbar}
+        onClose={() => setOpenSnackbar(false)}
+        autoHideDuration={3000}
+      >
+        <Alert severity="error">
+          <div className="error">{error}</div>
+        </Alert>
+      </Snackbar>
     </>
   );
 };

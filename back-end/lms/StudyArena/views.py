@@ -1,12 +1,14 @@
 from typing import Union
 
+from django.db import IntegrityError
+from django.db.models import Q
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from . import BBBApiConnection, utils
 
 from .models import School, Class, TeacherRequest, StudentRequest, Student, Teacher
-from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent
+from .permissions import IsManager, IsProfileCompleted, IsTeacher, IsStudent, IsAdmin
 from rest_framework.views import APIView
 from .serilizers import SchoolSerializer, ClassSerializer
 import io
@@ -101,9 +103,6 @@ class StudentRequests(APIView):
             return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
         for class_requests in query_sets:
-            # all_classes = query_set.objects.all()
-            # for cls in all_classes:
-            #     class_requests = cls.studentrequest_set.all()
             for req in class_requests:
                 output.append(
                     {
@@ -246,7 +245,6 @@ class ClassView(APIView):
             return Response(data={
                 **clazz.to_json(),
                 "message": "Class Successfully created."}, status=200)
-        # TODO: avoid duplicate naming...
         return Response(data={
             "message": "Something is wrong!",
         }, status=400)
@@ -328,12 +326,14 @@ class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
 
-    # TODO: add permission to each method...
     def get(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
         if self.get_mode == 'info':
             # in this case we return class and meeting info
-            info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
+            try:
+                info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
+            except ConnectionError as _:
+                return Response(status=500)
             return Response(data={
                 'name': cls.name,
                 'teacher': cls.teacher_set.last().user.fullname if cls.teacher_set.count() != 0 else 'unknown',
@@ -346,19 +346,29 @@ class MeetingView(APIView):
             }, status=200)
         elif self.get_mode == 'record':
             # in this case we return playbacks of a meeting
-            recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
+            try:
+                recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
+            except ConnectionError as _:
+                return Response(status=500)
             return Response(data=recordings[1], status=200)
         elif self.get_mode == 'slide':
             return Response(
                 data=cls.get_slides(), status=200)
 
-    def post(self, request, class_id):
+    def post(self, request, class_id, **kwargs):
         cls = get_object_or_404(Class, id=class_id)
-        return Response(data={
-            'success': BBBApiConnection.create(**cls.get_settings_set2()),
-            'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
-                                               password=cls.moderatorPW),
-        }, status=200)
+        if cls.school.status == 'suspended':
+            return Response(data={
+                'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
+            }, status=403)
+        try:
+            return Response(data={
+                'success': BBBApiConnection.create(**cls.get_settings_set2()),
+                'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
+                                                   password=cls.moderatorPW),
+            }, status=200)
+        except ConnectionError as _:
+            return Response(status=500)
 
     def put(self, request, class_id):
         cls = Class.objects.get(id=class_id)
@@ -393,3 +403,121 @@ class MeetingView(APIView):
             return Response(data={"result": "error"}, status=500)
         cls.save()
         return Response(data={"result": "ok"}, status=200)
+
+
+class AdminView(APIView):
+    permission_classes = (IsAdmin,)
+    mode = ''
+
+    def get(self, request, **kwargs):
+        if self.mode == 'schools':
+            filter_option = kwargs.get('filter_option', None)
+            # query_set = [school for school in
+            #              (School.objects.all() if filter_option is None else School.objects.all()) if
+            #              school.status == filter_option]
+            # query_set.reverse()
+            query_set = []
+            for school in School.objects.all():
+                if filter_option is not None and not school.status == filter_option:
+                    continue
+                query_set.append(school.to_json_set3())
+            query_set.reverse()
+            return Response(data=query_set, status=200)
+        elif self.mode == 'meetings':
+            try:
+                status, meetings = BBBApiConnection.get_meetings()
+            except ConnectionError as _:
+                return Response(status=500)
+            return Response(data=[
+                {
+                    'meetingName': meeting[0],
+                    'meetingID': meeting[1],
+                    'participantCount': meeting[2],
+                    'hasUserJoined': meeting[3],
+                } for meeting in meetings
+            ], status=200)
+
+    def post(self, request, **kwargs):
+        if self.mode == 'schools':
+            operation = request.data['operation']
+            school_id = kwargs['school_id']
+            school = School.objects.get(school_id=school_id)
+            if operation == 'accepted':
+                school.suspended = False
+                school.accepted = True
+                school.denied = False
+                school.manager = school.linked_manager
+            elif operation == 'rejected':
+                school.suspended = False
+                school.accepted = False
+                school.denied = True
+                school.manager = None
+            elif operation == 'suspended':
+                school.accepted = False
+                school.denied = False
+                school.suspended = True
+            try:
+                school.save()
+            except IntegrityError as _:
+                return Response(status=400)
+            return Response(status=201)
+        if self.mode == 'meeting':
+            # in this case admin wants to enter the meeting that sent its id
+            cls = Class.objects.get(meetingID=kwargs.get('meetingID'))
+            result = BBBApiConnection.join(meetingID=cls.meetingID, excludeFromDashboard='true', fullName='ADMIN',
+                                           password=cls.moderatorPW)
+            return Response(data={
+                'join_link': result,
+            }, status=200)
+
+    def delete(self, request, **kwargs):
+        cls = Class.objects.get(meetingID=kwargs.get('meetingID'))
+        try:
+            result = BBBApiConnection.end(meetingID=cls.meetingID, password=cls.moderatorPW)
+        except ConnectionError as _:
+            return Response(status=500)
+        if result:
+            return Response(data={
+                'message': 'تا دقایقی دیگر میتینگ اجبارا بسته خواهد شد.'
+            }, status=200)
+
+        return Response(data={
+            'message': 'کلاس قبلا تمام شده یا مشکل دیگری در بستن کلاس به وجود آمده است.'
+        }, status=200)
+
+
+class GuestView(APIView):
+    permission_classes = (AllowAny,)
+
+    def get(self, request, class_id, **kwargs):
+        clazz = get_object_or_404(Class, id=class_id)
+        try:
+            return Response(data={
+                'class': clazz.name,
+                'school': clazz.school.name,
+                'running': BBBApiConnection.is_meeting_running(meetingID=clazz.meetingID)[1]
+            }, status=200)
+        except ConnectionError as _:
+            return Response(status=500)
+
+    def post(self, request, class_id, **kwargs):
+        cls = get_object_or_404(Class, id=class_id)
+        try:
+            success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
+        except ConnectionError as _:
+            return Response(status=500)
+        fullName = request.data.get('fullName')
+        if not success:
+            return Response(data={
+                'message': 'ارتباط برقرار نشد. لطفا دوباره امتحان کنید.'
+            }, status=500)
+        else:
+            if not is_running:
+                return Response(data={
+                    'message': 'جلسه در حال اجرا نمی‌باشد.'
+                }, status=400)
+        return Response(data={
+            'message': 'دریافت لینک با موفقیت انجام شد.',
+            'join_link': BBBApiConnection.join(fullName=fullName, meetingID=cls.meetingID,
+                                               password=cls.attendeePW),
+        }, status=200)

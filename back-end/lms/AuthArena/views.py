@@ -95,7 +95,8 @@ class Profile(APIView):
         if filter_option == 'role':
             return Response({
                 'id': user.id,
-                'role': 'manager' if user.role == 'M' else ('student' if user.role == 'S' else 'teacher'),
+                'role': 'manager' if user.role == 'M' else (
+                    'student' if user.role == 'S' else 'teacher' if user.role == 'T' else 'admin'),
             }, status=200)
         return Response({
             # TODO: add picture address
@@ -138,3 +139,12 @@ class Profile(APIView):
             'message': 'something is wrong!',
             'errors': user_serializer.errors
         }, status=400)
+
+
+class Logout(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        token = get_object_or_404(Token, user=request.user)
+        token.delete()
+        return Response()

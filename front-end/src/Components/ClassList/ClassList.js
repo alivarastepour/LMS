@@ -1,7 +1,6 @@
 import { Wrapper } from "./ClassList.styles";
 
 import SearchBox from "../SearchBox/SearchBox";
-import AutoComplete from "../AutoComplete/AutoComplete";
 import ClassSettings from "../ClassSettings/ClassSettings";
 
 import Dialog from "@mui/material/Dialog";
@@ -11,6 +10,8 @@ import { handleSearch, addClass, deleteClass } from "./classListHandlers";
 import useGet from "../../custom-hooks/useGet";
 
 import { useEffect, useState } from "react";
+import Select from "../Select/Select";
+import { FILTER } from "./Constants";
 
 const CreateClass = () => {
   const URL = "http://localhost:8000/study/class";
@@ -24,7 +25,7 @@ const CreateClass = () => {
 
   const [searchValue, setSearchValue] = useState("");
 
-  const [searchTerm, setSearchTerm] = useState("نام کلاس");
+  const [searchTerm, setSearchTerm] = useState("name");
 
   const [className, setClassName] = useState("");
 
@@ -40,49 +41,52 @@ const CreateClass = () => {
   return (
     <>
       <Wrapper>
+        <div className="flex-header">
+          <div className="flex-item">
+            <SearchBox
+              className="s-box"
+              placeHolder="جستجو بر اساس نام کلاس , ارائه دهنده ..."
+              searchValue={searchValue}
+              setSearchValue={setSearchValue}
+              handleSearch={handleSearch}
+              staticInformation={staticInfo}
+              setInformation={setInfo}
+              searchTerm={searchTerm}
+            />
+          </div>
+          <div className="flex-item">
+            <Select
+              title=""
+              selectWidth={300}
+              value={searchTerm}
+              setValue={setSearchTerm}
+              data={FILTER}
+              size="small"
+            />
+          </div>
+          <div className="flex-item">
+            <input
+              placeholder="برای افزودن کلاس نام کلاس را وارد کنید."
+              id="input"
+              className="input"
+              type="text"
+              value={className}
+              onChange={(e) => setClassName(e.target.value)}
+            />
+          </div>
+          <div className="flex-item">
+            <button
+              className="button"
+              onClick={() => {
+                addClass(className, setInfo, setStaticInfo);
+              }}
+            >
+              افزودن
+            </button>
+          </div>
+        </div>
         <table className="table">
           <tbody>
-            <tr className="no-hover">
-              <td colSpan={1}>
-                <SearchBox
-                  className="s-box"
-                  placeHolder="جستجو بر اساس نام کلاس , ارائه دهنده ..."
-                  searchValue={searchValue}
-                  setSearchValue={setSearchValue}
-                  handleSearch={handleSearch}
-                  staticInformation={staticInfo}
-                  setInformation={setInfo}
-                  searchTerm={searchTerm}
-                />
-              </td>
-              <td colSpan={1}>
-                <AutoComplete
-                  options={["ارائه دهنده", "نام کلاس"]}
-                  setSearchTerm={setSearchTerm}
-                  searchTerm={searchTerm}
-                />
-              </td>
-              <td colSpan={1}>
-                <input
-                  placeholder="برای افزودن کلاس نام کلاس را وارد کنید."
-                  id="input"
-                  className="input"
-                  type="text"
-                  value={className}
-                  onChange={(e) => setClassName(e.target.value)}
-                />
-              </td>
-              <td style={{ textAlign: "right", paddingRight: 100 }}>
-                <button
-                  className="button"
-                  onClick={() => {
-                    addClass(className, setInfo, setStaticInfo);
-                  }}
-                >
-                  افزودن
-                </button>
-              </td>
-            </tr>
             <tr className="no-hover">
               <td className="header">ردیف</td>
               <td className="header">نام کلاس</td>

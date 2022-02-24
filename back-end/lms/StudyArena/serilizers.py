@@ -9,6 +9,8 @@ class SchoolSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         s = School.objects.create(**validated_data)
+        s.linked_manager = s.manager
+        s.manager = None
         s.save()
         return s
 

@@ -1,13 +1,22 @@
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
-import Class from "./Components/Class/Class";
-import ClassManagement from "./Components/ClassManagement/ClassManagement";
+import EndMeeting from "./Components/EndMeeting/EndMeeting";
+import GuestLogin from "./Components/GuestLogin/GuestLogin";
+import NotFound from "./Components/NotFound/NotFound";
 
+const Class = lazy(() => import("./Components/Class/Class"));
+const AllSchools = lazy(() => import("./Components/AllSchools/AllSchools"));
 const MainPage = lazy(() => import("./Components/MainPage/MainPage"));
 const Dashboard = lazy(() => import("./Components/Dashboard/Dashboard"));
 const Background = lazy(() => import("./Components/Background/Background"));
 const TableView = lazy(() => import("./Components/TableView/TableView"));
 const CreateClass = lazy(() => import("./Components/ClassList/ClassList"));
+const ClassManagement = lazy(() =>
+  import("./Components/ClassManagement/ClassManagement")
+);
+const ActiveMeetings = lazy(() =>
+  import("./Components/ActiveMeetings/ActiveMeetings")
+);
 const SchoolProfile = lazy(() =>
   import("./Components/SchoolProfile/SchoolProfile")
 );
@@ -18,6 +27,7 @@ const StudentManagement = lazy(() =>
 const Router = () => {
   return useRoutes([
     { path: "/", element: <Background component={<MainPage />} /> },
+    { path: "/guest/:id", element: <Background component={<GuestLogin />} /> },
     {
       path: "/accounts/:id",
       element: <Background component={<Dashboard />} />,
@@ -73,8 +83,26 @@ const Router = () => {
             },
           ],
         },
+        {
+          path: "accounts/:id/admin",
+          children: [
+            {
+              path: "accounts/:id/admin/:info",
+              element: <Background component={<AllSchools />} />,
+            },
+            {
+              path: "accounts/:id/admin/:meetings",
+              element: <Background component={<ActiveMeetings />} />,
+            },
+          ],
+        },
+        {
+          path: "./accounts/:id/*",
+          element: <NotFound />,
+        },
       ],
     },
+
     {
       path: "/:studentID/classes/:classID",
       element: <Background component={<Class />} />,
@@ -82,6 +110,18 @@ const Router = () => {
     {
       path: "/:studentID/classes-management/:classID",
       element: <Background component={<ClassManagement />} />,
+    },
+    {
+      path: "/classes/:classID/endMeeting",
+      element: <Background component={<EndMeeting />} />,
+    },
+    {
+      path: "/*",
+      element: <NotFound />,
+    },
+    {
+      path: "404",
+      element: <NotFound />,
     },
   ]);
 };

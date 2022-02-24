@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'AuthArena',
+    'StudyArena',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -36,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'AuthArena',
-    'StudyArena',
     'rest_framework.authtoken',
     'rest_framework',
 ]
@@ -130,3 +130,4 @@ REST_FRAMEWORK = {
     ],
 }
 CORS_ORIGIN_ALLOW_ALL = True
+APPEND_SLASH = True

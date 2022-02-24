@@ -1,17 +1,17 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  max-width: 95%;
+  width: 100%;
   height: 100%;
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   flex-wrap: wrap-reverse;
   flex-direction: row;
   padding-left: 100px;
   padding-right: 100px;
-  margin-bottom: 100px;
+  margin-bottom: 200px;
 
-  @media only screen and (max-width: 1747px) {
+  @media only screen and (max-width: 1748px) {
     & {
       flex-direction: column-reverse;
       justify-content: space-evenly;
@@ -34,9 +34,25 @@ export const Content = styled.div`
   border-radius: 20px;
   height: 700px;
   padding: 0 30px;
-
+  @media only screen and (max-width: 1748px) {
+    & {
+      width: 70%;
+      margin: auto;
+      margin-top: -300px;
+    }
+  }
+  @media only screen and (max-width: 1166px) {
+    & {
+      width: 100%;
+    }
+  }
   @media only screen and (max-width: 695px) {
     max-width: 99%;
+  }
+  @media only screen and (max-width: 420px) {
+    & {
+      margin-top: -100px;
+    }
   }
 `;
 
@@ -48,4 +64,9 @@ export const Heading = styled.div`
   color: white;
   text-align: center;
   direction: rtl;
+  @media only screen and (max-width: 1748px) {
+    & {
+      padding-top: 0;
+    }
+  }
 `;

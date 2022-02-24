@@ -21,7 +21,6 @@ const ClassManagement = () => {
   );
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState();
-  const [started, setStarted] = useState(false);
   useEffect(() => {
     if (data) {
       setUrl(data.url);
@@ -37,7 +36,6 @@ const ClassManagement = () => {
           url={url}
           date={data.start_meeting_data}
           setUrl={setUrl}
-          setStarted={setStarted}
         />
         <ClassRecords classID={class_id} />
         <Snackbar
