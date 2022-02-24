@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { useRoutes } from "react-router-dom";
+import EndMeeting from "./Components/EndMeeting/EndMeeting";
 import GuestLogin from "./Components/GuestLogin/GuestLogin";
 import NotFound from "./Components/NotFound/NotFound";
 
@@ -109,6 +110,10 @@ const Router = () => {
     {
       path: "/:studentID/classes-management/:classID",
       element: <Background component={<ClassManagement />} />,
+    },
+    {
+      path: "/classes/:classID/endMeeting",
+      element: <Background component={<EndMeeting />} />,
     },
     {
       path: "/*",
