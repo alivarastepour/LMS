@@ -8,6 +8,8 @@ from urllib.parse import quote as urlEncode
 SHARED_SECRET = 'XXXXXX'
 SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
 
+FRONTEND_URI = "localhost:3000"
+CALLBACK_END_MEETING = "/classes/$classID/endMeeting"
 
 def dict_to_str(**kwargs):
     query = ''
@@ -31,6 +33,7 @@ def communicate(url, **kwargs):
 
 
 def create(**kwargs):
+    kwargs['logoutURL'] = FRONTEND_URI + CALLBACK_END_MEETING
     result = communicate(generate_url('create', **kwargs))
     return result.find('returncode').text == 'SUCCESS'
 
