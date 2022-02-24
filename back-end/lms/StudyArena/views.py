@@ -103,9 +103,6 @@ class StudentRequests(APIView):
             return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
         for class_requests in query_sets:
-            # all_classes = query_set.objects.all()
-            # for cls in all_classes:
-            #     class_requests = cls.studentrequest_set.all()
             for req in class_requests:
                 output.append(
                     {
@@ -221,7 +218,6 @@ class ClassView(APIView):
     serializer_class = ClassSerializer
     permission_classes = (IsAuthenticated, IsManager | IsTeacher)
 
-
     def get(self, request, *args, **kwargs):
         clazz_id = kwargs.get('class_id', None)
         if clazz_id is None:
@@ -249,7 +245,6 @@ class ClassView(APIView):
             return Response(data={
                 **clazz.to_json(),
                 "message": "Class Successfully created."}, status=200)
-        # TODO: avoid duplicate naming...
         return Response(data={
             "message": "Something is wrong!",
         }, status=400)
@@ -331,12 +326,14 @@ class MeetingView(APIView):
     permission_classes = (IsAuthenticated, IsProfileCompleted)
     get_mode = ''
 
-    # TODO: add permission to each method...
     def get(self, request, class_id):
         cls = get_object_or_404(Class, id=class_id)
         if self.get_mode == 'info':
             # in this case we return class and meeting info
-            info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
+            try:
+                info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
+            except ConnectionError as _:
+                return Response(status=500)
             return Response(data={
                 'name': cls.name,
                 'teacher': cls.teacher_set.last().user.fullname if cls.teacher_set.count() != 0 else 'unknown',
@@ -349,7 +346,10 @@ class MeetingView(APIView):
             }, status=200)
         elif self.get_mode == 'record':
             # in this case we return playbacks of a meeting
-            recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
+            try:
+                recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
+            except ConnectionError as _:
+                return Response(status=500)
             return Response(data=recordings[1], status=200)
         elif self.get_mode == 'slide':
             return Response(
@@ -361,47 +361,48 @@ class MeetingView(APIView):
             return Response(data={
                 'message': 'مدرسه شما توسط ادمین به حالت تعلیق درآمده است. لطفا با مدیریت سایت تماس برقرار کنید.'
             }, status=403)
-        return Response(data={
-            'success': BBBApiConnection.create(**cls.get_settings_set2()),
-            'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
-                                               password=cls.moderatorPW),
-        }, status=200)
+        try:
+            return Response(data={
+                'success': BBBApiConnection.create(**cls.get_settings_set2()),
+                'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
+                                                   password=cls.moderatorPW),
+            }, status=200)
+        except ConnectionError as _:
+            return Response(status=500)
 
-
-def put(self, request, class_id):
-    cls = Class.objects.get(id=class_id)
-    try:
-        for key in request.FILES.keys():
-            for file in request.FILES.getlist(key):
-                final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
-                to_add = 'localhost' + final_file_path + '\n'
-                cls.slides = cls.slides + to_add
-                cls.selected_slides = cls.selected_slides + to_add
-    except Exception as _:
-        pass
-    cls.save()
-    return Response(data=cls.get_slides(), status=200)
-
-
-def delete(self, request, class_id):
-    cls = Class.objects.get(id=class_id)
-    urls = request.data.get("delete")
-    selected = request.data.get("select")
-    cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
-    try:
-        for url in urls:
-            if url in cls.slides:
-                utils.file_remover(url)
-                cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
-                cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
-            else:
-                cls.save()
-                return Response(data={"result": "Not Found!"}, status=404)
-    except Exception as _:
+    def put(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        try:
+            for key in request.FILES.keys():
+                for file in request.FILES.getlist(key):
+                    final_file_path = utils.file_handler(file, f'{cls.school.school_id}/{class_id}', file.name)
+                    to_add = 'localhost' + final_file_path + '\n'
+                    cls.slides = cls.slides + to_add
+                    cls.selected_slides = cls.selected_slides + to_add
+        except Exception as _:
+            pass
         cls.save()
-        return Response(data={"result": "error"}, status=500)
-    cls.save()
-    return Response(data={"result": "ok"}, status=200)
+        return Response(data=cls.get_slides(), status=200)
+
+    def delete(self, request, class_id):
+        cls = Class.objects.get(id=class_id)
+        urls = request.data.get("delete")
+        selected = request.data.get("select")
+        cls.selected_slides = ('\n'.join(selected)) + '\n'.lstrip()
+        try:
+            for url in urls:
+                if url in cls.slides:
+                    utils.file_remover(url)
+                    cls.slides = cls.slides.replace(url, "").replace("\n\n", "")
+                    cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
+                else:
+                    cls.save()
+                    return Response(data={"result": "Not Found!"}, status=404)
+        except Exception as _:
+            cls.save()
+            return Response(data={"result": "error"}, status=500)
+        cls.save()
+        return Response(data={"result": "ok"}, status=200)
 
 
 class AdminView(APIView):
@@ -423,7 +424,10 @@ class AdminView(APIView):
             query_set.reverse()
             return Response(data=query_set, status=200)
         elif self.mode == 'meetings':
-            status, meetings = BBBApiConnection.get_meetings()
+            try:
+                status, meetings = BBBApiConnection.get_meetings()
+            except ConnectionError as _:
+                return Response(status=500)
             return Response(data=[
                 {
                     'meetingName': meeting[0],
@@ -468,7 +472,10 @@ class AdminView(APIView):
 
     def delete(self, request, **kwargs):
         cls = Class.objects.get(meetingID=kwargs.get('meetingID'))
-        result = BBBApiConnection.end(meetingID=cls.meetingID, password=cls.moderatorPW)
+        try:
+            result = BBBApiConnection.end(meetingID=cls.meetingID, password=cls.moderatorPW)
+        except ConnectionError as _:
+            return Response(status=500)
         if result:
             return Response(data={
                 'message': 'تا دقایقی دیگر میتینگ اجبارا بسته خواهد شد.'
@@ -484,15 +491,21 @@ class GuestView(APIView):
 
     def get(self, request, class_id, **kwargs):
         clazz = get_object_or_404(Class, id=class_id)
-        return Response(data={
-            'class': clazz.name,
-            'school': clazz.school.name,
-            'running': BBBApiConnection.is_meeting_running(meetingID=clazz.meetingID)[1]
-        }, status=200)
+        try:
+            return Response(data={
+                'class': clazz.name,
+                'school': clazz.school.name,
+                'running': BBBApiConnection.is_meeting_running(meetingID=clazz.meetingID)[1]
+            }, status=200)
+        except ConnectionError as _:
+            return Response(status=500)
 
     def post(self, request, class_id, **kwargs):
         cls = get_object_or_404(Class, id=class_id)
-        success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
+        try:
+            success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
+        except ConnectionError as _:
+            return Response(status=500)
         fullName = request.data.get('fullName')
         if not success:
             return Response(data={
