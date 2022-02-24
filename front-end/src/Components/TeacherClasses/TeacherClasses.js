@@ -5,6 +5,7 @@ import { Wrapper } from "./TeacherClasses.styles";
 import TeacherClassesHeader from "./TeacherClasses.Header";
 
 import useGet from "../../custom-hooks/useGet";
+import Alert from "../Alert/Alert";
 
 const TeacherClasses = () => {
   const [state, setState] = useState(undefined);
@@ -43,22 +44,24 @@ const TeacherClasses = () => {
         schools={schools.data}
       />
       <Wrapper>
-        <table>
-          <tbody>
-            <tr>
-              <td className="header">نام کلاس</td>
-            </tr>
-            {classes.data.length !== 0 &&
-              classes.data.length &&
-              classes.data.map((a) => {
+        {classes.data.length !== 0 && classes.data.length ? (
+          <table>
+            <tbody>
+              <tr>
+                <td className="header">نام کلاس</td>
+              </tr>
+              {classes.data.map((a) => {
                 return (
                   <tr className="hover" key={a.id} onClick={() => nav(a.id)}>
                     <td>{a.name}</td>
                   </tr>
                 );
               })}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        ) : (
+          <Alert />
+        )}
       </Wrapper>
     </>
   );
