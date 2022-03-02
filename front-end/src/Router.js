@@ -3,7 +3,6 @@ import { useRoutes } from "react-router-dom";
 import EndMeeting from "./Components/EndMeeting/EndMeeting";
 import GuestLogin from "./Components/GuestLogin/GuestLogin";
 import NotFound from "./Components/NotFound/NotFound";
-
 const Class = lazy(() => import("./Components/Class/Class"));
 const AllSchools = lazy(() => import("./Components/AllSchools/AllSchools"));
 const MainPage = lazy(() => import("./Components/MainPage/MainPage"));

@@ -1,9 +1,14 @@
-import useGet from "../../custom-hooks/useGet";
-import Alert from "../Alert/Alert";
-import { Wrapper } from "./ActiveMeetings.styles";
-import { joinAsAdmin, forceEnd } from "./ActiveMeetings.handlers";
 import { useState } from "react";
+
+import { Wrapper } from "./ActiveMeetings.styles";
+
+import Alert from "../Alert/Alert";
+import { joinAsAdmin, forceEnd } from "./ActiveMeetings.handlers";
+
 import { Snackbar, Alert as A } from "@mui/material";
+
+import useGet from "../../custom-hooks/useGet";
+
 const ActiveMeetings = () => {
   const [url, setUrl] = useState("");
   const [ended, setEnded] = useState(false);

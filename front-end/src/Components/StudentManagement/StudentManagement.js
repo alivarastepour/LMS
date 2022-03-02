@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Wrapper } from "./StudentManagement.styles";
-import StudentManagementHeader from "./StudentManagement.Header";
 import { Content } from "../SchoolInformation/SchoolInformation.styles";
+
+import StudentManagementHeader from "./StudentManagement.Header";
 import StudentClasses from "../StuedntClasses/StudentClasses";
 import SchoolList from "../SchoolList/SchoolList";
 

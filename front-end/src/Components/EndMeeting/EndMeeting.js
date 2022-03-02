@@ -1,7 +1,7 @@
 import { Wrapper } from "./EndMeeting.styles";
-import "./EndMeeting.styles";
-import MainHeader from "../MainPage/Header";
 import Footer from "../Footer/Footer";
+import MainHeader from "../MainPage/Header";
+
 const EndMeeting = () => {
   return (
     <>

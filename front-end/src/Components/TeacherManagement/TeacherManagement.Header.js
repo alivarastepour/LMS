@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
+
 import { Wrapper } from "./TeacherManagement.Header.styles";
 
 const TeacherManagementHeader = ({ state, setState }) => {
   const navigator = useNavigate();
+
   const nav = (url) => navigator(url);
+
   return (
     <>
       <Wrapper>

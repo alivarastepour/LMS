@@ -1,5 +1,6 @@
-import { Wrapper } from "./AdminManagement.Header.styles";
 import { useNavigate } from "react-router-dom";
+
+import { Wrapper } from "./AdminManagement.Header.styles";
 const AdminManagementHeader = ({ state, setState }) => {
   const navigator = useNavigate();
   const nav = (url) => navigator(url);
