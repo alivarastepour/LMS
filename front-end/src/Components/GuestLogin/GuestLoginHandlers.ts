@@ -1,4 +1,5 @@
 import axios from "axios";
+import { host } from "../../Global/host";
 
 export const guestJoin = (
   id: string,
@@ -15,7 +16,7 @@ export const guestJoin = (
     setMessage("لطفا نام خود را وارد کنید");
     return;
   }
-  const URL = `http://localhost:8000/study/class/${id}/join/`;
+  const URL = `${host}study/class/${id}/join/`;
   const DATA = { fullName: name };
   axios
     .post(URL, DATA, {})
@@ -26,7 +27,6 @@ export const guestJoin = (
       setOpen(true);
     })
     .catch(function (e) {
-      console.log(e.response);
       setSuccess(false);
       setOpen(true);
     });

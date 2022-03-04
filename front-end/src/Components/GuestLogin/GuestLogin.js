@@ -11,6 +11,7 @@ import Actions from "./Actions";
 import { Wrapper } from "./GuestLogin.styles";
 
 import { guestJoin } from "./GuestLoginHandlers";
+import { host } from "../../Global/host";
 
 const GuestLogin = () => {
   const classID = useParams().id;
@@ -26,7 +27,7 @@ const GuestLogin = () => {
 
   const fetchData = useCallback(() => {
     axios
-      .get(`http://localhost:8000/study/class/${classID}/name/`)
+      .get(`${host}study/class/${classID}/name/`)
       .then((res) => setClazz(res.data))
       .catch(function (e) {
         if (e.response.status === 404) {
