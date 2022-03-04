@@ -1,12 +1,14 @@
 import { Alert, Snackbar } from "@mui/material";
 import { Content } from "./ErrorSnackbar.styles";
 
-const ErrorSnackbar = ({ open, setOpen, msg }) => {
+const ErrorSnackbar = ({ open, setOpen, msg, spaceX, spaceY }) => {
+  const mb = spaceY ? spaceY : 10;
+  const ml = spaceX ? spaceX : 10;
   return (
     <>
       <Content>
         <Snackbar
-          sx={{ marginBottom: 10, marginLeft: 10 }}
+          sx={{ marginBottom: mb, marginLeft: ml }}
           open={open}
           onClose={() => setOpen("")}
           autoHideDuration={3000}
