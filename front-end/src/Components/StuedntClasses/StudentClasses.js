@@ -6,14 +6,13 @@ import StudentClassesHeader from "./StudentClasses.Header";
 
 import useGet from "../../custom-hooks/useGet";
 import Alert from "../Alert/Alert";
+import { host } from "../../Global/host";
 
 const StudentClasses = () => {
   const [state, setState] = useState(undefined);
 
-  const schoolReqUrl = "http://localhost:8000/study/student/schools/";
-  const classesReqUrl = `http://localhost:8000/study/student/classes/${
-    state ? state : ""
-  }/`;
+  const schoolReqUrl = `${host}study/student/schools/`;
+  const classesReqUrl = `${host}study/student/classes/${state ? state : ""}/`;
   const TOKEN = sessionStorage.getItem("token");
 
   const navigator = useNavigate();
