@@ -332,8 +332,8 @@ class MeetingView(APIView):
             # in this case we return class and meeting info
             try:
                 info = BBBApiConnection.get_meeting_info(meetingID=cls.meetingID)
-            except ConnectionError as _:
-                return Response(status=500)
+            except Exception as _:
+                return Response(data={'message': 'مشکلی وجود دارد!'}, status=500)
             return Response(data={
                 'name': cls.name,
                 'teacher': cls.teacher_set.last().user.fullname if cls.teacher_set.count() != 0 else 'unknown',
@@ -348,8 +348,8 @@ class MeetingView(APIView):
             # in this case we return playbacks of a meeting
             try:
                 recordings = BBBApiConnection.get_recordings(meetingID=cls.meetingID)
-            except ConnectionError as _:
-                return Response(status=500)
+            except Exception as _:
+                return Response(data={'message': 'مشکلی وجود دارد!'}, status=500)
             return Response(data=recordings[1], status=200)
         elif self.get_mode == 'slide':
             return Response(
@@ -367,8 +367,8 @@ class MeetingView(APIView):
                 'join_link': BBBApiConnection.join(fullName=request.user.fullname, meetingID=cls.meetingID,
                                                    password=cls.moderatorPW),
             }, status=200)
-        except ConnectionError as _:
-            return Response(status=500)
+        except Exception as _:
+            return Response(data={'message': 'مشکلی وجود دارد!'}, status=500)
 
     def put(self, request, class_id):
         cls = Class.objects.get(id=class_id)
@@ -426,8 +426,8 @@ class AdminView(APIView):
         elif self.mode == 'meetings':
             try:
                 status, meetings = BBBApiConnection.get_meetings()
-            except ConnectionError as _:
-                return Response(status=500)
+            except Exception as _:
+                return Response(data={'message': 'مشکلی وجود دارد!'}, status=500)
             return Response(data=[
                 {
                     'meetingName': meeting[0],
@@ -476,8 +476,8 @@ class AdminView(APIView):
         cls = Class.objects.get(meetingID=kwargs.get('meetingID'))
         try:
             result = BBBApiConnection.end(meetingID=cls.meetingID, password=cls.moderatorPW)
-        except ConnectionError as _:
-            return Response(status=500)
+        except Exception as _:
+            return Response(data={'message': 'مشکلی وجود دارد!'}, status=500)
         if result:
             return Response(data={
                 'message': 'تا دقایقی دیگر میتینگ اجبارا بسته خواهد شد.'
@@ -499,15 +499,15 @@ class GuestView(APIView):
                 'school': clazz.school.name,
                 'running': BBBApiConnection.is_meeting_running(meetingID=clazz.meetingID)[1]
             }, status=200)
-        except ConnectionError as _:
-            return Response(status=500)
+        except Exception as _:
+            return Response(data={'message': 'مشکلی وجود دارد!'}, status=500)
 
     def post(self, request, class_id, **kwargs):
         cls = get_object_or_404(Class, id=class_id)
         try:
             success, is_running = BBBApiConnection.is_meeting_running(meetingID=cls.meetingID)
-        except ConnectionError as _:
-            return Response(status=500)
+        except Exception as _:
+            return Response(data={'message': 'مشکلی وجود دارد!'}, status=500)
         fullName = request.data.get('fullName')
         if not success:
             return Response(data={
