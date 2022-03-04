@@ -1,7 +1,8 @@
 import axios from "axios";
+import { host } from "../../Global/host";
 
 export const joinHandler = (users: number[], content: string) => {
-  const URL = `http://localhost:8000/study/${content}-request/`;
+  const URL = `${host}study/${content}-request/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .post(
@@ -11,18 +12,24 @@ export const joinHandler = (users: number[], content: string) => {
         headers: { Authorization: `Token ${TOKEN}` },
       }
     )
-    .catch((e) => console.log(e));
+    .catch((error) => console.log(error));
 };
-export const findSchool = (searchValue: string, setResult: Function) => {
+export const findSchool = (
+  searchValue: string,
+  setResult: Function,
+  setError: Function
+) => {
   if (searchValue.trim() === "") {
     return;
   }
-  const URL = `http://localhost:8000/study/school/${searchValue}/`;
+  const URL = `${host}study/school/${searchValue}/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .get(URL, {
       headers: { Authorization: `Token ${TOKEN}` },
     })
     .then((res) => setResult(res.data))
-    .catch((error) => console.log(error));
+    .catch((error) =>
+      setError(error.response.data.message || error.response.data.detail)
+    );
 };
