@@ -1,4 +1,5 @@
 import axios from "axios";
+import { host } from "../../Global/host";
 
 type Tclass = {
   name: string;
@@ -14,7 +15,7 @@ type Tclass = {
 };
 
 export const updateClassSettings = (value: Tclass): void => {
-  const URL = `http://localhost:8000/study/class/${value.id}/`;
+  const URL = `${host}study/class/${value.id}/`;
   const TOKEN = sessionStorage.getItem("token");
   delete value.id;
   delete value.meetingID;

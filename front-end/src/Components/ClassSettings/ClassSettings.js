@@ -8,6 +8,7 @@ import { ClassSettingsReducer } from "./classSettings.reducer";
 
 import useGet from "../../custom-hooks/useGet";
 import { updateClassSettings } from "./classSettings.handler";
+import { host } from "../../Global/host";
 
 const ClassSettings = ({ class_id, setOpenSettings }) => {
   const fakeData = {
@@ -23,7 +24,7 @@ const ClassSettings = ({ class_id, setOpenSettings }) => {
     webcamsOnlyForModerator: false,
   };
 
-  const URL = `http://localhost:8000/study/class/${class_id}/`;
+  const URL = `${host}study/class/${class_id}/`;
   const TOKEN = sessionStorage.getItem("token");
 
   const { data } = useGet(URL, TOKEN);
