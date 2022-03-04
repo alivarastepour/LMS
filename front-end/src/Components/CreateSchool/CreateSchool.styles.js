@@ -7,7 +7,9 @@ export const Wrapper = styled.div`
   direction: rtl;
   padding: 100px 100px 0 0;
   font-family: "vazir", sans-serif;
-
+  .bound {
+    direction: ltr;
+  }
   @media only screen and (max-width: 850px) {
     padding: 100px 20px;
   }

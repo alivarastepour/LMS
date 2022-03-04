@@ -1,9 +1,10 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
 
 import { Wrapper } from "./CreateSchool.styles";
 
 import { schoolReducer } from "./school.reducer";
 import { createSchoolHandler } from "./createSchool.handlers.ts";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const CreateSchool = () => {
   const initialState = {
@@ -13,13 +14,13 @@ const CreateSchool = () => {
   };
 
   const [school, dispatch] = useReducer(schoolReducer, initialState);
-
+  const [error, setError] = useState("");
   return (
     <>
       <Wrapper>
         <form
           onSubmit={(e) => {
-            createSchoolHandler(e, school);
+            createSchoolHandler(e, school, setError);
           }}
         >
           <div className="label">شناسه مدرسه</div>
@@ -68,6 +69,9 @@ const CreateSchool = () => {
             </button>
           </div>
         </form>
+        <div className="bound">
+          <ErrorSnackbar msg={error} open={!!error} setOpen={setError} />
+        </div>
       </Wrapper>
     </>
   );

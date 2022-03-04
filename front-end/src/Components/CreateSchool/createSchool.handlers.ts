@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { host } from "../../Global/host";
 
 type Tschool = {
   schoolId: string;
@@ -9,18 +10,17 @@ type Tschool = {
 
 export const createSchoolHandler = (
   event: React.FormEvent<HTMLFormElement>,
-  data: Tschool
+  data: Tschool,
+  setError: Function
 ) => {
-  console.log(data);
-
-  const URL = "http://localhost:8000/study/school/";
+  const URL = `${host}study/school/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .post(URL, data, {
       headers: { Authorization: `Token ${TOKEN}` },
     })
     .catch((e) => {
-      console.log(e);
+      setError(e.response.data.message || e.response.data.detail);
     });
   event.preventDefault();
 };
