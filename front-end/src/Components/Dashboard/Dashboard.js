@@ -15,6 +15,7 @@ import AccessibilityIdentifier from "./AccessibilityIdentifier";
 import { authContext } from "../../App";
 import useGet from "../../custom-hooks/useGet";
 import MainHeader from "../MainPage/Header";
+import { host } from "../../Global/host";
 
 const Profile = lazy(() => import("../Profile/Profile"));
 const DashboardHeader = lazy(() => import("./Dashboard.header"));
@@ -27,7 +28,7 @@ const Dashboard = () => {
   const nav = useCallback((url) => navigator(url), [navigator]);
 
   const { data } = useGet(
-    "http://localhost:8000/auth/whoami/role/",
+    `${host}auth/whoami/role/`,
     sessionStorage.getItem("token")
   );
 
