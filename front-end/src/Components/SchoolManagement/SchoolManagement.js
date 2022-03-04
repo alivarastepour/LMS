@@ -4,6 +4,7 @@ import { Wrapper } from "./SchoolManagement.styles";
 import Spinner from "../Spinner/Spinner";
 
 import useGet from "../../custom-hooks/useGet";
+import { host } from "../../Global/host";
 
 const CreateSchool = lazy(() => import("../CreateSchool/CreateSchool"));
 const CreateSchoolButton = lazy(() =>
@@ -15,7 +16,7 @@ const SchoolInformation = lazy(() =>
 );
 
 const SchoolManagement = () => {
-  const URL = "http://localhost:8000/study/school/";
+  const URL = `${host}study/school/`;
   const TOKEN = sessionStorage.getItem("token");
 
   const [showCreateSchool, setShowCreateSchool] = useState(false);
@@ -45,41 +46,5 @@ const SchoolManagement = () => {
       </Suspense>
     </>
   );
-  // if (data.has_requested && data.status !== 'rejected') {
-  //     if (data.status === 'accepted') {
-  //         return <>
-  //         <Wrapper>
-  //             <SchoolInformation/>
-  //         </Wrapper>
-  //         </>
-  //     }else{
-  //         return <>
-  //         <Wrapper>
-  //         <SchoolStatus status={data.status} />
-  //         </Wrapper>
-  //         </>
-  //     }
-  // }else{
-  //     if(data.status === 'rejected' && !showCreateSchool){
-  //         return <>
-  //         <Wrapper>
-  //         <SchoolStatus status={data.status} setShowCreateSchool={setShowCreateSchool}/>
-  //         </Wrapper>
-  //         </>
-  //     }
-  //     if (showCreateSchool) {
-  //         return <>
-  //         <Wrapper>
-  //         <CreateSchool/>
-  //         </Wrapper>
-  //         </>
-  //     }else{
-  //         return <>
-  //         <Wrapper>
-  //         <CreateSchoolButton setShowCreateSchool={setShowCreateSchool}/>
-  //         </Wrapper>
-  //         </>
-  //     }
-  // }
 };
 export default SchoolManagement;
