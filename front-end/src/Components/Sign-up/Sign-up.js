@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { authContext } from "../../App";
 
 const SignUp = ({ action }) => {
-  const { auth, setAuth } = useContext(authContext);
+  const { setAuth } = useContext(authContext);
 
   const initialState = {
     username: "",
@@ -33,7 +33,6 @@ const SignUp = ({ action }) => {
     username,
     password,
     email,
-    role,
     validUsername,
     validPassword,
     validEmail,

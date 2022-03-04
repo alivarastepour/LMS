@@ -1,5 +1,6 @@
 import axios from "axios";
 import { FormEvent } from "react";
+import { host } from "../../Global/host";
 
 export const valid_username = (username: string) =>
   !isNaN(Number(username[username.length - 1])) || username.length === 0;
@@ -33,7 +34,7 @@ export const submitHandler = (
   }
   if (validUsername && validPassword) {
     axios
-      .post("http://localhost:8000/auth/login/", {
+      .post(`${host}auth/login/`, {
         username: state.username,
         password: state.password,
       })

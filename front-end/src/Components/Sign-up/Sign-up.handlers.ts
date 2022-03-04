@@ -1,5 +1,6 @@
 import { FormEvent } from "react";
 import axios from "axios";
+import { host } from "../../Global/host";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -21,7 +22,7 @@ export const signUpHandler = (
 ) => {
   if (state.validUsername && state.validPassword && state.validUsername) {
     axios
-      .post("http://localhost:8000/auth/signup/", {
+      .post(`${host}auth/signup/`, {
         username: state.username,
         password: state.password,
         email: state.email,

@@ -9,6 +9,7 @@ import { signInReducer } from "./Sign-in.reducer";
 
 import { authContext } from "../../App";
 import axios from "axios";
+import { host } from "../../Global/host";
 
 const SignIn = () => {
   const { setAuth } = useContext(authContext);
@@ -28,7 +29,7 @@ const SignIn = () => {
     state;
 
   const nav = () => {
-    const URL = "http://localhost:8000/auth/whoami/role/";
+    const URL = `${host}auth/whoami/role/`;
     const TOKEN = sessionStorage.getItem("token");
 
     axios
