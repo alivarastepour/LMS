@@ -1,7 +1,8 @@
 import axios from "axios";
+import { host } from "../../Global/host";
 
 export const logoutHandler = () => {
-  const URL = "http://localhost:8000/auth/logout/";
+  const URL = `${host}auth/logout/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .post(

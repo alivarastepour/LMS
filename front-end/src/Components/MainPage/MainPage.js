@@ -12,7 +12,7 @@ import { authContext } from "../../App";
 import MainHeader from "./Header";
 
 const MainPage = () => {
-  const { auth, setAuth } = useContext(authContext);
+  const { setAuth } = useContext(authContext);
 
   const [state, setState] = useState(true);
 
