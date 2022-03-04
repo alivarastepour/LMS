@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent } from "react";
+import { host } from "../../Global/host";
 
 type Tuser = {
   class_name: string;
@@ -40,11 +41,12 @@ export const userHandler = (
   type: string,
   status: string,
   setInformation: Function,
-  setStaticInformation: Function
+  setStaticInformation: Function,
+  setError: Function
 ): void => {
   const data = { operation: status };
   const TOKEN = sessionStorage.getItem("token");
-  const URL = `http://localhost:8000/study/${type}-request/${user.id}/`;
+  const URL = `${host}study/${type}-request/${user.id}/`;
 
   axios
     .post(URL, data, {
@@ -55,7 +57,7 @@ export const userHandler = (
     .then(() =>
       handleTableChange(setInformation, setStaticInformation, user, status)
     )
-    .catch((e) => console.log(e));
+    .catch((e) => setError(e.response.data.message || e.response.data.detail));
 };
 
 const handleTableChange = (

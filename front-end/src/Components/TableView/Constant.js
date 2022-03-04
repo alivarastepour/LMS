@@ -8,7 +8,8 @@ export const renderButton = (
   userHandler,
   content,
   setInformation,
-  setStaticInformation
+  setStaticInformation,
+  setError
 ) => {
   if (user.status === "accepted") {
     return (
@@ -21,7 +22,8 @@ export const renderButton = (
               content,
               "rejected",
               setInformation,
-              setStaticInformation
+              setStaticInformation,
+              setError
             )
           }
           className="st-button reject"
@@ -40,7 +42,8 @@ export const renderButton = (
               content,
               "accepted",
               setInformation,
-              setStaticInformation
+              setStaticInformation,
+              setError
             )
           }
           className="st-button accept"
@@ -54,7 +57,8 @@ export const renderButton = (
               content,
               "rejected",
               setInformation,
-              setStaticInformation
+              setStaticInformation,
+              setError
             )
           }
           className="st-button reject"

@@ -10,9 +10,11 @@ import { Table, Wrapper } from "./TableView.styles";
 import useGet from "../../custom-hooks/useGet";
 import { handleSearch, userHandler } from "./TableView.handlers";
 import { FILTER, renderButton } from "./Constant";
+import { host } from "../../Global/host";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const TableView = ({ content }) => {
-  const URL = `http://localhost:8000/study/${content}-list/`;
+  const URL = `${host}study/${content}-list/`;
   const TOKEN = sessionStorage.getItem("token");
 
   const { data } = useGet(URL, TOKEN);
@@ -25,11 +27,12 @@ const TableView = ({ content }) => {
 
   const [searchValue, setSearchValue] = useState("");
 
+  const [error, setError] = useState("");
+
   useEffect(() => {
     setInformation(data.requests);
     setStaticInformation(data.requests);
   }, [data]);
-
   return (
     <>
       <Wrapper>
@@ -88,7 +91,8 @@ const TableView = ({ content }) => {
                         userHandler,
                         content,
                         setInformation,
-                        setStaticInformation
+                        setStaticInformation,
+                        setError
                       )}
                     </td>
                   </tr>
@@ -103,6 +107,12 @@ const TableView = ({ content }) => {
             )}
           </tbody>
         </Table>
+        <ErrorSnackbar
+          msg={error}
+          open={!!error}
+          setOpen={setError}
+          spaceX={13}
+        />
       </Wrapper>
     </>
   );
