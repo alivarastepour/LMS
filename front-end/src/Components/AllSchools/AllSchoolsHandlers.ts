@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent } from "react";
+import { host } from "../../Global/host";
 type Tschhol = {
   id: number;
   school_id: string;
@@ -31,8 +32,12 @@ export const searchHandler = (
   setInformation(newData);
 };
 
-export const schoolAction = (action: string, id: string) => {
-  const URL = `http://localhost:8000/study/admin/school/${id}/`;
+export const schoolAction = (
+  action: string,
+  id: string,
+  setError: Function
+) => {
+  const URL = `${host}study/admin/school/${id}/`;
   const TOKEN = sessionStorage.getItem("token");
   const DATA = { operation: action };
   axios
@@ -41,5 +46,5 @@ export const schoolAction = (action: string, id: string) => {
         Authorization: `Token ${TOKEN}`,
       },
     })
-    .catch((e) => console.log(e));
+    .catch((e) => setError(e.response.data.detail || e.response.data.message));
 };

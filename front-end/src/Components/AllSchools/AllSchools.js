@@ -7,6 +7,8 @@ import AllSchoolsTable from "./AllSchoolsTable";
 
 import { searchHandler } from "./AllSchoolsHandlers";
 import useGet from "../../custom-hooks/useGet";
+import { host } from "../../Global/host";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const AllSchools = () => {
   const [searchTerm, setSearchTerm] = useState("school_id");
@@ -14,9 +16,10 @@ const AllSchools = () => {
   const [information, setInformation] = useState([]);
   const [staticInformation, setStaticInformation] = useState([]);
   const [schoolFilter, setSchoolFilter] = useState("pending");
+  const [error, setError] = useState("");
 
   const { data } = useGet(
-    `http://localhost:8000/study/admin/schools/${schoolFilter}`,
+    `${host}study/admin/schools/${schoolFilter}`,
     sessionStorage.getItem("token")
   );
 
@@ -39,7 +42,8 @@ const AllSchools = () => {
           schoolFilter={schoolFilter}
           setSchoolFilter={setSchoolFilter}
         />
-        <AllSchoolsTable information={information} />
+        <AllSchoolsTable information={information} setError={setError} />
+        <ErrorSnackbar msg={error} open={!!error} setOpen={setError} />
       </Wrapper>
     </>
   );

@@ -15,7 +15,6 @@ const ActiveMeetings = () => {
   const [url, setUrl] = useState("");
   const [ended, setEnded] = useState(false);
   const [error, setError] = useState("");
-  console.log(process.env);
   const { data } = useGet(
     `${host}study/admin/meetings/`,
     sessionStorage.getItem("token")

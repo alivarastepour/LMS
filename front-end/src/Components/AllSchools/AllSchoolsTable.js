@@ -1,5 +1,5 @@
 import { status } from "./constant";
-const AllSchoolsTable = ({ information }) => {
+const AllSchoolsTable = ({ information, setError }) => {
   return (
     <>
       {information && information.length ? (
@@ -19,7 +19,7 @@ const AllSchoolsTable = ({ information }) => {
                   <td>{a.school_id}</td>
                   <td>{a.name}</td>
                   <td>{a.manager}</td>
-                  <td>{status(a.status, a.school_id)}</td>
+                  <td>{status(a.status, a.school_id, setError)}</td>
                 </tr>
               );
             })}
