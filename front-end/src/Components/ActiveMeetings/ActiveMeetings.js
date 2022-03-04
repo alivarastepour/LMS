@@ -8,12 +8,16 @@ import { joinAsAdmin, forceEnd } from "./ActiveMeetings.handlers";
 import { Snackbar, Alert as A } from "@mui/material";
 
 import useGet from "../../custom-hooks/useGet";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
+import { host } from "../../Global/host";
 
 const ActiveMeetings = () => {
   const [url, setUrl] = useState("");
   const [ended, setEnded] = useState(false);
+  const [error, setError] = useState("");
+  console.log(process.env);
   const { data } = useGet(
-    "http://localhost:8000/study/admin/meetings/",
+    `${host}study/admin/meetings/`,
     sessionStorage.getItem("token")
   );
   return (
@@ -41,7 +45,7 @@ const ActiveMeetings = () => {
                         <button
                           className="button enter"
                           onClick={() => {
-                            joinAsAdmin(a.meetingID, setUrl);
+                            joinAsAdmin(a.meetingID, setUrl, setError);
                           }}
                         >
                           دریافت لینک
@@ -60,7 +64,9 @@ const ActiveMeetings = () => {
                       )}
                       <button
                         className="button end"
-                        onClick={() => forceEnd(a.meetingID, setEnded)}
+                        onClick={() =>
+                          forceEnd(a.meetingID, setEnded, setError)
+                        }
                       >
                         خاتمه
                       </button>
@@ -83,6 +89,7 @@ const ActiveMeetings = () => {
             <div className="ended">جلسه توسط شما به اتمام رسید</div>
           </A>
         </Snackbar>
+        <ErrorSnackbar open={!!error} setOpen={setError} msg={error} />
       </Wrapper>
     </>
   );

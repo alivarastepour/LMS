@@ -1,7 +1,12 @@
 import axios from "axios";
+import { host } from "../../Global/host";
 
-export const joinAsAdmin = (id: string, setUrl: Function) => {
-  const URL = `http://localhost:8000/study/admin/meetings/${id}/join/`;
+export const joinAsAdmin = (
+  id: string,
+  setUrl: Function,
+  setError: Function
+) => {
+  const URL = `${host}study/admin/meetings/${id}/join/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .post(
@@ -13,11 +18,18 @@ export const joinAsAdmin = (id: string, setUrl: Function) => {
         },
       }
     )
-    .then((a) => setUrl(a.data.join_link));
+    .then((a) => setUrl(a.data.join_link))
+    .catch((e) => {
+      setError(e.response.data.message || e.response.data.detail);
+    });
 };
 
-export const forceEnd = (id: string, setEnded: Function) => {
-  const URL = `http://localhost:8000/study/admin/meetings/${id}/end/`;
+export const forceEnd = (
+  id: string,
+  setEnded: Function,
+  setError: Function
+) => {
+  const URL = `${host}study/admin/meetings/${id}/end/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .delete(URL, {
@@ -26,5 +38,8 @@ export const forceEnd = (id: string, setEnded: Function) => {
       },
     })
     .then((a) => setEnded(true))
-    .catch(() => setEnded(false));
+    .catch((e) => {
+      setError(e.response.data.message || e.response.data.detail);
+      setEnded(false);
+    });
 };
