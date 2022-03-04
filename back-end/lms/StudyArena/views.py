@@ -100,7 +100,7 @@ class StudentRequests(APIView):
             elif filter_option == 'rejected':
                 query_sets.append(self.get_rejected(request.user.school))
         except Exception:
-            return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
+            return Response(data={'message': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
         for class_requests in query_sets:
             for req in class_requests:
@@ -171,7 +171,7 @@ class TeacherRequests(APIView):
             elif filter_option == 'rejected':
                 query_sets.append(self.get_rejected(request.user.school))
         except Exception:
-            return Response(data={'details': 'شما مدرسه ای ندارید.'}, status=400)
+            return Response(data={'message': 'شما مدرسه ای ندارید.'}, status=400)
         output = []
         for class_requests in query_sets:
             for req in class_requests:
@@ -397,12 +397,12 @@ class MeetingView(APIView):
                     cls.selected_slides = cls.selected_slides.replace(url, "").replace("\n\n", "")
                 else:
                     cls.save()
-                    return Response(data={"result": "Not Found!"}, status=404)
+                    return Response(data={"message": "Not Found!"}, status=404)
         except Exception as _:
             cls.save()
-            return Response(data={"result": "error"}, status=500)
+            return Response(data={"message": "error"}, status=500)
         cls.save()
-        return Response(data={"result": "ok"}, status=200)
+        return Response(data={"message": "ok"}, status=200)
 
 
 class AdminView(APIView):
@@ -459,7 +459,9 @@ class AdminView(APIView):
             try:
                 school.save()
             except IntegrityError as _:
-                return Response(status=400)
+                return Response(data={
+                    'message': 'مشکلی پیش آمده است.'
+                }, status=400)
             return Response(status=201)
         if self.mode == 'meeting':
             # in this case admin wants to enter the meeting that sent its id

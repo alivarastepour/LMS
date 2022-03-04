@@ -65,6 +65,7 @@ class CustomLogin(ObtainAuthToken):
         return Response(data={
             'id': 'null',
             'token': 'null',
+            'message': 'عملیات ورود با خطا مواجه شد.'
         }, status=400)
 
 
