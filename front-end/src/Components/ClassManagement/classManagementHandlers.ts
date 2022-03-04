@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent } from "react";
+import { host } from "../../Global/host";
 
 export const createMeeting = (
   id: string,
@@ -7,7 +8,7 @@ export const createMeeting = (
   setError: Function,
   setOpenSnackBar: Function
 ) => {
-  const URL = `http://localhost:8000/study/class/${id}/create/`;
+  const URL = `${host}study/class/${id}/create/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .post(
@@ -31,7 +32,7 @@ export const fileUpload = (
   event: ChangeEvent<HTMLInputElement>,
   id: string
 ) => {
-  const URL = `http://localhost:8000/study/class/${id}/slide/`;
+  const URL = `${host}study/class/${id}/slide/`;
   const TOKEN = sessionStorage.getItem("token");
 
   let formData = new FormData();
