@@ -8,11 +8,13 @@ import { profileReducer } from "./Profile.reducer";
 import { profileEditHandler } from "./profile-edit.handler";
 import { profileImageEditHandler } from "../../Global/global-functions";
 import useGet from "../../custom-hooks/useGet";
+import { host } from "../../Global/host";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
-
-  const URL = "http://localhost:8000/auth/whoami/";
+  const [error, setError] = useState("");
+  const URL = `${host}auth/whoami/`;
   const TOKEN = sessionStorage.getItem("token");
 
   const [edit, setEdit] = useState(false);
@@ -100,11 +102,22 @@ const Profile = () => {
           </div>
           <div className="grid-item item8">
             <button
-              onClick={() => profileEditHandler(edit, setEdit, profileData)}
+              onClick={() =>
+                profileEditHandler(edit, setEdit, profileData, setError)
+              }
               className="button"
             >
               {edit ? "اعمال تغییرات" : "تغییر اطلاعات کابری"}
             </button>
+          </div>
+          <div className="bound">
+            <ErrorSnackbar
+              msg={error}
+              open={!!error}
+              setOpen={setError}
+              spaceX={-2}
+              spaceY={-2}
+            />
           </div>
         </Wrapper>
       )}

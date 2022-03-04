@@ -1,4 +1,5 @@
 import axios from "axios";
+import { host } from "../../Global/host";
 
 type Tprofile = {
   username: string;
@@ -13,9 +14,10 @@ type Tprofile = {
 export const profileEditHandler = (
   edit: boolean,
   setEdit: Function,
-  state: Tprofile
+  state: Tprofile,
+  setError: Function
 ) => {
-  const URL = "http://localhost:8000/auth/whoami/";
+  const URL = `${host}auth/whoami/`;
   const TOKEN = sessionStorage.getItem("token");
 
   if (edit) {
@@ -23,7 +25,9 @@ export const profileEditHandler = (
       .put(URL, state, {
         headers: { Authorization: `Token ${TOKEN}` },
       })
-      .catch((e) => console.log(e));
+      .catch((e) =>
+        setError(e.response.data.message || e.response.data.detail)
+      );
   }
   setEdit(!edit);
 };

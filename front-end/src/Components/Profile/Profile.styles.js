@@ -11,7 +11,9 @@ export const Wrapper = styled.div`
   flex-wrap: wrap;
   flex-direction: column;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-
+  .bound {
+    direction: ltr;
+  }
   @media only screen and (max-width: 915px) {
     & {
       width: 90%;
