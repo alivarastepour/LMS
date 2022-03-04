@@ -12,9 +12,11 @@ import useGet from "../../custom-hooks/useGet";
 import { useEffect, useState } from "react";
 import Select from "../Select/Select";
 import { FILTER } from "./Constants";
+import { host } from "../../Global/host";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const CreateClass = () => {
-  const URL = "http://localhost:8000/study/class";
+  const URL = `${host}study/class`;
   const TOKEN = sessionStorage.getItem("token");
 
   const { data } = useGet(URL, TOKEN);
@@ -32,6 +34,8 @@ const CreateClass = () => {
   const [openSettings, setOpenSettings] = useState(false);
 
   const [id, setId] = useState("");
+
+  const [error, setError] = useState("");
 
   useEffect(() => {
     setStaticInfo(data.classes);
@@ -78,7 +82,7 @@ const CreateClass = () => {
             <button
               className="button"
               onClick={() => {
-                addClass(className, setInfo, setStaticInfo);
+                addClass(className, setInfo, setStaticInfo, setError);
               }}
             >
               افزودن
@@ -103,7 +107,7 @@ const CreateClass = () => {
                     <td>
                       <button
                         onClick={() =>
-                          deleteClass(e.id, setInfo, setStaticInfo)
+                          deleteClass(e.id, setInfo, setStaticInfo, setError)
                         }
                         className="button-table rem"
                       >
@@ -147,6 +151,13 @@ const CreateClass = () => {
             )}
           </tbody>
         </table>
+        <ErrorSnackbar
+          open={!!error}
+          setOpen={setError}
+          msg={error}
+          spaceX={20}
+          spaceY={10}
+        />
       </Wrapper>
     </>
   );
