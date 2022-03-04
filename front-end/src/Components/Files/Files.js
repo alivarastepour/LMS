@@ -9,9 +9,10 @@ import RemoveIcon from "@mui/icons-material/Remove";
 
 import useGet from "../../custom-hooks/useGet";
 import { handleSelect, handleRemove, fileHandler } from "./filesHandler";
+import { host } from "../../Global/host";
 const Files = () => {
   const id = useParams().classID;
-  const URL = `http://localhost:8000/study/class/${id}/slide/`;
+  const URL = `${host}study/class/${id}/slide/`;
   const TOKEN = sessionStorage.getItem("token");
 
   const { data } = useGet(URL, TOKEN);

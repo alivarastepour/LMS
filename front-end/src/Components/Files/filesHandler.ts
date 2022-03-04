@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ChangeEvent } from "react";
+import { host } from "../../Global/host";
 
 export const handleSelect = (
   e: ChangeEvent<HTMLInputElement>,
@@ -52,7 +53,7 @@ export const fileHandler = (
   remove: string[],
   id: string
 ) => {
-  const URL = `http://localhost:8000/study/class/${id}/slide/`;
+  const URL = `${host}study/class/${id}/slide/`;
   const TOKEN = sessionStorage.getItem("token");
   axios
     .delete(URL, {
