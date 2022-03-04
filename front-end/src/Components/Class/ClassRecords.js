@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import Spinner from "../Spinner/Spinner";
 
 import useGet from "../../custom-hooks/useGet";
+import { host } from "../../Global/host";
 
 const ClassRecords = ({ classID }) => {
   const [loading, setLoading] = useState(true);
   const { data } = useGet(
-    `http://localhost:8000/study/class/${classID}/recordings/`,
+    `${host}study/class/${classID}/recordings/`,
     sessionStorage.getItem("token")
   );
   useEffect(() => {

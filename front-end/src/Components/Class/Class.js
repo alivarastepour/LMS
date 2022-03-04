@@ -11,12 +11,13 @@ import ClassState from "./ClassState";
 import ClassRecords from "./ClassRecords";
 
 import useGet from "../../custom-hooks/useGet";
+import { host } from "../../Global/host";
 
 const Class = () => {
   const class_id = useParams().classID;
 
   const { data } = useGet(
-    `http://localhost:8000/study/class/${class_id}/info/`,
+    `${host}study/class/${class_id}/info/`,
     sessionStorage.getItem("token")
   );
 
