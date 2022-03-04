@@ -11,15 +11,18 @@ import { schoolProfileReducer } from "./schoolProfile.reducer";
 import useGet from "../../custom-hooks/useGet";
 import { profileImageEditHandler } from "../../Global/global-functions";
 import { schoolProfileEditHandler } from "./schoolProfile-edit.handler";
+import { host } from "../../Global/host";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const SchoolProfile = () => {
-  const URL = "http://localhost:8000/study/school/";
+  const URL = `${host}study/school/`;
   const TOKEN = sessionStorage.getItem("token");
 
   const { data } = useGet(URL, TOKEN);
 
   const [edit, setEdit] = useState(false);
 
+  const [error, setError] = useState("");
   const [info, dispatch] = useReducer(schoolProfileReducer, {});
 
   useEffect(() => {
@@ -70,13 +73,21 @@ const SchoolProfile = () => {
           <div className="content change">
             <button
               onClick={() => {
-                schoolProfileEditHandler(edit, setEdit, info, URL);
+                schoolProfileEditHandler(edit, setEdit, info, URL, setError);
               }}
               className="button"
             >
               {edit ? "ثبت تغییرات" : "تغییر اطلاعات"}
             </button>
           </div>
+        </div>
+        <div className="bound">
+          <ErrorSnackbar
+            open={!!error}
+            setOpen={setError}
+            msg={error}
+            spaceX={18}
+          />
         </div>
       </Wrapper>
     </>

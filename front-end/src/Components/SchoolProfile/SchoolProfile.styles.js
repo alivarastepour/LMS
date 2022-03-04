@@ -10,7 +10,9 @@ export const Wrapper = styled.div`
   text-align: right;
   align-content: center;
   justify-content: space-around;
-
+  .bound {
+    direction: ltr;
+  }
   .image {
     text-align: center;
   }
