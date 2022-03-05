@@ -12,6 +12,8 @@ import ClassRecords from "./ClassRecords";
 
 import useGet from "../../custom-hooks/useGet";
 import { host } from "../../Global/host";
+import MainHeader from "../MainPage/Header";
+import Footer from "../Footer/Footer";
 
 const Class = () => {
   const class_id = useParams().classID;
@@ -25,6 +27,7 @@ const Class = () => {
 
   return (
     <>
+      <MainHeader />
       <Wrapper>
         <ClassInfo
           className={data && data.name}
@@ -48,6 +51,7 @@ const Class = () => {
           </Alert>
         </Snackbar>
       </Wrapper>
+      <Footer />
     </>
   );
 };
