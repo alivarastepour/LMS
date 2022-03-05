@@ -1,3 +1,4 @@
+import Alert from "../Alert/Alert";
 import { status } from "./constant";
 const AllSchoolsTable = ({ information, setError }) => {
   return (
@@ -26,7 +27,7 @@ const AllSchoolsTable = ({ information, setError }) => {
           </tbody>
         </table>
       ) : (
-        <div>dali</div>
+        <Alert />
       )}
     </>
   );
