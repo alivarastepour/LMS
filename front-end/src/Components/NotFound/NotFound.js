@@ -30,7 +30,7 @@ const NotFound = () => {
           </div>
         </div>
         <div className="image">
-          <img src={four_oh_four} alt="404" width={500} height={500} />
+          <img src={four_oh_four} alt="404" className="img" />
         </div>
       </Wrapper>
     </>
