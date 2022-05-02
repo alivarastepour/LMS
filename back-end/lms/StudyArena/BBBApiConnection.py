@@ -2,14 +2,16 @@ import datetime
 import hashlib
 import requests
 import xml.etree.ElementTree as ET
-from jalali_date import datetime2jalali
 from urllib.parse import quote as urlEncode
+
+from jalali_date import datetime2jalali
 
 SHARED_SECRET = 'XXXXXX'
 SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
 
 FRONTEND_URI = "localhost:3000"
 CALLBACK_END_MEETING = "/classes/$classID/endMeeting"
+
 
 def dict_to_str(**kwargs):
     query = ''
@@ -111,13 +113,12 @@ if __name__ == '__main__':
       <document url="https://www.example.com/default.pptx" filename="default.pptx"/>
    </module>
     </modules>"""
-    y = generate_url('create', name='Test+Meeting', meetingID='abc12345', attendeePW='111222', moderatorPW='333444')
-    print(generate_url('join', fullName='mahmood', meetingID='abc12345', password='333444'))
-    print(create(name='Test+Meeting', meetingID='abc123456', attendeePW='111222', moderatorPW='333444'))
-    print(generate_url('join', fullName='Mahmood_Choopani', meetingID='abc123456', password='333444', redirect='FALSE'))
-    print(is_meeting_running(meetingID='abc123456'))
-    print(is_meeting_running(meetingID='abc12345'))
-    x = 'abc123456'
+    print(create(name='Test+Meeting12', meetingID='rectest1', attendeePW='111222', moderatorPW='333444',
+                 allowStartStopRecording=True,record=True))
+    print(generate_url('join', fullName='Mahmood_Choopani', meetingID='rectest1', password='333444', redirect='TRUE'))
+    print(is_meeting_running(meetingID='testtest6'))
+    print(is_meeting_running(meetingID='testtest'))
+    x = 'testtest6'
     print(get_meeting_info(meetingID=x))
     print(get_meetings())
-    # print(join(fullName='Mahmood_Choopani',meetingID='abc123456',password='333444',redirect='FALSE'))
+    # print(join(fullName='Mahmood_Choopani',meetingID='testtest6',password='333444',redirect='FALSE'))
