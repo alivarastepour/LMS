@@ -9,8 +9,8 @@ from jalali_date import datetime2jalali
 SHARED_SECRET = 'XXXXXX'
 SERVER_ADDRESS = 'https://xx.xx.xx/bigbluebutton/api/'
 
-FRONTEND_URI = "localhost:3000"
-CALLBACK_END_MEETING = "/classes/$classID/endMeeting"
+FRONTEND_URI = "51.255.228.211"
+CALLBACK_END_MEETING = "/classes/ati/endMeeting"
 
 
 def dict_to_str(**kwargs):
