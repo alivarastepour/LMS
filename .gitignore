@@ -26,3 +26,5 @@ back-end/lms/lms/__pycache__/settings.cpython-39.pyc
 back-end/lms/lms/__pycache__/urls.cpython-39.pyc
 back-end/lms/lms/__pycache__/wsgi.cpython-39.pyc
 back-end/lms/AuthArena/__pycache__/__init__.cpython-39.pyc
+back-end/lms/StudyArena/migrations/*
+back-end/lms/AuthArena/migrations/*
