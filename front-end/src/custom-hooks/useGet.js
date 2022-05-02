@@ -16,7 +16,7 @@ const useGet = (URL, TOKEN) => {
         setData(ans.data);
       })
       .catch((e) => {
-        setError(e);
+        setError(e.response.data.message || e.response.data.detail);
       });
   }, [TOKEN, URL]);
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Wrapper } from "./Class.styles";
@@ -12,19 +12,26 @@ import ClassRecords from "./ClassRecords";
 
 import useGet from "../../custom-hooks/useGet";
 import { host } from "../../Global/host";
+import MainHeader from "../MainPage/Header";
+import Footer from "../Footer/Footer";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const Class = () => {
   const class_id = useParams().classID;
 
-  const { data } = useGet(
+  const { data, error } = useGet(
     `${host}study/class/${class_id}/info/`,
     sessionStorage.getItem("token")
   );
-
   const [open, setOpen] = useState(false);
+  const [er, setEr] = useState("");
+  useEffect(() => {
+    setEr(error);
+  }, [error]);
 
   return (
     <>
+      <MainHeader />
       <Wrapper>
         <ClassInfo
           className={data && data.name}
@@ -47,7 +54,15 @@ const Class = () => {
             <div className="succes">لینک کلاس به کلیپ‌بورد الصاق شد</div>
           </Alert>
         </Snackbar>
+        <ErrorSnackbar
+          msg={typeof er === "object" ? "" : er}
+          open={er === {} ? false : !!er}
+          setOpen={setEr}
+          spaceX={1}
+          spaceY={1}
+        />
       </Wrapper>
+      <Footer />
     </>
   );
 };

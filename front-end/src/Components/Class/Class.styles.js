@@ -4,6 +4,7 @@ export const Wrapper = styled.div`
   overflow-y: auto;
   width: 90%;
   margin: auto;
+  margin-bottom: 80px;
   height: 800px;
   border-radius: 10px;
   backdrop-filter: blur(31px) saturate(160%);

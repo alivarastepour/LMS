@@ -12,23 +12,29 @@ import ClassRecords from "./ClassRecords";
 
 import useGet from "../../custom-hooks/useGet";
 import { host } from "../../Global/host";
+import MainHeader from "../MainPage/Header";
+import Footer from "../Footer/Footer";
+import ErrorSnackbar from "../ErrorSnackbar/ErrorSnackbar";
 
 const ClassManagement = () => {
   const class_id = useParams().classID;
+  const [er, setEr] = useState("");
 
-  const { data } = useGet(
+  const { data, error } = useGet(
     `${host}study/class/${class_id}/info/`,
     sessionStorage.getItem("token")
   );
   const [open, setOpen] = useState(false);
   const [url, setUrl] = useState();
   useEffect(() => {
+    setEr(error);
     if (data) {
       setUrl(data.url);
     }
-  }, [data]);
+  }, [data, error]);
   return (
     <>
+      <MainHeader />
       <Wrapper>
         <ClassInfo className={data && data.name} id={class_id} />
         <ClassState
@@ -49,6 +55,14 @@ const ClassManagement = () => {
           </Alert>
         </Snackbar>
       </Wrapper>
+      <ErrorSnackbar
+        msg={typeof er === "object" ? "" : er}
+        open={er === {} ? false : !!er}
+        setOpen={setEr}
+        // spaceX={2}
+        // spaceY={8}
+      />
+      <Footer />
     </>
   );
 };
