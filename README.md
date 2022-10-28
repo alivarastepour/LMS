@@ -4,8 +4,6 @@ an implementation for a LMS(learning management system) with distinguished dashb
 ## technologies
 back-end is implemented using django framework; reactjs and MUI are used for deveolping front-end.
 
-## production build
-a production build of this prject is available at TBD.
 
 ## contributations
 you are welcome to perform any kind of contribution.
